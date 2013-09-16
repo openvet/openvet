@@ -5,22 +5,28 @@ from datetime import date
 import time
 import sys
 
-user='root'
-password='horizons'
-table='OpenVet10b'
+
+import parametres
+
+host=parametres.host
+repertoire=parametres.repertoire
+user=parametres.user
+password=parametres.password
+database=parametres.database
+
 
 class Table:
     
     def __init__(self,name):
         #self.parent
         try:
-            self.con=mdb.connect('localhost','root','horizons',table)
+            self.con=mdb.connect(host,user,password,database)
         except mdb.Error, e:
             print "Error %d: %s" % (e.args[0], e.args[1])
             sys.exit(1)
         self.con.set_character_set('utf8')
         self.champs=[]
-        self.table=table+'.'+name
+        self.table=database+'.'+name
         self.getfields()
         
     def getfields(self):
@@ -68,7 +74,7 @@ class Table:
                 values=values+str(i)+", "
         values=values[:-2]
         query="""INSERT INTO %s (%s) VALUES (%s)"""%(self.table,lchamps,values)
-        print query
+        #print query
         error=self.execute(query)
         return error
 
@@ -235,7 +241,7 @@ class Table:
     
 def execute(query):
     try:
-        con=mdb.connect('localhost','root','horizons',table)
+        con=mdb.connect(host,user,password,database)
     except mdb.Error, e:
         print "Error %d: %s" % (e.args[0], e.args[1])
         sys.exit (1)
@@ -249,15 +255,15 @@ def execute(query):
         rows=cur.fetchall()
     except mdb.Error, e:
         error="Error %d: %s" % (e.args[0], e.args[1])
-        cur.close()
-        if error==None:
-            con.commit()
+    cur.close()
+    if error==None: #erreur a revoir indentation corrigee
+        con.commit()
     con.close()
     return (error,rows)
     
 def savedata(query):
     try:
-        con=mdb.connect('localhost','root','horizons','kiwi')
+        con=mdb.connect(host,user,password,database)
     except mdb.Error, e:
         print "Error %d: %s" % (e.args[0], e.args[1])
         sys.exit (1)
@@ -321,6 +327,7 @@ def get_client(idclt):
 	clt=execute("SELECT * FROM kiwi.Client WHERE idClient='"+str(idclt)+"'")
 	clt=clt[1][0]
 	return clt
+()
 
 def get_especes():
 	lst=[]
@@ -339,12 +346,12 @@ def get_races(espece):
 			lst.append(i[0])
 	return lst
 
-def add(table,data):
+def add(table,data, autoincrement=True):
     err2=err1=None
     a=Table(table)
     err1=a.valid(data)
     if err1==None:
-            err2=a.add(data,True)
+            err2=a.add(data,autoincrement)
     a.close()
     return (err1,err2)
 
