@@ -1,0 +1,15 @@
+La requete de recherche de client dont le nom commence par ... avec le Nom, le Prénom et la Commune en retour donne environ (pour une réponse de 30 solutions environ):
+-0,002s avec la version 10b
+-0,09s avec la vesrion 10c
+Si la requête est otpimisée avec les jointures on descent à 0,004s pour la version 10c.
+Je pense que c'est la requête qui demande le plus de réactivité, la liste se modifie en temps réel au fur et à mesure que l'opérateur tape les lettres. Si on veut absolument garder une table Adresse externe, ça ne me semble faisable à condition:
+1. De dupliquer le champ Commune de l'adresse courante principale en dur dans la table Client ou de dupliquer une table Client en MyISAM (beaucoup plus rapide) avec les champs Nom,Prenom,Commune, Mais à ce niveau je pense que l'interface python Mysql sera le facteur ralentisseur.
+2. Ajouter un champ TabledeReference (si ce n'est pas encore le cas) dans la Table Adresse. En effet lors de recherche sur l'adresse, il faut savoir à quelle table se rapporte l'id trouvée. acuellemeent dans le version 10c, j'ai mis un champ VARCHAR, mais je pense qu'il faudra lui substituer un champs INT, pour accélérer les recherches.
+3. Enfin je pense qu'il est préférable de mettre la clé d'identification Personne dans la table adresse pour une gestion plus efficace des adresses multiples.
+
+Pour les nom de rue, l'opération de peuplement de la base, montre que ça représente une masse considérable de données dans le cas de cette simulation c'est 4Mo au minimum (3 à 60 rues pour toutes les communes de 3 départements de Franche-Comté), pour une base de 8,5Mo. Si le remplissage de cette table est à la charge de l'utilisateur, alors il n'y a plus aucune garantie sur une orthographe unique. En tous cas, pas plus qu'avec une table non connectée optionnelle d'aide à la saisie d'un champ adresse.
+
+Pour le reste les requêtes les plus longues devraient tourner à 0,05s maxi en utilisant les jointures, ce qui est en effet largement acceptable.
+
+Donc la Version10c devrait être un bon compromis. 
+
