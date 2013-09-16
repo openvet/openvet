@@ -1,0 +1,9 @@
+tout est dans parametres.py (avant il faut creer la structure de la base)
+
+db.add devrait retourner l'id, cf idadresse=db.execute("SELECT LAST_INSERT_ID()") # !!!arevoir    dangeureux sans LOCK 
+db.add  la validation ralentit les requetes, voir s'il n'est pas preferable de verifier les donnees dans openvet ???
+db.execute se reconnecte à chaque fois, voir s'il n est pas possible de garder la connexion pour plusieurs requetes
+
+dans openvetc repertoire : à quoi sert RefTable
+
+dans les requetes : attention aux chaines de caracteres avec ' ou "  ex : chat Dixie's Chocolate 
