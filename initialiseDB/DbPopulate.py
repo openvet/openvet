@@ -502,15 +502,15 @@ def main():
     maxrobechien=0
     
     
-#    FillCommunesAndRaces()
-#
+    FillCommunesAndRaces()
+
     CreateListeRaces()
     CreateListeRobes()
-#
-#    if database <>'OpenVet10b' :  #== 'OpenVet10c' or database=='OpenVet10d':
-#        print 'fill nom rue 10c 10d'
-#        FillNomRue()    #OpenVet10c et suivants    
-#
+
+    if database <>'OpenVet10b' :  #== 'OpenVet10c' or database=='OpenVet10d':
+        print 'fill nom rue 10c 10d'
+        FillNomRue()    #OpenVet10c et suivants    
+
 
     EffaceChamp('Animal')
     EffaceChamp('Client') #vide la table
