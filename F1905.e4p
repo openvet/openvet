@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-4.6.dtd">
-<!-- eric4 project file for project openvet3103F -->
-<!-- Saved: 2014-03-31, 11:37:47 -->
+<!-- eric4 project file for project F1905 -->
+<!-- Saved: 2014-05-20, 17:54:47 -->
 <!-- Copyright (C) 2014 ,  -->
 <Project version="4.6">
-  <Language></Language>
+  <Language>en</Language>
   <ProgLanguage mixed="0">Python</ProgLanguage>
   <ProjectType>Qt4</ProjectType>
   <Description></Description>
@@ -13,9 +13,13 @@
   <Email></Email>
   <Sources>
     <Source>VetCore/Core_Pathologie.py</Source>
+    <Source>VetCore/Core_Analyse.py</Source>
+    <Source>VetCore/Core_old.py</Source>
+    <Source>VetCore/Viewer.py</Source>
     <Source>VetCore/Core_Critere.py</Source>
     <Source>VetCore/Core_Consultation.py</Source>
     <Source>VetCore/Tables.py</Source>
+    <Source>VetCore/DBase.py</Source>
     <Source>VetCore/config.py</Source>
     <Source>VetCore/Core.py</Source>
     <Source>VetGUI/ui_Form_consultation_old.py</Source>
@@ -24,15 +28,19 @@
     <Source>VetGUI/ui_Form_pathologie.py</Source>
     <Source>VetGUI/TestGui.py</Source>
     <Source>VetGUI/Gui_Pathologie.py</Source>
+    <Source>VetGUI/Gui_Analyse.py</Source>
     <Source>VetGUI/mkpyqt.py</Source>
     <Source>VetGUI/Gui_OpenVet.py</Source>
     <Source>VetGUI/Mywidgets.py</Source>
     <Source>VetGUI/ui_Form_consultation.py</Source>
     <Source>VetGUI/ui_Form_animal.py</Source>
+    <Source>VetGUI/Gui_ModeleAnalyse.py</Source>
+    <Source>VetGUI/ui_Form_DialogAnalyse.py</Source>
     <Source>VetGUI/ui_Form_critere.py</Source>
     <Source>VetGUI/Gui_Core.py</Source>
     <Source>VetGUI/ui_Form_DialogPathologie.py</Source>
     <Source>VetGUI/config.py</Source>
+    <Source>VetGUI/ui_Form_DialogModeleAnalyse.py</Source>
     <Source>VetGUI/Gui_Critere.py</Source>
     <Source>VetGUI/resources_rc.py</Source>
     <Source>VetGUI/ui_Form_client.py</Source>
@@ -43,8 +51,10 @@
     <Form>VetGUI/Form_pathologie.ui</Form>
     <Form>VetGUI/Form_consultation.ui</Form>
     <Form>VetGUI/Form_openvet.ui</Form>
+    <Form>VetGUI/Form_DialogModeleAnalyse.ui</Form>
     <Form>VetGUI/Form_consultation_old.ui</Form>
     <Form>VetGUI/Form_DialogPathologie.ui</Form>
+    <Form>VetGUI/Form_DialogAnalyse.ui</Form>
   </Forms>
   <Translations>
   </Translations>

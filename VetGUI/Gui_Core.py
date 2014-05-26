@@ -12,4 +12,3 @@ def FillCombobox(combobox,function):       #Fill from list of items. Do not fit 
     for i in lst:
         combobox.addItem(i[1],i[0])
 
-

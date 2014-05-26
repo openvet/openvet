@@ -56,7 +56,7 @@ class Consultation:
 		#TODO: fill self.images
 		tmp=[i[1].toLatin1().data() for i in res]
 		return QtCore.QString(','.join(tmp))
-	
+		
 	def GetChirurgies(self,idConsultation):	
 		res=self.DBase.GetDbidText("CALL GetChirurgie(%i)"%idConsultation)
 		tmp=[i[1].toLatin1().data() for i in res]

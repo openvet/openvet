@@ -1,45 +1,24 @@
 #!/usr/bin/env python
 # -*- coding: utf8 -*-
 import re
-from PyQt4 import QtCore
-import Tables
+from PyQt4.QtCore import *
+from PyQt4.QtSql import *
+import config
 
-def GetDbLines(DBase,request):
-	clst=[]
-	res=DBase.RechercheSQL_liste(request)
-	if len(res)==0:
-		return([])
-	for i in res:
-		tmp=[]
-		for j in i:
-			if not j is None:
-				tmp.append(QtCore.QString(str(j).decode(DBase.dbCodec)))
-			else:
-				tmp.append(QtCore.QString(''))
-		clst.append(tmp)
-	return clst
+class Ctable:
+	def __init__(self,DBase,table):
+		self.Table=table
+		self.DBase=DBase
+		res=self.DBase.record(self.Table)
+		self.TableFields=[str(res.fieldName(i)) for i in range(res.count())]
+		for i in self.TableFields:
+			self.__dict__.update({i:None})             
 
-def GetDbText(DBase,request):
-	clst=[]
-	res=DBase.RechercheSQL_liste(request)
-	if len(res)==0:
-		return([])
-	for i in res[0]:
-		if not i is None:
-			clst.append(QtCore.QString(str(i).decode(DBase.dbCodec)))
-		else:
-			clst.append(QtCore.QString(''))
-	return clst
+	def Print(self):
+		print '#attributes: '+','.join(self.TableFields)
+		for i in self.TableFields:
+			print '%s : %s\t\t\t(%s)'%(i,str(self.__dict__[i]),type(self.__dict__[i]))
 
-def GetDbidText(DBase,request,Tous=False):
-	clst=[]
-	if Tous:
-		clst.append([0,QtCore.QString("Tous")])
-	res=DBase.RechercheSQL_liste(request)
-	for i in res:
-		txt=QtCore.QString(i[1].decode(DBase.dbCodec))
-		clst.append([i[0],txt])
-	return clst
 		
 	
 def ValideDate(date,formatin='dmyy'):
@@ -68,13 +47,16 @@ def ValideTelephone(tel):
 		return None
 	return res
 
-def Logout(chaine):
-	fout=open('debug.log','a')
-	fout.write(chaine+'n')
-	fout.close()
 	
 
 if __name__ == '__main__':
-	a=QtCore.QString(u'')
-	print a.toUtf8()
+	db = QSqlDatabase.addDatabase("QMYSQL")
+	db.setHostName ( config.host )
+	db.setUserName ( config.user )
+	db.setPassword ( config.password )
+	db.setDatabaseName(config.database)
+	if not db.open():
+		print 'connection impossible'
+	Mytable=Ctable(db,'Analyse')
+	Mytable.Print()
 	

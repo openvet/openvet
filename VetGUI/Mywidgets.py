@@ -43,3 +43,20 @@ class MyTableWidget(QtGui.QTableWidget):
 		else:
 			QtGui.QTableWidget.keyPressEvent(self,event)
 	#TODO menu right-click
+
+class MyPlainTextEdit(QtGui.QPlainTextEdit):
+	def __init__(self,parent=None):
+		super(MyPlainTextEdit,self).__init__(parent)
+		self.MaxLength=0
+		self.textChanged.connect(self.OnLimitLength)
+		
+	def SetMaxLength(self,length):
+		self.MaxLength=length
+		
+	def OnLimitLength(self):
+		if self.MaxLength==0:
+			return
+		text=self.toPlainText()
+		if text.length()>self.MaxLength:
+			self.setPlainText(text.remove(text.length()-1,1))
+			self.moveCursor(QtGui.QTextCursor.End)

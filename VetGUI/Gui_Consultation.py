@@ -6,6 +6,9 @@ from PyQt4 import QtCore, QtGui
 sys.path.append('../VetCore')
 from ui_Form_consultation import Ui_tabWidget_medical
 from Gui_Pathologie import FormPathologie
+from Gui_Analyse import FormAnalyse
+from Gui_ModeleAnalyse import FormModeleAnalyse
+
 #import Gui_Core
 import time
 import Tables
@@ -13,6 +16,7 @@ import config
 import Core_Consultation
 import Core_Pathologie
 import Core_Critere
+import Core_Analyse
 
 
 
@@ -25,16 +29,21 @@ class TabConsultation(QtGui.QTabWidget,Ui_tabWidget_medical):
     idConsultation=0
     NewConsultation=True
     
-    def __init__(self, parent=None):
+    def __init__(self,parent=None):
         QtGui.QTabWidget.__init__(self,parent)
         self.setupUi(self)
         self.DBase=Tables.DataBase(config.database)
+        self.Qbase=parent.db
+        #self.MyQuery
         self.editClient = None
         self.editAnimal = None
         self.editPathologie=None
+        self.importAnalyse=None
         self.TypeConsultationDefaut=3
         self.MyConsult= Core_Consultation.Consultation(self.DBase,0)     #TODO: transmit DataBase Connection object
         self.MyPathologie=Core_Pathologie.Pathologie(self.DBase)
+        self.MyAnalyse=Core_Analyse.Analyse(self)
+        self.ModeleAnalyse=None
         #init dates
         now=QtCore.QDate.currentDate()
         self.dateEdit_consult.setDate(now)
@@ -42,19 +51,18 @@ class TabConsultation(QtGui.QTabWidget,Ui_tabWidget_medical):
         self.dateEdit_vacciner_end.setDate(now)
         self.dateEdit_ordonance.setDate(now)
         self.dateEdit_docDate.setDate(now)
-        self.dateTimeEdit_analyse.setDate(now)
+        self.dateTimeEdit_analyse.setDateTime(QtCore.QDateTime.currentDateTime())
         #hide some widget
-        self.tableWidget_analyses.setVisible(False)
-        self.listWidget_analyse.setVisible(False)
-        self.lineEdit_titreImage.setVisible(False)
-        self.lineEdit_fichier.setVisible(False)
-        self.pushButton_addImage.setVisible(False)
-        self.toolButton_fichier.setVisible(False)
-        self.label_Referant.setVisible(False)
-        self.comboBox_Referant.setVisible(False)
+        self.HideAnalyse()
+        #SetMaxLength
+        self.plainTextEdit_conclusions.SetMaxLength(200)
+        self.plainTextEdit_syntheseanalyse.SetMaxLength(65535)
+        #SetContextMenus
+        self.listView_AnalyseImage.addActions((self.DoEditDocument,self.DoDeleteDoc))
+        self.tableView_Parametres.addAction(self.DoDeleteParametre)
         #connect actions
+        #____________________________***   Tab_Consultation   ***__________________________
         self.comboBox_consultType.currentIndexChanged.connect(self.OnTypeConsultation)
-        #self.connect(self.comboBox_veterinaire,QtCore.SIGNAL("keyPressEvent(QKeyEvent)"),self.OnNewConsultant)
         self.comboBox_PathologieDomaine.currentIndexChanged.connect(self.OnDomaine)
         self.connect(self.comboBox_Pathologie, QtCore.SIGNAL("highlighted(int)"),self.OnPathologie)
         self.connect(self.textBrowser_consultations, QtCore.SIGNAL("anchorClicked(QUrl)"),self.OnConsultationSelect)
@@ -63,7 +71,46 @@ class TabConsultation(QtGui.QTabWidget,Ui_tabWidget_medical):
         self.toolButton_Pathologie.clicked.connect(self.EditPathologie)
         self.pushButton_valider.clicked.connect(self.SaveConsultation)
         self.pushButton_Nouveau.clicked.connect(self.OnNewConsultation)
-              
+        #____________________________***  Tab_Analyses   ***______
+        self.connect(self.DoEditDocument,QtCore.SIGNAL("triggered()"),self.OnEditAnalyseDocument)
+        self.connect(self.DoDeleteDoc,QtCore.SIGNAL("triggered()"),self.OnDeleteAnalyseDocument)
+        self.connect(self.DoDeleteParametre,QtCore.SIGNAL("triggered()"),self.OnDeleteParametre)
+        self.connect(self.listView_AnalyseImage,QtCore.SIGNAL("doubleClicked (QModelIndex)"),self.OnEditAnalyseDocument)
+        self.connect(self.listView_Analyses,QtCore.SIGNAL("activated(QModelIndex)"),self.OnListAnalyse)
+        self.connect(self.tableView_Parametres,QtCore.SIGNAL("clicked(QModelIndex)"),self.OnClickParametre)
+        self.connect(self.listView_AnalyseImage,QtCore.SIGNAL("clicked(QModelIndex)"),self.OnClickDocument)
+        self.toolButton_AddAnalyse.clicked.connect(self.OnNewAnalyse)
+        self.pushButton_SaveAnalyse.clicked.connect(self.OnSaveAnalyse) 
+        self.connect(self.comboBox_typeanalyse,QtCore.SIGNAL("currentIndexChanged(int)"),self.OnTypeAnalyse)
+        self.connect(self.comboBox_model,QtCore.SIGNAL("currentIndexChanged(int)"),self.OnModelAnalyse)
+        self.toolButton_EditModelAnalyse.clicked.connect(self.OnEditModel)
+        self.comboBox_Parametre.activated.connect(self.OnAddParametre)
+        self.lineEdit_AnalyseRemarque.textChanged.connect(self.OnAnalyseRemarque)
+        self.pushButton_AnalyseImport.clicked.connect(self.OnImportAnalyse)
+        self.radioButton_Parametre.clicked.connect(self.OnVueAnalyse)
+        self.radioButton_Document.clicked.connect(self.OnVueAnalyse)
+        
+    def HideAnalyse(self):
+        self.tableView_Parametres.setVisible(False)
+        self.comboBox_Parametre.setVisible(False)
+        self.label_Parametre.setVisible(False)
+        self.toolButton_EditParametre.setVisible(False)
+        self.comboBox_typeanalyse.setVisible(False)
+        self.label_TypeAnalyse.setVisible(False)
+        self.toolButton_EditTypeAnalyse.setVisible(False)
+        self.comboBox_model.setVisible(False)
+        self.label_model.setVisible(False)
+        self.toolButton_EditModelAnalyse.setVisible(False)
+        self.lineEdit_AnalyseRemarque.setHidden(True)
+        self.label_Analyse_Remarque.setHidden(True)
+        self.pushButton_AnalyseImport.setHidden(True)
+        self.listView_AnalyseImage.setVisible(False)
+        self.label_Referant.setVisible(False)
+        self.comboBox_Referant.setVisible(False)  
+        self.label_VueAnalyse.setVisible(False)
+        self.radioButton_Parametre.setVisible(False)
+        self.radioButton_Document.setVisible(False)
+               
     def FillConsultation_Combo(self):
         self.comboBox_veterinaire.Fill(self.MyConsult.GetConsultants())
         self.comboBox_Referant.Fill(self.MyConsult.GetReferants())
@@ -73,13 +120,15 @@ class TabConsultation(QtGui.QTabWidget,Ui_tabWidget_medical):
                     
     def OnSelectAnimal(self):
         #TODO get idEspece from animal
-        self.idEspece=1
         #MAKE consultation enabled
-        self.MyConsult.Animal_idAnimal=self.idEspece
+        self.MyConsult.Animal_idAnimal=self.idAnimal
         self.MyPathologie.SetEspece(self.idEspece)
         self.FillConsultation_Combo()
         self.GetConsultations()
-            
+        self.MyAnalyses=Core_Analyse.Analyses(self.idAnimal)
+        self.listView_Analyses.setModel(self.MyAnalyses)
+        self.HideAnalyse()
+             
     def GetConsultations(self):
         MyDossier=Core_Consultation.Consultations(self.DBase,self.idAnimal)
         self.textBrowser_consultations.setText(MyDossier.Get())
@@ -107,6 +156,7 @@ class TabConsultation(QtGui.QTabWidget,Ui_tabWidget_medical):
     def FillFormConsultation(self):
         self.MyConsult.Get(self.idConsultation)
         self.dateEdit_consult.setDate(self.MyConsult.DateConsultation)
+        self.dateTimeEdit_analyse.setDate(self.MyConsult.DateConsultation)
         self.comboBox_veterinaire.setCurrentIndex(self.comboBox_veterinaire.findText(self.MyConsult.Consultant))
         index=self.comboBox_consultType.findData(self.MyConsult.TypeConsultation_idTypeConsultation)
         if index>-1:
@@ -219,7 +269,177 @@ class TabConsultation(QtGui.QTabWidget,Ui_tabWidget_medical):
             self.editPathologie.NbCriteres=0
             print 'Pathologie éditée'
      
-
+#________________________________________________***  A N A L Y S E S ***_______________________________________________________
+    def GuiAnalyse(self):
+        self.comboBox_typeanalyse.setVisible(True)
+        self.label_TypeAnalyse.setVisible(True)
+        self.toolButton_EditTypeAnalyse.setVisible(True)
+        self.pushButton_AnalyseImport.setVisible(True)
+        self.lineEdit_AnalyseRemarque.setHidden(False)
+        self.label_Analyse_Remarque.setHidden(False)
+        if not self.MyAnalyse.isImage:
+            self.listView_AnalyseImage.setHidden(True)
+            self.comboBox_model.setVisible(True)
+            self.label_model.setVisible(True)
+            self.toolButton_EditModelAnalyse.setVisible(True)
+            self.tableView_Parametres.setHidden(False)
+            self.comboBox_Parametre.setHidden(False)
+            self.label_Parametre.setHidden(False)
+            self.toolButton_EditParametre.setHidden(False)
+            self.label_VueAnalyse.setVisible(True)
+            self.radioButton_Parametre.setVisible(True)
+            self.radioButton_Document.setVisible(True)
+            self.radioButton_Parametre.setChecked(True)
+            self.tableView_Parametres.setModel(self.MyAnalyse.Resultats)
+            self.tableView_Parametres.setColumnHidden(0,True)
+            self.tableView_Parametres.resizeColumnsToContents()
+    #        if not self.MyAnalyse.Resultats is None:
+    #            self.connect(self.MyAnalyse.Resultats,QtCore.SIGNAL("dataChanged(QModelIndex,QModelIndex)"),self.OnParametreChanged)
+            if not self.MyAnalyse.Documents is None:
+                self.listView_AnalyseImage.setModel(self.MyAnalyse.Documents) 
+        else:
+            self.tableView_Parametres.setHidden(True)
+            self.comboBox_Parametre.setHidden(True)
+            self.label_Parametre.setHidden(True)
+            self.toolButton_EditParametre.setHidden(True)
+            self.listView_AnalyseImage.setHidden(False)
+            self.label_VueAnalyse.setVisible(False)
+            self.radioButton_Parametre.setVisible(False)
+            self.radioButton_Document.setVisible(False)
+            if not self.MyAnalyse.Documents is None:
+                self.listView_AnalyseImage.setModel(self.MyAnalyse.Documents)
+    
+    def OnVueAnalyse(self):
+        if self.radioButton_Parametre.isChecked():
+            self.listView_AnalyseImage.setHidden(True)
+            self.tableView_Parametres.setHidden(False)
+            self.comboBox_Parametre.setHidden(False)
+            self.label_Parametre.setHidden(False)
+            self.toolButton_EditParametre.setHidden(False)
+        else:
+            self.tableView_Parametres.setHidden(True)
+            self.comboBox_Parametre.setHidden(True)
+            self.label_Parametre.setHidden(True)
+            self.toolButton_EditParametre.setHidden(True)
+            self.listView_AnalyseImage.setHidden(False)
+                
+    def OnListAnalyse(self,index):
+        if index.isValid():
+            idAnalyse=index.data(QtCore.Qt.UserRole).toInt()[0]
+            self.MyAnalyse.Get(idAnalyse,self.idConsultation,self.idEspece)
+            self.OnTypeAnalyse(None)
+                    
+    def OnNewAnalyse(self):
+        if self.idConsultation==0:
+            QtGui.QMessageBox.warning(self,u"Alerte OpenVet",'Vous devez selectionner une consultation pour entrer une nouvelle analyse', QtGui.QMessageBox.Ok | QtGui.QMessageBox.Default)
+        else:
+            self.HideAnalyse()
+            self.comboBox_typeanalyse.setVisible(True)
+            self.label_TypeAnalyse.setVisible(True)
+            self.toolButton_EditTypeAnalyse.setVisible(True)
+            self.lineEdit_AnalyseRemarque.setText("")
+            self.MyAnalyse.Get(0,self.idConsultation,self.idEspece)
+            self.dateTimeEdit_analyse.setDateTime(QtCore.QDateTime.currentDateTime())
+            self.lineEdit_description.setFocus()
+        
+    def OnDeleteParametre(self):
+        index=self.tableView_Parametres.currentIndex()
+        if not self.MyAnalyse.Resultats.data(index,QtCore.Qt.DisplayRole).toString().isEmpty():
+            if QtGui.QMessageBox.question(self,'OpenVet',u'Etes-vous sûre de vouloir effacer ce résultat?',QtGui.QMessageBox.Yes| QtGui.QMessageBox.Default,QtGui.QMessageBox.No)==QtGui.QMessageBox.No:
+                return
+        self.MyAnalyse.Resultats.removeRows(index.row())
+        
+    def OnClickParametre(self,index):   
+        self.lineEdit_AnalyseRemarque.setText(self.MyAnalyse.Resultats.GetRemarque(index))    
+          
+    def OnClickDocument(self,index):
+        self.lineEdit_AnalyseRemarque.setText(self.MyAnalyse.Documents.GetRemarque(index))
+        
+    def OnAnalyseRemarque(self):
+        if self.MyAnalyse.isImage:
+            self.MyAnalyse.Documents.SetRemarque(self.lineEdit_AnalyseRemarque.text())
+        elif not self.MyAnalyse.isImage and self.radioButton_Document.isChecked():
+            self.MyAnalyse.Documents.SetRemarque(self.lineEdit_AnalyseRemarque.text())
+        else:
+            self.MyAnalyse.Resultats.SetRemarque(self.lineEdit_AnalyseRemarque.text())
+                    
+    def OnTypeAnalyse(self,index=None):
+        parametre=self.MyAnalyse.GetIdTypeAnalyse(self.comboBox_typeanalyse.currentText())
+        self.MyAnalyse.IsQuantitatif(self.comboBox_typeanalyse.currentText())
+        if parametre is None:
+            return
+        self.GuiAnalyse()
+        if self.MyAnalyse.idAnalyse==0:
+            if not self.MyAnalyse.isImage:
+                self.MyAnalyse.Resultats.SetParametres(parametre,self.idEspece) #init Modeles in the same time
+                self.comboBox_Parametre.setModel(self.MyAnalyse.Resultats.Parametres)
+                self.comboBox_Parametre.setModelColumn(5)
+                self.comboBox_model.setModel(self.MyAnalyse.Resultats.Modeles)
+        else:
+            if self.MyAnalyse.Resultats is None:
+                return  #Myanalyse have been modified by Table.SetFilter and so have been combobox.TypeAnalyse, but Resultats have not been initiated yet. 
+            self.comboBox_model.setVisible(False)
+            self.label_model.setVisible(False)
+            self.toolButton_EditModelAnalyse.setVisible(False)
+            self.MyAnalyse.Resultats.SetParametres(parametre,self.idEspece)
+            self.comboBox_Parametre.setModel(self.MyAnalyse.Resultats.Parametres)
+            self.comboBox_Parametre.setModelColumn(5)    
+                             
+    def OnModelAnalyse(self,index=None):
+        if not self.MyAnalyse.Resultats.isEmpty():
+            if QtGui.QMessageBox.question(self,'OpenVet',u'Voulez-vous effacer les données présentes?',QtGui.QMessageBox.Yes| QtGui.QMessageBox.Default,QtGui.QMessageBox.No)==QtGui.QMessageBox.No:
+                return
+        idModele=self.comboBox_model.itemData(index,QtCore.Qt.UserRole)
+        if idModele.toInt()[0]>0:
+            #TODO: if self.lineEdit_description.Text.isEmpty()
+            self.lineEdit_description.setText(self.comboBox_model.itemData(index,QtCore.Qt.DisplayRole).toString())
+            self.ModeleAnalyse=Core_Analyse.ModeleAnalyse(self.MyAnalyse.Resultats,idModele)
+            self.tableView_Parametres.edit(self.MyAnalyse.Resultats.index(0,2))
+        
+    def OnEditModel(self):
+        idModele=self.comboBox_model.itemData(self.comboBox_model.currentIndex(),QtCore.Qt.UserRole)
+        self.ModeleAnalyse=Core_Analyse.ModeleAnalyse(self.MyAnalyse.Resultats,idModele)
+        (flag,msg)=self.ModeleAnalyse.CheckModele(idModele,self.lineEdit_description.text())
+        #TODO: if flag==3: 3 boutons (supprimer,modifier,annuler)
+        if QtGui.QMessageBox.question(self,'OpenVet',msg,QtGui.QMessageBox.Yes| QtGui.QMessageBox.Default,QtGui.QMessageBox.Cancel)==QtGui.QMessageBox.Yes:
+            if flag==3:
+                self.ModeleAnalyse.ToDelete=True
+            else:
+                MyModele=FormModeleAnalyse(self.ModeleAnalyse)
+                if MyModele.exec_():
+                    self.ModeleAnalyse.Save()
+        
+    def OnAddParametre(self):
+        index=self.comboBox_Parametre.currentIndex()
+        if self.MyAnalyse.Resultats.insertRows(0,index):
+            self.tableView_Parametres.edit(self.MyAnalyse.Resultats.index(self.MyAnalyse.Resultats.rowCount()-1, 2, QtCore.QModelIndex()))
+        else:
+            QtGui.QMessageBox.warning(self,u"Alerte OpenVet",u'Ce paramètre est déjà présent dans la liste.', QtGui.QMessageBox.Ok | QtGui.QMessageBox.Default)
+                
+    def OnImportAnalyse(self):
+        self.importAnalyse = FormAnalyse(self)
+        if self.importAnalyse.exec_():
+            if self.MyAnalyse.Documents.insertRows(0,[self.importAnalyse.Titre,self.importAnalyse.Etiquette,self.importAnalyse.FichierInterne]):
+                QtGui.QMessageBox.warning(self,u"Alerte OpenVet",u'Cette image est déjà présente dans la liste.', QtGui.QMessageBox.Ok | QtGui.QMessageBox.Default)
+                
+    def OnEditAnalyseDocument(self,index=None):
+        if index is None:
+            index=self.listView_Analyses.currentIndex()
+        self.importAnalyse = FormAnalyse(self)
+        self.importAnalyse.Set(self.MyAnalyse.Documents.GetDocument(index))
+        if self.importAnalyse.exec_():
+            self.MyAnalyse.Documents.setData(index,QtCore.QVariant(self.importAnalyse.Titre))
+        
+    def OnDeleteAnalyseDocument(self):
+        index=self.listView_Analyses.currentIndex()
+        self.MyAnalyse.Documents.RemoveRow(index.row())
+                         
+    def OnSaveAnalyse(self):
+        valid=self.MyAnalyse.Save()
+        QtGui.QToolTip.showText(QtGui.QCursor.pos(),valid, widget=None)
+        self.MyAnalyses=Core_Analyse.Analyses(self.idAnimal)
+        self.listView_Analyses.setModel(self.MyAnalyses)      
+            
 class FormComment(QtGui.QDialog):
     def __init__(self,parent=None):
         super(FormComment,self).__init__(parent)
