@@ -1,4 +1,3 @@
-#!/usr/bin/python 
 # -*- coding: utf8 -*-
 
 import adodb, MySQLdb
@@ -18,6 +17,7 @@ IDUSER=config.IDUSER
 class DataBase:
     nomDB=''
     def __init__(self,nomD):
+        self.dbCodec=config.dbCodec     #'ISO-8859-1'
         self.nomDB=nomD
         #self.DataBase=DataBase(nomD)
         self.InitialiseDB()
@@ -427,7 +427,7 @@ if __name__ == "__main__":
     
     print 'enregistre client'
     err=table_client.EnregistreTable()
-    print 'fin enregistre client '+str(err)
+    print 'fin enregistre client '+err
 
     print 'set champ CIP : interdit'
     table_client.SetChamp('CIP','60000') 
