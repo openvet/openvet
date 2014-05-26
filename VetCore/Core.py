@@ -4,7 +4,7 @@ import re
 from PyQt4 import QtCore
 import Tables
 
-def GetDbLines(DBase,request):
+def GetDbLines(DBase,request):	#TODO: Move in Table
 	clst=[]
 	res=DBase.RechercheSQL_liste(request)
 	if len(res)==0:
@@ -15,20 +15,23 @@ def GetDbLines(DBase,request):
 			if not j is None:
 				tmp.append(QtCore.QString(str(j).decode(DBase.dbCodec)))
 			else:
-				tmp.append('')
+				tmp.append(QtCore.QString(''))
 		clst.append(tmp)
 	return clst
 
 def GetDbText(DBase,request):
 	clst=[]
 	res=DBase.RechercheSQL_liste(request)
+# 	TODO:
+# 	if not type(res)==tuple:
+# 		return None
 	if len(res)==0:
 		return([])
 	for i in res[0]:
 		if not i is None:
 			clst.append(QtCore.QString(str(i).decode(DBase.dbCodec)))
 		else:
-			clst.append('')
+			clst.append(QtCore.QString(''))
 	return clst
 
 def GetDbidText(DBase,request,Tous=False):
@@ -37,23 +40,9 @@ def GetDbidText(DBase,request,Tous=False):
 		clst.append([0,QtCore.QString("Tous")])
 	res=DBase.RechercheSQL_liste(request)
 	for i in res:
-		txt=QtCore.QString(i[1].decode(DBase.dbCodec))	#TODO add in QListString?
+		txt=QtCore.QString(i[1].decode(DBase.dbCodec))
 		clst.append([i[0],txt])
 	return clst
-
-def DbAdd(DBase,table,valeurs):
-	valeurs=','.join(valeurs)
-	#print "INSERT INTO %s VALUES (%s)"%(table,valeurs)
-	DBase.ExecuteSQL("INSERT INTO %s VALUES (%s)"%(table,valeurs))
-	
-#	Mytable=Tables.Table(DBase, table,  auto=True)
-	#Mytable.SetChamps(True,  values[0],  values[1], values[2],values[3],values[4])
-	
-def DbUpdate(DBase,table,champs,valeurs):
-	idtable='='.join(zip(champs,valeurs)[0])
-	sets=','.join(['='.join(i) for i in zip(champs,valeurs)[1:]])
-	#print "UPDATE %s SET %s WHERE %s"%(table,sets,idtable)
-	DBase.ExecuteSQL("UPDATE %s SET %s WHERE %s"%(table,sets,idtable))
 		
 	
 def ValideDate(date,formatin='dmyy'):

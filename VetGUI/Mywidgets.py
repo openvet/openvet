@@ -30,7 +30,17 @@ class MyComboBox(QtGui.QComboBox):
 			idata=value[0]
 		else:
 			idata=None
-			print 'Erreur d\'index' # TODO
+			print 'Erreur d\'index: %s,\" %s\"'%(self.objectName(),self.currentText())
 		return idata
 
-
+class MyTableWidget(QtGui.QTableWidget):
+	def __init__(self,parent=None):
+		super(MyTableWidget,self).__init__(parent)
+		
+	def keyReleaseEvent(self,event):
+		if event.key()==QtCore.Qt.Key_Return or event.key()==QtCore.Qt.Key_Enter:
+			#print "enter"
+			self.emit(QtCore.SIGNAL("OnEnter"))
+		else:
+			QtGui.QTableWidget.keyPressEvent(self,event)
+	#TODO menu right-click
