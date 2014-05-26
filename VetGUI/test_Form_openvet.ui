@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>756</width>
+    <height>822</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Open Vet</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../../../../../../.designer/images/icone.png</normaloff>../../../../../../.designer/images/icone.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <widget class="QWidget" name="horizontalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>370</y>
+      <width>501</width>
+      <height>301</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0">
+     <property name="spacing">
+      <number>10</number>
+     </property>
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMaximumSize</enum>
+     </property>
+     <property name="margin">
+      <number>10</number>
+     </property>
+     <item alignment="Qt::AlignHCenter|Qt::AlignTop">
+      <widget class="QPushButton" name="pushButton_3">
+       <property name="text">
+        <string>PushButton</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QTabWidget" name="tabWidget">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="currentIndex">
+        <number>1</number>
+       </property>
+       <widget class="QWidget" name="tab">
+        <attribute name="title">
+         <string>Tab 1</string>
+        </attribute>
+       </widget>
+       <widget class="QWidget" name="tab_2">
+        <attribute name="title">
+         <string>Tab 2</string>
+        </attribute>
+       </widget>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="text">
+        <string>PushButton</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>60</y>
+      <width>221</width>
+      <height>221</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QPushButton" name="pushButton_2">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>90</y>
+       <width>99</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string>PushButton</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>520</x>
+      <y>270</y>
+      <width>160</width>
+      <height>80</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QPushButton" name="pushButton_4">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>PushButton</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="gridLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>10</y>
+      <width>231</width>
+      <height>251</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
+      <widget class="QPushButton" name="pushButton_5">
+       <property name="text">
+        <string>PushButton</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QPushButton" name="pushButton_6">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>PushButton</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QRadioButton" name="radioButton">
+       <property name="text">
+        <string>RadioButton</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QToolButton" name="toolButton">
+       <property name="text">
+        <string>...</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>756</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuDossiers_M_dicaux">
+    <property name="title">
+     <string>Dossiers Médicaux</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuComptabilit">
+    <property name="title">
+     <string>Comptabilité</string>
+    </property>
+    <widget class="QMenu" name="menuD_clarations">
+     <property name="title">
+      <string>Déclarations</string>
+     </property>
+     <addaction name="actionTVA"/>
+     <addaction name="action2035"/>
+    </widget>
+    <addaction name="action_Recettes"/>
+    <addaction name="actionD_penses"/>
+    <addaction name="action_Banque"/>
+    <addaction name="actionRecoupement_bancaire"/>
+    <addaction name="menuD_clarations"/>
+   </widget>
+   <widget class="QMenu" name="menuConfiguration">
+    <property name="title">
+     <string>Paramètres</string>
+    </property>
+    <widget class="QMenu" name="menuBase_de_donn_es">
+     <property name="title">
+      <string>Base de données</string>
+     </property>
+     <addaction name="actionBackup"/>
+     <addaction name="actionRestore"/>
+     <addaction name="actionImport"/>
+    </widget>
+    <addaction name="actionBureau"/>
+    <addaction name="action_Facturation"/>
+    <addaction name="action_M_dicaments"/>
+    <addaction name="action_Pathologies"/>
+    <addaction name="separator"/>
+    <addaction name="menuBase_de_donn_es"/>
+    <addaction name="actionR_seau_S_curit"/>
+   </widget>
+   <widget class="QMenu" name="menuQuitter">
+    <property name="title">
+     <string>Quitter</string>
+    </property>
+    <addaction name="actionQuitter"/>
+   </widget>
+   <widget class="QMenu" name="menuStock">
+    <property name="title">
+     <string>Stock</string>
+    </property>
+    <addaction name="actionCommandes"/>
+    <addaction name="actionAnalyse"/>
+   </widget>
+   <widget class="QMenu" name="menuStatistiques">
+    <property name="title">
+     <string>Statistiques</string>
+    </property>
+   </widget>
+   <addaction name="menuDossiers_M_dicaux"/>
+   <addaction name="menuStock"/>
+   <addaction name="menuComptabilit"/>
+   <addaction name="menuStatistiques"/>
+   <addaction name="menuConfiguration"/>
+   <addaction name="menuQuitter"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="action_Recettes">
+   <property name="text">
+    <string>&amp;Recettes</string>
+   </property>
+  </action>
+  <action name="actionD_penses">
+   <property name="text">
+    <string>&amp;Dépenses</string>
+   </property>
+  </action>
+  <action name="action_Banque">
+   <property name="text">
+    <string>&amp;Banque</string>
+   </property>
+  </action>
+  <action name="actionRecoupement_bancaire">
+   <property name="text">
+    <string>Recoupement bancaire</string>
+   </property>
+  </action>
+  <action name="actionTVA">
+   <property name="text">
+    <string>TVA</string>
+   </property>
+  </action>
+  <action name="action2035">
+   <property name="text">
+    <string>2035</string>
+   </property>
+  </action>
+  <action name="actionCommandes">
+   <property name="text">
+    <string>&amp;Commandes</string>
+   </property>
+  </action>
+  <action name="actionAnalyse">
+   <property name="text">
+    <string>Visualisation</string>
+   </property>
+  </action>
+  <action name="action_Facturation">
+   <property name="text">
+    <string>&amp;Facturation</string>
+   </property>
+  </action>
+  <action name="actionBureau">
+   <property name="text">
+    <string>Bureau</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+B</string>
+   </property>
+  </action>
+  <action name="action_M_dicaments">
+   <property name="text">
+    <string>&amp;Médicaments</string>
+   </property>
+  </action>
+  <action name="action_Pathologies">
+   <property name="text">
+    <string>&amp;Pathologies</string>
+   </property>
+  </action>
+  <action name="actionBackup">
+   <property name="text">
+    <string>Backup</string>
+   </property>
+  </action>
+  <action name="actionRestore">
+   <property name="text">
+    <string>Restore</string>
+   </property>
+  </action>
+  <action name="actionImport">
+   <property name="text">
+    <string>Import</string>
+   </property>
+  </action>
+  <action name="actionR_seau_S_curit">
+   <property name="text">
+    <string>Réseau/Sécurité</string>
+   </property>
+  </action>
+  <action name="actionQuitter">
+   <property name="text">
+    <string>Quitter</string>
+   </property>
+   <property name="toolTip">
+    <string>Quitter l'application</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>
