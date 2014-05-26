@@ -2,7 +2,7 @@
 
 import os
 
-#TEST GIT
+#TEST GIT MODIF
 
 DEBUG=True
 DEBUG_AFFICHE_MESSAGE_CONSOLE=True  #TODO: a enlever lorsuqe les msg d erreurs seront geres par gestion_erreurs.py
@@ -10,7 +10,7 @@ DEBUG_AFFICHE_MESSAGE_CONSOLE=True  #TODO: a enlever lorsuqe les msg d erreurs s
 
 
 
-#user='root'#pour ouvrir la base   /TEST2
+#user='root'#pour ouvrir la base  
 
 repertoire='/home/francois/Programmes/Kiwi/OpenVet/OpenVet/'
 WorkingPath='/media/Datas/Kiwi/OpenVet'
