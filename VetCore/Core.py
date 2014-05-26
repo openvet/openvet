@@ -4,7 +4,7 @@ import re
 from PyQt4 import QtCore
 import Tables
 
-def GetDbLines(DBase,request):	#TODO: Move in Table
+def GetDbLines(DBase,request):
 	clst=[]
 	res=DBase.RechercheSQL_liste(request)
 	if len(res)==0:
@@ -22,9 +22,6 @@ def GetDbLines(DBase,request):	#TODO: Move in Table
 def GetDbText(DBase,request):
 	clst=[]
 	res=DBase.RechercheSQL_liste(request)
-# 	TODO:
-# 	if not type(res)==tuple:
-# 		return None
 	if len(res)==0:
 		return([])
 	for i in res[0]:

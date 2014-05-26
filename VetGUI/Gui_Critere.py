@@ -11,100 +11,134 @@ class FormCritere(QtGui.QDialog, Ui_DialogCritere):
     def __init__(self, parent=None):
         QtGui.QDialog.__init__(self, parent)
         self.setupUi(self)
-        self.MyCritere=parent.MyCritere #ConsultationCriteres dans MyConsult
-        self.idCritereSeuil=QtCore.QString(u'0')
+        self.DBase=parent.MyConsult.DBase
+        self.MyCritere=Critere(self.DBase)
+        if not parent.MyConsult.idCritere is None:
+            self.MyCritere.Get(parent.MyConsult.idCritere)
         self.SeuilChanged=False
-        self.Grade=None
-#        ids=[parent.MyCritere.idCritere,parent.MyCritere.idExamen,parent.MyCritere.idPathologie]
+        self.Nbseuils=0
+        self.PreviousIndexCritere=0
         self.label_Pathologie.setText(QtCore.QString(u'Pathologie: %s'%parent.comboBox_PathologieSelection.currentText()))
         self.label_Examen.setText(QtCore.QString(u'Examen    : %s'%parent.comboBox_Examen.currentText()))
         self.comboBox_Critere.Fill(parent.MyPathologie.GetCriteres(self.MyCritere.Examen_idExamen))
-        self.comboBox_Unite.Fill(self.MyCritere.GetUnite())
+        self.comboBox_Unite.Fill(self.MyCritere.GetUnite())     
         self.tableWidget_Seuil.clear()
-        self.tableWidget_Seuil.setHorizontalHeaderLabels(QtCore.QStringList()<<u'Seuil Inférieur'<<u'Seuil Supérieur'<<u'Score')
-        for i,width in zip(range(3),[120,120,60]):
+        #TODO: colonne Remarque
+        self.tableWidget_Seuil.setHorizontalHeaderLabels(QtCore.QStringList()<<u'Grade'<<u'Seuil Inférieur'<<u'Seuil Supérieur'<<u'Score')
+        for i,width in zip(range(4),[60,120,120,120]):
             self.tableWidget_Seuil.setColumnWidth(i,width)
         self.tableWidget_Seuil.setRowHeight(0,24)   
         #Connect actions
         self.comboBox_Critere.activated.connect(self.OnCritere)
         self.comboBox_Unite.activated.connect(self.OnUnite)
-        self.lineEdit_NbGrades.textChanged.connect(self.OnNbGrades)
-        self.comboBox_Grade.currentIndexChanged.connect(self.OnGrade)
+        self.spinBox_NbGrade.editingFinished.connect(self.OnNbGrades)
         self.connect(self.tableWidget_Seuil,QtCore.SIGNAL("OnEnter"),self.OnSeuilEnter)
-        #init widgets
         self.comboBox_Critere.setCurrentIndex(self.comboBox_Critere.findData(self.MyCritere.idCritere))
+        self.toolButton_NewCritere.clicked.connect(self.OnNewCritere)
+        self.toolButton_DeleteCritere.clicked.connect(self.OnDeleteCritere)
         self.pushButton_Save.clicked.connect(self.OnValid)
         self.pushButton_Cancel.clicked.connect(self.OnClose)
+        #init widgets
         self.IsInit=True
         self.OnCritere()
-
-    def FillGrade(self,Nb):
-        if not Nb.toInt()[1]:
-            return
-        z=QtCore.QStringList()
-        for i in range(Nb.toInt()[0]+1):
-            z<<(QtCore.QString(str(i)))
-        self.comboBox_Grade.clear()
-        self.comboBox_Grade.addItems(z)
         
     def OnCritere(self):
         if not self.IsInit:
-            self.OnsaveCritere()
+            self.SaveCritere()
+        self.PreviousIndexCritere=self.comboBox_Critere.currentIndex()
         self.IsInit=False
         self.MyCritere.Critere=self.comboBox_Critere.currentText()
-        self.MyCritere.GetCritere(self.comboBox_Critere.GetData())
-        self.comboBox_Unite.setCurrentIndex(self.comboBox_Unite.findText(self.MyCritere.Unite_idUnite))
-        self.lineEdit_NbGrades.setText(self.MyCritere.NbGrades)
-        self.comboBox_Grade.setCurrentIndex=0
+        self.MyCritere.Get(self.comboBox_Critere.GetData())
+        if self.MyCritere.Unite_idUnite.toInt()[1]:
+            self.comboBox_Unite.setCurrentIndex(self.comboBox_Unite.findData(self.MyCritere.Unite_idUnite.toInt()[0]))
+        self.spinBox_NbGrade.setValue(self.MyCritere.NbGrades.toInt()[0])
         self.plainTextEdit_Remarque.setPlainText(self.MyCritere.Remarque)
+        self.Nbseuils=len(self.MyCritere.CritereGrades)
+        self.tableWidget_Seuil.clearContents()
+        self.tableWidget_Seuil.setRowCount=self.Nbseuils
+        for i,n in zip(self.MyCritere.CritereGrades,range(self.Nbseuils)):
+            for j,valeur in zip(range(4),[i.Grade,i.LimiteInf,i.LimiteSup,i.Score]):
+                self.tableWidget_Seuil.setItem(n,j,QtGui.QTableWidgetItem(valeur))
+            self.tableWidget_Seuil.item(n,0).setData(QtCore.Qt.UserRole,i.idCritereSeuil)
         
     def OnUnite(self):
         self.MyCritere.Unite_idUnite=self.comboBox_Unite.currentText()
             
     def OnNbGrades(self):
-        if self.lineEdit_NbGrades.text().toInt()[1]:
-            self.FillGrade(self.lineEdit_NbGrades.text())
-            self.MyCritere.NbGrades=self.lineEdit_NbGrades.text()
-         
-    def OnGrade(self):
-        self.OnSaveGrade()
-        self.OnSaveGrade()
-        self.Grade=self.comboBox_Grade.currentText()
-        self.SeuilChanged=False
-        res=self.MyCritere.GetCritereSeuil(self.comboBox_Grade.currentText().toInt()[0])
-        if len(res)==0:
-            self.idCritereSeuil=QtCore.QString(u'0')
-            for i in range(3):
-                self.tableWidget_Seuil.setItem(0,i,QtGui.QTableWidgetItem(u''))
-        else:
-            self.idCritereSeuil=res[0]
-            for i,valeur in zip(range(3),res[1:]):
-                self.tableWidget_Seuil.setItem(0,i,QtGui.QTableWidgetItem(valeur))
-            
+        self.Nbseuils=self.spinBox_NbGrade.text().toInt()[0]
+        delta=self.Nbseuils-self.tableWidget_Seuil.rowCount()
+        for i in range(abs(delta)):
+            if delta>0:
+                self.tableWidget_Seuil.insertRow(self.tableWidget_Seuil.rowCount()-1)
+            else:
+                if self.tableWidget_Seuil.rowCount()>self.Nbseuils:
+                    self.tableWidget_Seuil.removeRow(self.tableWidget_Seuil.rowCount()-1)
+                else:
+                    QtGui.QMessageBox.warning(self,u"Alerte OpenVet",u'Vous devez supprimer les grades dans le tableau en mettant le grade à \"\", puis en pressant Entrée.', QtGui.QMessageBox.Ok)
+    
+    def OnNewCritere(self):
+        self.SaveCritere()
+        self.spinBox_NbGrade.setValue(0)
+        self.Nbseuils=0
+        self.plainTextEdit_Remarque.setPlainText('')
+        self.comboBox_Unite.setCurrentIndex(0)
+        self.tableWidget_Seuil.clearContents()
+        self.comboBox_Critere.addItem('', 0)
+        self.comboBox_Critere.setCurrentIndex(self.comboBox_Critere.count()-1)
+        self.MyCritere.idCritere=0
+        self.MyCritere.CritereGrades=[] 
+        self.IsInit=True
+    
+    def OnDeleteCritere(self):
+        n=self.MyCritere.IsUsed()
+        msg=''
+        if n:
+            msg=u'Ce critère est référencé dans %i consultation(s).\n'%n
+        msgBox=QtGui.QMessageBox.warning(self,u"Alerte OpenVet",msg+'Voulez-vous Vraiment effacer cette pathologie', QtGui.QMessageBox.Yes,QtGui.QMessageBox.No | QtGui.QMessageBox.Default)
+        if msgBox==QtGui.QMessageBox.Yes:
+            if self.MyCritere.idCritere>0:
+                self.MyCritere.idCritere*=-1
+                self.SaveCritere()
+            self.comboBox_Critere.removeItem(self.comboBox_Critere.currentIndex())
+            self.tableWidget_Seuil.clearContents()
+            self.IsInit=True
+                         
     def OnSeuilEnter(self):
         self.SeuilChanged=True
+        item=self.tableWidget_Seuil.currentItem()
+        index=self.MyCritere.GetIndexGrade(item.data(QtCore.Qt.UserRole))
+        if item.column()==0:
+            if item.text()=='':
+                if QtGui.QMessageBox.question(self,"OpenVet",QtCore.QString(u'Confirmation avant l\'effacement de ce grade?'),QtGui.QMessageBox.Yes|QtGui.QMessageBox.Cancel)==QtGui.QMessageBox.Yes:
+                    self.MyCritere.CritereGrades[index].idCritereSeuil*=-1
+                    self.tableWidget_Seuil.removeRow(item.row())
+                    self.Nbseuils-=1
+                    self.spinBox_NbGrade.setValue(self.Nbseuils)
         
-    def OnsaveCritere(self): 
+    def SaveCritere(self): 
+        #attributes: idCritere,Examen_idExamen,Critere,Unite_idUnite,NbGrades,Remarque
+        if self.MyCritere.idCritere==0:
+            self.MyCritere.Critere=self.comboBox_Critere.currentText()
         self.MyCritere.Remarque=self.plainTextEdit_Remarque.toPlainText()
-        if not self.lineEdit_NbGrades.text().toInt()[1]:
-            self.lineEdit_NbGrades.setText(QtCore.QString(u''))
-        self.MyCritere.SaveCritere()
-        
-    def OnSaveGrade(self):
-        if self.SeuilChanged==False:
-            return
-        data=[self.idCritereSeuil,self.Grade]
-        for i in range(3):
-            if self.tableWidget_Seuil.item(0,i) is None:
-                return
-            else:
-                data.append(self.tableWidget_Seuil.item(0,i).text())
-        self.MyCritere.SaveGrade(data)
+        self.MyCritere.NbGrades=QtCore.QString('%i'%self.Nbseuils)
+        self.MyCritere.Unite_idUnite=QtCore.QString('%i'%self.comboBox_Unite.GetData())
+#       self.MyCritere.NbGrades=self.spinBox_NbGrade_NbGrades.text().toInt()[1]
+        #attributes: idCritereSeuil,Critere_idCritere,LimiteInf,LimiteSup,Grade,Score
+        for i in range(self.Nbseuils):
+            data=[self.tableWidget_Seuil.item(i,0).data(QtCore.Qt.UserRole).toInt()[0]]
+            for j in [1,2,0,3]:
+                if self.tableWidget_Seuil.item(i,j) is None:
+                    data.append(QtCore.QString(''))
+                else:
+                    data.append(self.tableWidget_Seuil.item(i,j).text())
+            self.MyCritere.UpdateGrade(data)
+        self.MyCritere.Print()
+        idins=self.MyCritere.Save()
+        self.comboBox_Critere.setItemData(self.PreviousIndexCritere,QtCore.QVariant(idins),QtCore.Qt.UserRole)
+        self.MyCritere.idCritere=idins
     
     def OnValid(self):
-        self.MyCritere.Print()
-        #self.OnsaveCritere()
-        #TODO: OnSaveGrade
+        self.SaveCritere()
         self.close()
         
     def OnClose(self):

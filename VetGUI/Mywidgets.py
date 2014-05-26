@@ -39,7 +39,6 @@ class MyTableWidget(QtGui.QTableWidget):
 		
 	def keyReleaseEvent(self,event):
 		if event.key()==QtCore.Qt.Key_Return or event.key()==QtCore.Qt.Key_Enter:
-			#print "enter"
 			self.emit(QtCore.SIGNAL("OnEnter"))
 		else:
 			QtGui.QTableWidget.keyPressEvent(self,event)

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-4.6.dtd">
-<!-- eric4 project file for project francois1903 -->
-<!-- Saved: 2014-03-19, 17:31:51 -->
+<!-- eric4 project file for project openvet3103F -->
+<!-- Saved: 2014-03-31, 11:37:47 -->
 <!-- Copyright (C) 2014 ,  -->
 <Project version="4.6">
-  <Language>en</Language>
+  <Language></Language>
   <ProgLanguage mixed="0">Python</ProgLanguage>
   <ProjectType>Qt4</ProjectType>
   <Description></Description>
@@ -13,21 +13,19 @@
   <Email></Email>
   <Sources>
     <Source>VetCore/Core_Pathologie.py</Source>
-    <Source>VetCore/__init__.py</Source>
-    <Source>VetCore/Core_Individus.py</Source>
     <Source>VetCore/Core_Critere.py</Source>
     <Source>VetCore/Core_Consultation.py</Source>
     <Source>VetCore/Tables.py</Source>
     <Source>VetCore/config.py</Source>
     <Source>VetCore/Core.py</Source>
-    <Source>VetCore/myrequest.py</Source>
-    <Source>Mywidgets.py</Source>
+    <Source>VetGUI/ui_Form_consultation_old.py</Source>
+    <Source>VetGUI/ui_Form_openvet.py</Source>
     <Source>VetGUI/Gui_Consultation.py</Source>
     <Source>VetGUI/ui_Form_pathologie.py</Source>
     <Source>VetGUI/TestGui.py</Source>
-    <Source>VetGUI/consult4_02.py</Source>
     <Source>VetGUI/Gui_Pathologie.py</Source>
     <Source>VetGUI/mkpyqt.py</Source>
+    <Source>VetGUI/Gui_OpenVet.py</Source>
     <Source>VetGUI/Mywidgets.py</Source>
     <Source>VetGUI/ui_Form_consultation.py</Source>
     <Source>VetGUI/ui_Form_animal.py</Source>
@@ -44,6 +42,8 @@
     <Form>VetGUI/Form_critere.ui</Form>
     <Form>VetGUI/Form_pathologie.ui</Form>
     <Form>VetGUI/Form_consultation.ui</Form>
+    <Form>VetGUI/Form_openvet.ui</Form>
+    <Form>VetGUI/Form_consultation_old.ui</Form>
     <Form>VetGUI/Form_DialogPathologie.ui</Form>
   </Forms>
   <Translations>

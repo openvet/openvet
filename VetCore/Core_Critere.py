@@ -32,8 +32,10 @@ class Critere:                  #TODO: dériver d'une classe DataBase ou class a
         self.Pathologie_idPathologie=res[6].toInt()[0]
         #Get Grades
         res=self.DBase.GetDbLines("CALL GetCritereGrades(%i)"%idCritere)
+        self.CritereGrades=[]
         for i in res:
-            print i
+#            print i
+            i[0]=i[0].toInt()[0]
             tmp=CritereGrade(self)
             tmp.Set(i)
             self.CritereGrades.append(tmp)
@@ -47,23 +49,49 @@ class Critere:                  #TODO: dériver d'une classe DataBase ou class a
     def GetUnite(self):
         return self.DBase.GetDbidText('SELECT * FROM Unite ORDER By Unite')
     
+    def GetIndexGrade(self,idCritereSeuil):
+        for i,j in zip(self.CritereGrades,range(len(self.CritereGrades))):
+            if i.idCritereSeuil==idCritereSeuil:
+                return j
+    
+    def IsUsed(self):
+        return len(self.DBase.GetDbLines('SELECT PathologieRef_idPathologieRef FROM ConsultationCritere WHERE Critere_idCritere=%i'%self.idCritere))
+              
+    def UpdateGrade(self,data):
+        if data[0]>0:
+            index=self.CritereGrades[self.GetIndexGrade(data[0])]
+            index.Critere_idCritere=self.idCritere
+            index.LimiteInf=data[1]
+            index.LimiteSup=data[2]
+            index.Grade=data[3]
+            index.Score=data[4]
+        else:
+            Ndata=[data[0],self.idCritere]
+            Ndata.extend(data[1:])
+            tmp=CritereGrade(self)
+            tmp.Set(Ndata)
+            self.CritereGrades.append(tmp)
+              
     def Save(self):
         err=[]
         values=[]
-        values.append('%i'%self.idCritere)
+        ToDelete=False
+        if self.idCritere<0:
+            ToDelete=True
+        values.append('%i'%abs(self.idCritere))
         values.append('%i'%self.Examen_idExamen)
         if self.Critere.size()<=60:
-            values.append('\"%s\"'%self.Critere.toUtf8().data())
+            values.append(u'\"%s\"'%self.Critere)
         else:
             err.append(u'Nom du Critère trop long')
         if self.Unite_idUnite.isEmpty():
             values.append('NULL')
         else:
-            res=self.DBase.GetDbidText('SELECT * From Unite WHERE Unite=\"%s\"'%self.Unite_idUnite)
+            res=self.DBase.GetDbidText('SELECT * From Unite WHERE idUnite=%i'%self.Unite_idUnite.toInt()[0])
             if len(res):
                 values.append('%i'%res[0][0])
             else:
-                err.append('Unité absente de la table Unite')
+                err.append(u'Unité absente de la table Unite')
         if self.NbGrades.toInt()[1]:
             values.append('%i'%self.NbGrades.toInt()[0])
         else:
@@ -76,24 +104,32 @@ class Critere:                  #TODO: dériver d'une classe DataBase ou class a
         else:
             values.append('NULL')
         if len(err)==0:
+            if ToDelete:
+                self.DBase.DbDelete(self.Table,[self.TableFields[0],values[0]])
+                return
             if self.idCritere==0:
                 #fields=['idCritere','Examen_idExamen','Critere','Unite_idUnite','NbGrades','Remarque']
-                self.DBase.DbAddLinked([self.Table,'CritereRef'], [values,['0','%i'%self.Pathologie_idPathologie,'(SELECT LAST_INSERT_ID())']])
+                self.idCritere=self.DBase.DbAddLinked([self.Table,'CritereRef'], [values,['0','%i'%self.Pathologie_idPathologie,'(SELECT LAST_INSERT_ID())']])
             else:
                 Nvalues=[values[0]]
                 Nvalues.extend(values[2:])
                 fields=[self.TableFields[0]]
                 fields.extend(self.TableFields[2:])
-                #['idCritere','Critere','Unite_idUnite','NbGrades','Remarque']
+                #'idCritere','Critere','Unite_idUnite','NbGrades','Remarque'
                 self.DBase.DbUpdate(self.Table,fields,Nvalues)
+            for i in self.CritereGrades:
+                i.Critere_idCritere=self.idCritere
+                i.Save()
+            return self.idCritere   
         else:
             msg='Erreur Save Critere :%s'%','.join(err)
             print msg
             return msg
-        
-    def SaveGrades(self):
-        for i in self.CritereGrades:
-            i.Save()
+                
+#     def SaveGrades(self):
+#         for i in self.CritereGrades:
+#             i.Critere_idCritere=self.idCritere
+#             i.Save()
 
 class CritereGrade:
     def __init__(self, parent=None):
@@ -117,17 +153,24 @@ class CritereGrade:
         self.LimiteInf=res[1]
         self.LimiteSup=res[2]
         self.Grade=QtCore.QString('%i'%grade)
-        self.Score=res[3]
+        self.Score=QtCore.QString(res[3])
+#        self.Remarque=QtCore.QString(res[4])    TODO add Remarque in fields of GetSeuil
         return res
     
     def Set(self,data):
         for i,value in zip(self.TableFields,data):
             self.__dict__.update({i:value})
-            
+               
+    def CheckDoublon(self):
+        return self.DBase.RechercheSQL_id('CALL CheckDoublonCritere(%i,%i)'%(self.Critere_idCritere,self.Grade.toInt()[0]))>0
+                
     def Save(self):
         err=[]
         values=[]
-        values.append('%i'%self.idCritereSeuil)
+        ToDelete=False
+        if self.idCritereSeuil<0:
+            ToDelete=True
+        values.append('%i'%abs(self.idCritereSeuil))
         values.append('%i'%self.Critere_idCritere)
         if self.LimiteInf.toFloat()[1]:
             values.append('%.2f'%self.LimiteInf.toFloat()[0])
@@ -143,25 +186,35 @@ class CritereGrade:
             values.append('%i'%self.Grade.toInt()[0])
         else:
             err.append('Erreur de Grade')
-        if self.Score.toInt()[1]:
-            values.append('%i'%self.Score.toInt()[0])
-        else:
+        if self.Score.isEmpty():
             values.append('NULL')
-        if len(err)>0:
-            print err
-            return
-        if self.idCritereSeuil==0:
-            #idCritereSeuil,Critere_idCritere,LimiteInf,LimiteSup,Grade,Score
-            self.DBase.DbAdd('CritereSeuil',values)
         else:
-
-            Nvalues=[]
-            fields=[]
-            for i in [0,2,3,5]:
-                Nvalues.append(values[i])
-                fields.append(self.TableFields[i])
-            #'idCritereSeuil','LimiteInf','LimiteSup','Score'
-            self.DBase.DbUpdate('CritereSeuil',fields,Nvalues)  
+            values.append('\"%s\"'%self.Score)
+        if self.Score.size()>45:
+            err.append('Erreur de Score trop long')
+        # for field Remarque
+        values.append('NULL')
+        if len(err)==0:
+            if ToDelete:
+                self.DBase.DbDelete(self.Table,[self.TableFields[0],values[0]])
+                return
+            if self.idCritereSeuil==0:
+                #idCritereSeuil,Critere_idCritere,LimiteInf,LimiteSup,Grade,Score,Remarque
+                if not self.CheckDoublon():
+                    print self.DBase.DbAdd('CritereSeuil',values)
+            else:
+    
+                Nvalues=[]
+                fields=[]
+                for i in [0,2,3,5]:
+                    Nvalues.append(values[i])
+                    fields.append(self.TableFields[i])
+                #'idCritereSeuil','LimiteInf','LimiteSup','Score'
+                self.DBase.DbUpdate('CritereSeuil',fields,Nvalues)  
+        else:
+            msg='Erreur Save CritereSeuil :%s'%','.join(err)
+            print msg
+            return msg
 
 class CriteresConsultation:
     def __init__(self,idPathologie, parent=None):   #parent is Consultation
@@ -177,10 +230,11 @@ class CriteresConsultation:
         self.idDomainePathologie=res[0].toInt()[0]
         self.DomainePathologie=res[1]
         self.Pathologie_NomReference=res[2]
+        self.idPathologieRef=0
         if self.Consultation_idConsultation > 0:
-            self.idPathologieRef=self.DBase.RechercheSQL_id("CALL GetPathologieRef(%i,%i)"%(self.Consultation_idConsultation,self.Pathologie_idPathologie))
-        else:
-            self.idPathologieRef=0
+            res=self.DBase.RechercheSQL_id("CALL GetPathologieRef(%i,%i)"%(self.Consultation_idConsultation,self.Pathologie_idPathologie))
+            if not res is None:
+                self.idPathologieRef=res
         self.Criteres=[]
         
     def Print(self):
@@ -192,6 +246,7 @@ class CriteresConsultation:
                
     def Get(self):
         res=self.DBase.GetDbLines("CALL GetCriteresConsult(%i,%i)"%(self.Consultation_idConsultation,self.Pathologie_idPathologie))
+        self.Criteres=[]
         for i in res:
             tmp=CritereConsultation(self)
             data=[i[0].toInt()[0],i[1].toInt()[0],self.idPathologieRef]
@@ -216,11 +271,9 @@ class CriteresConsultation:
         ToDelete=False
         if not idConsultation is None:
             self.Consultation_idConsultation=idConsultation
-        if self.idPathologieRef>=0:
-            values.append('%i'%self.idPathologieRef)
-        else:
-            values.append('%i'%abs(self.idPathologieRef))
+        if self.idPathologieRef<0:
             ToDelete=True
+        values.append('%i'%abs(self.idPathologieRef))           
         if self.Consultation_idConsultation>0:
             values.append('%i'%self.Consultation_idConsultation)
         else:
@@ -229,12 +282,15 @@ class CriteresConsultation:
             values.append('%i'%self.Pathologie_idPathologie)
         else:
             err.append('idPathologie')
+        values.append('NULL')
         if ToDelete:
             self.DBase.DbDelete(self.Table,[self.TableFields[0],values[0]])
             return
-        if len(err)==0:  
-            if self.idPathologieRef==0:
-                self.idPathologieRef=self.DBase.DbAdd( self.Table, values)
+        if len(err)==0:
+            if ToDelete:
+                self.DBase.DbDelete(self.Table,[self.TableFields[0],values[0]])
+            elif self.idPathologieRef==0:
+                self.idPathologieRef=self.DBase.DbAdd( self.Table, values,True)
             else:
                 fields=['idPathologieRef','Pathologie_idPathologie']
                 Nvalues=[values[0],values[2]]
@@ -249,12 +305,11 @@ class CriteresConsultation:
     
     def New(self,idCritere):  #old GetNewCritere
         res=self.DBase.GetDbText("CALL GetNewConsultationCritere(%i)"%idCritere)
-        tmp=CritereConsultation(self)
-        data=[0,idCritere,self.idPathologieRef]
-        data.extend([QtCore.QString('')]*3)
-        tmp.Set(data)
-        tmp.Set(data)
-        self.Criteres.append(tmp)
+#         tmp=CritereConsultation(self)
+#         data=[0,idCritere,self.idPathologieRef]
+#         data.extend([QtCore.QString('')]*3)
+#         tmp.Set(data)
+#         self.Criteres.append(tmp)
         return res
 
 class CritereConsultation:
@@ -285,14 +340,23 @@ class CritereConsultation:
         self.Grade=res[5]
         return res
     
-    def Set(self,data,valeur=''):
+    def Set(self,data):
         for i,value in zip(self.TableFields,data):
             self.__dict__.update({i:value})
+        
+    def SetValues(self,valeur,grade):
         self.Valeur=valeur
-    
+        self.Grade=grade
+        if self.Valeur.toFloat()[1]:
+            self.CritereQuantitatif=self.Valeur
+            self.CritereQualitatif=QtCore.QString('')
+        else:
+            self.CritereQuantitatif=QtCore.QString('')
+            self.CritereQualitatif=self.Valeur
+        
     def GetCritereGrade(self,Valeur):
         self.Valeur=Valeur    
-        res=self.DBase.GetDbText("CALL GetCritereGrade(%i,%f)"%(self.idCritere,Valeur))
+        res=self.DBase.GetDbText("CALL GetCritereGrade(%i,%.2f)"%(self.idCritere,Valeur))
         if len(res)>0:
             self.Grade=res[0]+QtCore.QString('/')+res[1]
         return self.Grade
@@ -316,43 +380,42 @@ class CritereConsultation:
             values.append('%i'%self.PathologieRef_idPathologieRef)
         else:
             err.append('idPathologieRef')
-        if self.Valeur.isEmpty():
-            if self.CritereQuantitatif is None and self.CritereQualitatif is None:
-                err.append('Valeur Nulle')
-            else:
-                if self.CritereQuantitatif.toFloat()[1]:
-                    values.append('%.2f'%self.CritereQuantitatif.toFloat()[0])
-                    values.append('NULL')
-                else:
-                    values.append('NULL')
-                    values.append('\"%s\"'%self.CritereQualitatif)
-        if self.Valeur.size()>20:
-            err.append('Critere Qualitatif trop long')     
-        if self.Valeur.toFloat()[1]:
-            values.append('%.2f'%self.Valeur.toFloat()[0])
-            values.append('NULL')
+        if self.CritereQuantitatif.isEmpty() and self.CritereQualitatif.isEmpty():
+            err.append('Valeur Nulle')
         else:
-            values.append('NULL')
-            values.append('\"%s\"'%self.Valeur.toUtf8().data())
+            if self.CritereQuantitatif.toFloat()[1]:
+                values.append('%.2f'%self.CritereQuantitatif.toFloat()[0])
+                values.append('NULL')
+            else:
+                values.append('NULL')
+                if self.CritereQualitatif.size()>20:
+                    err.append('Critere Qualitatif trop long')  
+                else:
+                    values.append('\"%s\"'%self.CritereQualitatif)
+            
         if self.Grade.size()>20:
             err.append('Grade trop long')
         if self.Grade.isEmpty():
             values.append('NULL')
         else:
-            values.append('\"%s\"'%self.Grade.toUtf8().data())
+            values.append('\"%s\"'%self.Grade)
         if len(err)==0:
             if self.idConsultationCritere==0:
                     #idConsultationCritere,Critere_idCritere,PathologieRef_idPathologieRef,CritereQuantitatif,CritereQualitatif,Grade
-                    self.DBase.DbAdd( self.Table, values)
+                    dberr=self.DBase.DbAdd( self.Table, values)
+                    if not dberr is None:
+                        print dberr
+            elif ToDelete:
+                self.DBase.DbDelete(self.Table,[self.TableFields[0],values[0]])
             else:
                 Nvalues=[values[0]]
                 Nvalues.extend(values[3:])
                 fields=[self.TableFields[0]]
                 fields.extend(self.TableFields[3:])
                 #idConsultationCritere,CritereQuantitatif,CritereQualitatif,Grade
-                self.DBase.DbUpdate(self.Table,fields,Nvalues)
-        elif ToDelete:
-            self.DBase.DbDelete(self.Table,[self.TableFields[0],values[0]])
+                dberr=self.DBase.DbUpdate(self.Table,fields,Nvalues)
+                if not dberr is None:
+                    print dberr
         else:
             msg='Erreur Save %s :%s'%(self.Table,','.join(err))
             print msg

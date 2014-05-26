@@ -59,7 +59,7 @@ class DataBase:
             if AFFICHE_CONSOLE :
                 print msg
             return msg
-        if liste is None:
+        if len(liste)==0:
             return None
         else:
             return liste[0][0]
@@ -137,6 +137,7 @@ class DataBase:
         """ requête= uniquement de modification (pas de recherche) \            
         return = nb de lignes modifiees ou msg d'erreur (tester type)"""
         result=''
+        idins=0
         conn = self.Connection() 
         if type(conn)==type('str') : return conn
         try:
@@ -144,6 +145,9 @@ class DataBase:
             conn.begin()
             for i in requetes:
                 cur.execute(i)
+                if idins==0:
+                    cur.execute("SELECT LAST_INSERT_ID()")
+                    idins=cur.fetchall()[0][0]
             conn.commit()
             cur.close()
         except :
@@ -151,7 +155,7 @@ class DataBase:
             result ="Err Database.ExecutSQL Execution "+str(requetes)+" "+str(result)
             result+='\n'+str(sys.exc_info()[1])
             return result           
-        return result
+        return idins
  
     
     def GetFields(self,table):
@@ -172,7 +176,7 @@ class DataBase:
         for table,valeurs in zip(tables,values):
             valeurs=','.join(valeurs)
             requetes.append("INSERT INTO %s VALUES (%s)"%(table,valeurs))
-        print self.ExecuteMultiSQL(requetes)
+        return self.ExecuteMultiSQL(requetes)
         
     def DbUpdate(self,table,champs,valeurs):
         idtable='='.join(zip(champs,valeurs)[0])

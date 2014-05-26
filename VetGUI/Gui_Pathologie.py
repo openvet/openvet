@@ -20,6 +20,7 @@ class FormPathologie(QtGui.QDialog, Ui_DialogPathologie):   #On click button_P
         self.curidExamen=0
         self.curidPathologie=0
         self.curidCritere=0
+        self.indexPathologie=0
         self.ChangedRows=[]
         self.editCritere=None
         #format table
@@ -47,6 +48,7 @@ class FormPathologie(QtGui.QDialog, Ui_DialogPathologie):   #On click button_P
         self.connect(self.tableWidget_Criteres,QtCore.SIGNAL("OnEnter"),self.OnCritereEnter)
         self.comboBox_PathologiePathologie.activated.connect(self.OnPathologie)
         self.comboBox_PathologieSelection.activated.connect(self.OnSelection)
+        self.toolButton_AddDomaine.clicked.connect(self.OnAddDomaine)
         self.toolButton_AddPathologie.clicked.connect(self.OnAddPathologie)
         self.toolButton_DeletePathologie.clicked.connect(self.OnDeletePathologie)
         self.lineEdit_NomReference.returnPressed.connect(self.CheckDoublonPathologie)
@@ -54,7 +56,7 @@ class FormPathologie(QtGui.QDialog, Ui_DialogPathologie):   #On click button_P
         self.toolButton_deleteSelection.clicked.connect(self.OnRemoveSelection)
         self.toolButton_AddCritere.clicked.connect(self.OnEditCritere)
         self.pushButton_SavePathologie.clicked.connect(self.SavePathologie)
-        self.pushButton_Save.clicked.connect(self.SavePathologiesConsultation)
+        self.pushButton_Save.clicked.connect(self.SaveConsultation)
         self.pushButton_Cancel.clicked.connect(self.OnCancel)
         #fill pathologies pour Tous 
         self.OnPathologieDomaine()
@@ -83,6 +85,7 @@ class FormPathologie(QtGui.QDialog, Ui_DialogPathologie):   #On click button_P
                 txt.setData(5,0)
                 txt.setFlags(txt.flags()|QtCore.Qt.ItemIsEditable)
                 self.listWidget_Synonymes.addItem(txt)
+            self.listWidget_Domaines.clear()
             for i in self.MyPathologie.Domaines:
                 txt=QtGui.QListWidgetItem(i.NomDomaine)
                 txt.setData(5,QtCore.QVariant([i.idDomaineRef,i.PathologieDomaine_idPathologieDomaine]))
@@ -105,7 +108,13 @@ class FormPathologie(QtGui.QDialog, Ui_DialogPathologie):   #On click button_P
                 msgBox=QtGui.QMessageBox.warning(self,u"Alerte OpenVet",'Voulez-vous Vraiment effacer ce domaine de pathologie', QtGui.QMessageBox.Yes,QtGui.QMessageBox.No | QtGui.QMessageBox.Default)
                 if msgBox==QtGui.QMessageBox.Yes:
                     item.setHidden(True)
-                                   
+                    
+    def OnAddDomaine(self):
+        #TODO combobox editable pour modification d'orthographe
+        (text,valid)=QtGui.QInputDialog.getText(self,"OpenVet","Entrez le nouveau nom de domaine",QtGui.QLineEdit.Normal,"")
+        if valid and not text.isEmpty():
+            self.MyPathologie.SaveDomaine(text)
+                           
     def OnAddPathologie(self):
         self.MyPathologie.idPathologie=0
         self.lineEdit_NomReference.setText('')
@@ -118,6 +127,7 @@ class FormPathologie(QtGui.QDialog, Ui_DialogPathologie):   #On click button_P
             txt.setFlags(txt.flags()|QtCore.Qt.ItemIsEditable)
             self.listWidget_Synonymes.addItem(txt)
         self.listWidget_Domaines.clear()
+        self.lineEdit_NomReference.setFocus()
         
             
     def CheckDoublonPathologie(self):
@@ -169,9 +179,12 @@ class FormPathologie(QtGui.QDialog, Ui_DialogPathologie):   #On click button_P
             else:
                 self.MyPathologie.AddDomaine([i.data(5).toList()[0],i.data(5).toList()[1],i.text()])
 #        self.MyPathologie.Print()
-        self.MyPathologie.Save()
-        QtGui.QToolTip.showText(QtCore.QPoint(660,100),QtCore.QString(u'Pathologie sauvegardée'), widget=None)
-        self.OnPathologieDomaine()
+        if not self.MyPathologie.CheckDoublon(self.MyPathologie.NomReference):
+            self.MyPathologie.Save()
+            QtGui.QToolTip.showText(QtCore.QPoint(660,100),QtCore.QString(u'Pathologie sauvegardée'), widget=None)
+            self.OnPathologieDomaine()
+        else:
+            QtGui.QToolTip.showText(QtCore.QPoint(660,100),QtCore.QString(u'Doublon : Pathologie non sauvegardé'), widget=None)
         
     def OnAddSelection(self):
         if self.comboBox_PathologieSelection.findData(self.MyPathologie.idPathologie)==-1:
@@ -185,16 +198,19 @@ class FormPathologie(QtGui.QDialog, Ui_DialogPathologie):   #On click button_P
         if self.NbCriteres>0:
             self.SaveCriteresConsultation()
         self.curidPathologie=self.comboBox_PathologieSelection.GetData()
+        self.indexPathologie=self.MyConsult.GetIndexConsultationPathologie(self.curidPathologie)
         if not self.curidPathologie is None:
             self.MyPathologie.Get(self.curidPathologie)
         self.comboBox_Examen.Fill(self.MyPathologie.GetExamens())
+        self.MyConsult.idCritere=self.comboBox_Critere.GetData()
         self.NbCriteres=0
         self.tableWidget_Criteres.clearContents()
-        for i in self.MyConsult.GetConsultationCriteres(self.curidPathologie):
-            self.FillTable(i)
+        res=self.MyConsult.GetConsultationCriteres(self.curidPathologie)
+        for i,index in zip(res,range(len(res))):
+            self.FillTable(i,index)
         self.ChangedRows=[]
             
-    def FillTable(self,ligne):
+    def FillTable(self,ligne,index):
         if len(ligne)==0:
             return
         self.NbCriteres+=1
@@ -203,37 +219,48 @@ class FormPathologie(QtGui.QDialog, Ui_DialogPathologie):   #On click button_P
         for i,align in zip(range(6),[QtCore.Qt.AlignLeft,QtCore.Qt.AlignLeft,QtCore.Qt.AlignRight,QtCore.Qt.AlignRight,QtCore.Qt.AlignCenter,QtCore.Qt.AlignRight]):
             self.tableWidget_Criteres.setItem(self.NbCriteres-1,i,QtGui.QTableWidgetItem(ligne[i+2]))
             self.tableWidget_Criteres.item(self.NbCriteres-1,i).setTextAlignment(align)
-            self.tableWidget_Criteres.item(self.NbCriteres-1,i).setData(QtCore.Qt.UserRole,QtCore.QVariant([ligne[0],ligne[1]]))
+            self.tableWidget_Criteres.item(self.NbCriteres-1,i).setData(QtCore.Qt.UserRole,QtCore.QVariant([ligne[0],ligne[1],index]))
             
     def OnExamen(self):
         if not self.comboBox_Examen.GetData() is None:
             self.curidExamen=self.comboBox_Examen.GetData()
             self.comboBox_Critere.Fill(self.MyPathologie.GetCriteres(self.curidExamen))  
-            self.curidCritere=self.comboBox_Critere.GetData()              
-
+            self.curidCritere=self.comboBox_Critere.GetData() 
+                         
+    def IsNewCritere(self,newid):
+        for i in range(self.NbCriteres):
+            if newid==self.tableWidget_Criteres.item(i,2).data(QtCore.Qt.UserRole).toList()[1].toInt()[0]:
+                return False
+        return True
+        
     def OnCritere(self):
         self.tableWidget_Criteres.sortByColumn(0,QtCore.Qt.AscendingOrder)
-        if not self.comboBox_Critere.GetData() is None:
-            res=self.MyConsult.ConsultationPathologies[self.MyConsult.GetIndexConsultationPathologie(self.curidPathologie)].New(self.comboBox_Critere.GetData())
-            if len(res)>0:
-                self.FillTable([0,res[0],res[1],res[2],'',res[3],res[4],''])
-                self.tableWidget_Criteres.scrollToItem(self.tableWidget_Criteres.item(self.NbCriteres-1,2))
-                self.tableWidget_Criteres.setCurrentCell(self.NbCriteres-1,2)
-                self.tableWidget_Criteres.editItem(self.tableWidget_Criteres.item(self.NbCriteres-1,2))
-                #TODO: set column=2
+        self.MyConsult.idCritere=self.comboBox_Critere.GetData()
+        if self.MyConsult.idCritere is None:
+            return
+        if not self.IsNewCritere(self.MyConsult.idCritere):
+            return
+        res=self.MyConsult.ConsultationPathologies[self.indexPathologie].New(self.MyConsult.idCritere)
+        if len(res)>0:
+            self.FillTable([0,res[0],res[1],res[2],'',res[3],res[4],''],-1)
+            self.tableWidget_Criteres.scrollToItem(self.tableWidget_Criteres.item(self.NbCriteres-1,2))
+            self.tableWidget_Criteres.setCurrentCell(self.NbCriteres-1,2)
+            self.tableWidget_Criteres.editItem(self.tableWidget_Criteres.item(self.NbCriteres-1,2))
 
     def OnCritereEnter(self):
         item=self.tableWidget_Criteres.currentItem()
         try:
             idConsultationCritere=item.data(QtCore.Qt.UserRole).toList()[0].toInt()[0]
             idCritere=item.data(QtCore.Qt.UserRole).toList()[1].toInt()[0]
+            index=item.data(QtCore.Qt.UserRole).toList()[2].toInt()[0]
         except:
             return
         if item.column()==2:
             #remove critere if valeur=''
             if item.text()=='':
                 if QtGui.QMessageBox.question(self,"OpenVet",QtCore.QString(u'Confirmation avant éffacement du critère?'),QtGui.QMessageBox.Yes|QtGui.QMessageBox.Cancel)==QtGui.QMessageBox.Yes:
-                    self.ChangedRows.append(-idConsultationCritere)
+                    if index>=0:
+                        self.MyConsult.ConsultationPathologies[self.indexPathologie].Criteres[index].idConsultationCritere*=-1
                     self.tableWidget_Criteres.removeRow(item.row())
                     self.NbCriteres-=1
                     return
@@ -242,40 +269,38 @@ class FormPathologie(QtGui.QDialog, Ui_DialogPathologie):   #On click button_P
             if not res is None :
                 self.tableWidget_Criteres.setItem(item.row(),5,QtGui.QTableWidgetItem(res))
                 self.tableWidget_Criteres.item(item.row(),5).setTextAlignment(QtCore.Qt.AlignRight)  
-        if idConsultationCritere!=0:
+        if idConsultationCritere>0:
             if not idConsultationCritere in self.ChangedRows:
                 self.ChangedRows.append(idConsultationCritere) 
                 
     def SaveCriteresConsultation(self):
-        #TODO if new pathologie in selection save PathologieRef ->idPathologieRef =>Create CriteresConsultation?
         #attributes: idConsultationCritere,Critere_idCritere,PathologieRef_idPathologieRef,CritereQuantitatif,CritereQualitatif,Grade
         for i in range(self.NbCriteres):
             ids=self.tableWidget_Criteres.item(i,2).data(QtCore.Qt.UserRole).toList()
+            idCritere=ids[1].toInt()[0]
             idConsultationCritere=ids[0].toInt()[0]
+            index=ids[2].toInt()[0]
             valeur=self.tableWidget_Criteres.item(i,2).text()
             grade=self.tableWidget_Criteres.item(i,5).text()
-            if idConsultationCritere<=0:
-                self.MyConsult.SaveCritere(self.MyConsult.GetIndexConsultationPathologie(self.curidPathologie),ids,valeur,grade)
-            if idConsultationCritere in self.ChangedRows:
-                self.MyConsult.SaveCritere(ids,valeur,grade)           
-                self.ChangedRows.remove(idConsultationCritere)
-        for i in self.ChangedRows:
-            if i<0:
-                self.MyConsult.SaveCritere(self.MyConsult.GetIndexConsultationPathologie(self.curidPathologie),[i,0],0,QtCore.QString(''))
-        self.close()   
-               
+            if idConsultationCritere in self.ChangedRows or idConsultationCritere==0:
+                self.MyConsult.UpdateCritere(self.indexPathologie,index,idCritere,valeur,grade)   
+#        self.MyConsult.Print()
+        self.MyConsult.Save()  
+             
     def OnCancel(self):
         self.close()   
           
-    def SavePathologiesConsultation(self):
-        pass       
-   
+    def SaveConsultation(self):
+        #SavePathologie
+        self.SaveCriteresConsultation()
+        self.close()         
 
     def OnEditCritere(self):
-        if self.editCritere is None:
-            self.editCritere = FormCritere(self)
+        #TODO: are pathologie et examen renseignés
+        self.editCritere = FormCritere(self)
         if self.editCritere.exec_():
-            print u'critère édité'
+            print ('critere edité')
+        
     
 # class FormNewPathologie(QtGui.QDialog):
 #     def __init__(self,parent=None):

@@ -6,7 +6,7 @@ from PyQt4 import QtCore
 
 class Pathologie:
     def __init__(self,DBase):
-         #attributes: idPathologie,NomReference,Chronique,DescriptifPublic
+        #attributes: idPathologie,NomReference,Chronique,DescriptifPublic
         self.Table='Pathologie'
         self.DBase=DBase
         self.TableFields=self.DBase.GetFields(self.Table)
@@ -50,6 +50,7 @@ class Pathologie:
         self.DescriptifPublic=res[2]
         self.Synonymes=self.DBase.GetDbidText("SELECT idPathologieSynonyme,Synonyme FROM PathologieSynonyme WHERE Pathologie_idPathologie=%i"%idPathologie)
         res=self.DBase.GetDbLines("CALL GetDomaine_id(%i)"%self.idPathologie)
+        self.Domaines=[]
         for i in res:
             self.AddDomaine(i)     
                                  
@@ -67,7 +68,11 @@ class Pathologie:
                 return
         print 'idDomaineRef non trouvé.'
         return -1
-                               
+    
+    def SaveDomaine(self,domaine):
+        pass
+    #TODO:
+                              
     def GetExamens(self):    
         return self.DBase.GetDbidText("CALL GetExamens(%i)"%self.idPathologie)
     
@@ -80,7 +85,10 @@ class Pathologie:
     #TODO GetTraitements
     
     def CheckDoublon(self,nom):
-        return self.DBase.GetDbidText("CALL CheckDoublonPathologie(\"%s\")"%nom)
+        if len(self.DBase.GetDbidText("CALL CheckDoublonPathologie(\"%s\")"%nom))==0:
+            return False
+        else:
+            return True
     
     def CheckUsed(self):
         res=self.DBase.GetDbText("CALL CheckUsedPathologie(%i)"%self.idPathologie)
@@ -99,7 +107,6 @@ class Pathologie:
             ToDelete=True
         if self.NomReference.size()<=60:
             values.append('\"%s\"'%self.NomReference)
-            #TODO: ckeck doublon
         else:
             err.append(u'Nom de référence trop long')
         if self.Chronique:
@@ -114,9 +121,11 @@ class Pathologie:
             self.DBase.DbDelete(self.Table,[self.TableFields[0],values[0]])
             return
         if len(err)==0:  
-            #TODO BeginTrans
+            #TODO BeginTrans & vérifier que enregistrement édité n'ont pas été supprimés?
             if self.idPathologie==0:
-                self.idPathologie=self.DBase.DbAdd(self.Table, values)
+                self.idPathologie=self.DBase.DbAdd(self.Table, values,True)
+                self.DBase.DbAdd('PathologieEspece',['0','%i'%self.idPathologie,'%i'% self.idEspece])                  
+
             else:
                 self.DBase.DbUpdate(self.Table,self.TableFields,values)
             for i in self.Synonymes:
@@ -126,8 +135,8 @@ class Pathologie:
                     self.DBase.DbAdd("PathologieSynonyme",['0','%i'%self.idPathologie,'\"%s\"'%i[1]])
                 if i[0]>0:
                     self.DBase.DbUpdate("PathologieSynonyme",['idPathologieSynonyme','Synonyme'],['%i'%i[0],'\"%s\"'%i[1]])
-            #TODO: save Domaines
             for i in self.Domaines:
+                i.Pathologie_idPathologie=self.idPathologie
                 i.Save()
             #TODO Commit         
         else:
@@ -190,7 +199,7 @@ class PathologieDomaine:
             return
         if len(err)==0:  
             if self.idDomaineRef==0:
-                self.idDomaineRef=self.DBase.DbAdd(self.Table, values)
+                self.idDomaineRef=self.DBase.DbAdd(self.Table, values,True)
             else:
                 self.DBase.DbUpdate(self.Table,self.TableFields,values)      
         else:
