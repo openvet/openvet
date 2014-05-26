@@ -1,26 +1,6 @@
-#!/usr/bin/env python
 # -*- coding: utf8 -*-
 import re
-from PyQt4.QtCore import *
-from PyQt4.QtSql import *
-import config
 
-class Ctable:
-	def __init__(self,DBase,table):
-		self.Table=table
-		self.DBase=DBase
-		res=self.DBase.record(self.Table)
-		self.TableFields=[str(res.fieldName(i)) for i in range(res.count())]
-		for i in self.TableFields:
-			self.__dict__.update({i:None})             
-
-	def Print(self):
-		print '#attributes: '+','.join(self.TableFields)
-		for i in self.TableFields:
-			print '%s : %s\t\t\t(%s)'%(i,str(self.__dict__[i]),type(self.__dict__[i]))
-
-		
-	
 def ValideDate(date,formatin='dmyy'):
 	if not isinstance(date, basestring):
 		return None
@@ -47,16 +27,7 @@ def ValideTelephone(tel):
 		return None
 	return res
 
-	
-
 if __name__ == '__main__':
-	db = QSqlDatabase.addDatabase("QMYSQL")
-	db.setHostName ( config.host )
-	db.setUserName ( config.user )
-	db.setPassword ( config.password )
-	db.setDatabaseName(config.database)
-	if not db.open():
-		print 'connection impossible'
-	Mytable=Ctable(db,'Analyse')
-	Mytable.Print()
+	print ValideTelephone('03.81.94.13.66')
+			
 	

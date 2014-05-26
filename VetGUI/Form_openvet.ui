@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1024</width>
-    <height>715</height>
+    <width>1284</width>
+    <height>800</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,430 +15,45 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../images/icone.png</normaloff>../images/icone.png</iconset>
+    <normaloff>../../../../../../.designer/images/icone.png</normaloff>../../../../../../.designer/images/icone.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QStackedWidget" name="stackedWidget">
+   <widget class="QTabWidget" name="tabWidgetClient">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>0</y>
-      <width>1024</width>
-      <height>671</height>
+      <y>10</y>
+      <width>1291</width>
+      <height>751</height>
      </rect>
     </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgba(188, 255, 231, 0);</string>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="tabShape">
+     <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
      <number>0</number>
     </property>
-    <widget class="QWidget" name="page_Consultation">
-     <widget class="QTabWidget" name="tabWidget_fiches">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>1024</width>
-        <height>671</height>
-       </rect>
-      </property>
-      <property name="autoFillBackground">
-       <bool>false</bool>
-      </property>
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
-      <property name="tabShape">
-       <enum>QTabWidget::Triangular</enum>
-      </property>
-      <property name="currentIndex">
-       <number>0</number>
-      </property>
-      <property name="iconSize">
-       <size>
-        <width>16</width>
-        <height>16</height>
-       </size>
-      </property>
-      <property name="elideMode">
-       <enum>Qt::ElideNone</enum>
-      </property>
-      <property name="tabsClosable">
-       <bool>true</bool>
-      </property>
-      <widget class="QWidget" name="tab_fiche1">
-       <attribute name="title">
-        <string>Client1</string>
-       </attribute>
-       <widget class="QFrame" name="frame_client">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>474</width>
-          <height>120</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(188, 255, 231,0);</string>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::Box</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <property name="lineWidth">
-         <number>1</number>
-        </property>
-        <widget class="QComboBox" name="comboBox_client">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>10</y>
-           <width>371</width>
-           <height>27</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">selection-background-color: rgb(255, 255, 127);</string>
-         </property>
-         <property name="editable">
-          <bool>true</bool>
-         </property>
-        </widget>
-        <widget class="QTextBrowser" name="textBrowser_client">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>50</y>
-           <width>451</width>
-           <height>61</height>
-          </rect>
-         </property>
-         <property name="toolTip">
-          <string>Double click pour sélectionner l'édition</string>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(231, 231, 231);</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::Box</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <property name="lineWidth">
-          <number>1</number>
-         </property>
-         <property name="midLineWidth">
-          <number>0</number>
-         </property>
-        </widget>
-        <widget class="QToolButton" name="toolButton_ClientInfo">
-         <property name="geometry">
-          <rect>
-           <x>430</x>
-           <y>10</y>
-           <width>26</width>
-           <height>25</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>...</string>
-         </property>
-         <property name="icon">
-          <iconset resource="resources.qrc">
-           <normaloff>:/newPrefix/images/info.png</normaloff>:/newPrefix/images/info.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>24</width>
-           <height>24</height>
-          </size>
-         </property>
-        </widget>
-       </widget>
-       <widget class="QFrame" name="frame_animal">
-        <property name="geometry">
-         <rect>
-          <x>536</x>
-          <y>0</y>
-          <width>482</width>
-          <height>120</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(188, 255, 231,0);</string>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::Box</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <widget class="QComboBox" name="comboBox_Animal">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>10</y>
-           <width>261</width>
-           <height>27</height>
-          </rect>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">selection-background-color: rgb(255, 255, 127);</string>
-         </property>
-         <property name="editable">
-          <bool>true</bool>
-         </property>
-        </widget>
-        <widget class="QTextBrowser" name="textBrowser_animal">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>50</y>
-           <width>454</width>
-           <height>61</height>
-          </rect>
-         </property>
-         <property name="toolTip">
-          <string>Double click pour sélectionner l'édition</string>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(231, 231, 231);</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::Box</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-        </widget>
-        <widget class="QToolButton" name="toolButton_AnimalInfo">
-         <property name="geometry">
-          <rect>
-           <x>430</x>
-           <y>10</y>
-           <width>26</width>
-           <height>25</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>...</string>
-         </property>
-         <property name="icon">
-          <iconset resource="resources.qrc">
-           <normaloff>:/newPrefix/images/info.png</normaloff>:/newPrefix/images/info.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>24</width>
-           <height>24</height>
-          </size>
-         </property>
-        </widget>
-       </widget>
-       <widget class="QToolButton" name="toolButton_addAnimal">
-        <property name="geometry">
-         <rect>
-          <x>510</x>
-          <y>0</y>
-          <width>26</width>
-          <height>26</height>
-         </rect>
-        </property>
-        <property name="toolTip">
-         <string>Nouvel animal</string>
-        </property>
-        <property name="text">
-         <string>...</string>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>../images/add1.png</normaloff>../images/add1.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>30</width>
-          <height>30</height>
-         </size>
-        </property>
-       </widget>
-       <widget class="QToolButton" name="toolButton_editAnimal">
-        <property name="geometry">
-         <rect>
-          <x>510</x>
-          <y>32</y>
-          <width>26</width>
-          <height>26</height>
-         </rect>
-        </property>
-        <property name="toolTip">
-         <string>Modifie animal</string>
-        </property>
-        <property name="text">
-         <string>...</string>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>../images/edit1.png</normaloff>../images/edit1.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>30</width>
-          <height>30</height>
-         </size>
-        </property>
-       </widget>
-       <widget class="QToolButton" name="toolButton_deleteAnimal">
-        <property name="geometry">
-         <rect>
-          <x>510</x>
-          <y>64</y>
-          <width>26</width>
-          <height>26</height>
-         </rect>
-        </property>
-        <property name="toolTip">
-         <string>Efface animal</string>
-        </property>
-        <property name="text">
-         <string>...</string>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>../images/delete2.png</normaloff>../images/delete2.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>30</width>
-          <height>30</height>
-         </size>
-        </property>
-       </widget>
-       <widget class="QToolButton" name="toolButton_scan">
-        <property name="geometry">
-         <rect>
-          <x>493</x>
-          <y>95</y>
-          <width>26</width>
-          <height>26</height>
-         </rect>
-        </property>
-        <property name="toolTip">
-         <string>Recherche client / animal</string>
-        </property>
-        <property name="text">
-         <string>...</string>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>../images/loupe2.png</normaloff>../images/loupe2.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>30</width>
-          <height>30</height>
-         </size>
-        </property>
-       </widget>
-       <widget class="QToolButton" name="toolButton_addClient">
-        <property name="geometry">
-         <rect>
-          <x>474</x>
-          <y>0</y>
-          <width>26</width>
-          <height>26</height>
-         </rect>
-        </property>
-        <property name="toolTip">
-         <string>Nouveau client</string>
-        </property>
-        <property name="text">
-         <string>...</string>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>../images/add1.png</normaloff>../images/add1.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>30</width>
-          <height>30</height>
-         </size>
-        </property>
-       </widget>
-       <widget class="QToolButton" name="toolButton_deleteClient">
-        <property name="geometry">
-         <rect>
-          <x>474</x>
-          <y>64</y>
-          <width>26</width>
-          <height>26</height>
-         </rect>
-        </property>
-        <property name="toolTip">
-         <string>Efface client</string>
-        </property>
-        <property name="text">
-         <string>...</string>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>../images/delete2.png</normaloff>../images/delete2.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>30</width>
-          <height>30</height>
-         </size>
-        </property>
-       </widget>
-       <widget class="QToolButton" name="toolButton_editClient">
-        <property name="geometry">
-         <rect>
-          <x>474</x>
-          <y>32</y>
-          <width>26</width>
-          <height>26</height>
-         </rect>
-        </property>
-        <property name="toolTip">
-         <string>Modifie client</string>
-        </property>
-        <property name="text">
-         <string>...</string>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>../images/edit1.png</normaloff>../images/edit1.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>30</width>
-          <height>30</height>
-         </size>
-        </property>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="tab_fiche2">
-       <attribute name="title">
-        <string>Client2</string>
-       </attribute>
-      </widget>
-      <widget class="QWidget" name="tab_7">
-       <attribute name="title">
-        <string>Ajouter</string>
-       </attribute>
-      </widget>
-     </widget>
+    <property name="tabsClosable">
+     <bool>true</bool>
+    </property>
+    <property name="movable">
+     <bool>true</bool>
+    </property>
+    <widget class="QWidget" name="tabWidgetOuvrir">
+     <attribute name="icon">
+      <iconset resource="resources.qrc">
+       <normaloff>:/newPrefix/images/add1.png</normaloff>:/newPrefix/images/add1.png</iconset>
+     </attribute>
+     <attribute name="title">
+      <string extracomment="ouvre une nouvelle fiche client"/>
+     </attribute>
     </widget>
-    <widget class="QWidget" name="page_2"/>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -446,8 +61,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1024</width>
-     <height>23</height>
+     <width>1284</width>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuDossiers_M_dicaux">

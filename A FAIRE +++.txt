@@ -1,0 +1,30 @@
+
+consultation : trier par date
+ascenseur dans onglet consultation  faire  reglage 
+petit bug  lors champs null  enregistre texte 'null' revoir requete
+
+
+
+database : creer variable de classe pour database
+
+
+
+BUG : edition consult + changer d'animal +  edition+valise consult=> err car consultActive=None
+==> lors changement animal annuler mode edition
+
+
+empecher deplacement onglet +  (tabconsultation)
+
+database :
+ajouter  Unsigned pour les types entier.
+retirer int(11) tinyint(1)  inutile car ne change pas la taille des entiers
+
+
+Table.py
+FAIT  verifier format decimal et taille, type date...
+FAIT prevoir table join ou regrouper tables avec id 
+
+
+remplacer tous msg erreur par AfficheErreur(msg)
+
+FAIRE LOCK UNLOCK **********************

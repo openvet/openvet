@@ -1,0 +1,33 @@
+
+
+
+1/    bcp d'exception :
+exception _mysql_exceptions.OperationalError: (2013, 'Lost connection to MySQL server during query') in <bound method Cursor.__del__ of <MySQLdb.cursors.Cursor object at 0x28aa850>> ignored
+../
+==> apparement sans conséquences / à revoir
+
+
+2/ erreur lors des comparaisons dans core_consultation
+/VetCore/Core_Consultation.py:154: UnicodeWarning: Unicode equal comparison failed to convert both arguments to Unicode - interpreting them as being unequal
+  if len(res)==1 and res[0][0].decode(config.dbCodec)==self.Consultant:
+
+  la comparaison échoue alors que l'égalitée est vraie !!!  (même erreur ligne 180)
+  
+>>> res[0][0].decode(config.dbCodec)
+u'BAGAINI (veto) Fran\xe7ois'
+>>> type(res[0][0].decode(config.dbCodec))
+<type 'unicode'>
+>>> self.Consultant
+PyQt4.QtCore.QByteArray('BAGAINI (veto) Fran\xc3\xa7ois')
+>>> type(self.Consultant)
+<class 'PyQt4.QtCore.QByteArray'>
+  
+  ===> pb comparaison de type differents et convertion en unicode
+  
+3/ MessageBox (ligne 197): bug /// 
+Le programme déboggué a déclenché l'exception :
+TypeError
+"QMessageBox.about(QWidget, QString, QString): argument 1 has unexpected type 'instance'"
+Fichier: /home/yvon/Documents/programmation/openvet2/interface graphique/OpenVet270114/VetCore/Core_Consultation.py, Ligne: 197
+
+====> this n'est pas une instance de type QTGUI  ==> remplacer par un print

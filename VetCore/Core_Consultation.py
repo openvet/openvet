@@ -1,368 +1,340 @@
 # -*- coding: utf8 -*-
+
+
+#*************************************************** VERSION CORE CONSULTATION NEW********************************
 #import Tables
+from Tables import *
 import time
 import config
-#import Core
-#import operator
-from PyQt4 import QtCore
-from PyQt4.QtGui import *
-from Core_Critere import CriteresConsultation
-from Core_Critere import CritereConsultation
+import Core
+from PyQt4 import QtCore, QtGui
 
+from gestion_erreurs import * 
+
+DATABASE=config.database 
+IDUSER=config.IDUSER
+
+
+class TableAnimal(Table):
+    def __init__(self,nomBase,nomTable, TableBase='', auto=True, USER=config.user, PWD=config.password, dataBase=None):
+        Table. __init__(self, nomBase,nomTable, TableBase, auto, USER, PWD, dataBase)
+        
+    def New(self): #important pour creer nouveaux enfants dans table liées (sinon crée instance de Table au lieu de TableAnimal)
+        unetable=TableAnimal(self.nomDB,self.NomTable, self.NomTableBase,  dataBase=self.DataBase)
+        return unetable
+        
+    def DescriptionHTML(self):#TODO: a completer ex barré pour dcd, etc...
+        txt=''
+        txt+=self.Get('Nom')
+        txt+=u' (espèce='+str(self.Get('Especes_idEspeces'))+')'
+        return txt
+
+
+class TableClient(Table):
+    def __init__(self,nomBase,nomTable, TableBase='', auto=True, USER=config.user, PWD=config.password, dataBase=None):
+        Table. __init__(self, nomBase,nomTable, TableBase, auto, USER, PWD, dataBase)
+        
+    def New(self): #important pour creer nouveaux enfants dans table liées (sinon crée instance de Table au lieu de TableAnimal)
+        unetable=TableAnimal(self.nomDB,self.NomTable, self.NomTableBase,  dataBase=self.DataBase)
+        return unetable
+        
+    def DescriptionHTML(self):#TODO: a completer ex barré pour dcd, etc...
+        txt=''
+        txt+=self.Get('Nom')+self.Get('Prenom')
+        txt+=' (id='+str(self.Id())+')'
+        return txt
 
 class Consultation:
-	def __init__(self,DBase,idAnimal):
-		self.Table='Consultation'
-		self.DBase=DBase
-		self.Animal_idAnimal=idAnimal
-		self.TableFields=self.DBase.GetFields(self.Table)
-		#attributes: idConsultation,Animal_idAnimal,DateConsultation,TypeConsultation_idTypeConsultation,Personne_idConsultant,Personne_idReferant,
-		#Personne_idReferent,Examen,Traitement,Actif,Commentaires
-		for i in self.TableFields:
-			self.__dict__.update({i:None})          
-		self.DateConsultation=QtCore.QDate()
-		self.TypeConsultation=None
-		self.Consultant=None
-		self.Referant=None
-		self.ConsultationPathologies=[]
-		self.IsBiologie=False
-		self.IsImage=False
-		self.IsChirurgie=False
-		self.IsOrdonnance=False
-		self.IsPlanTher=False
-		self.DomainePathologie=None
-		self.idCritere=None
-		#TODO add self.Biologies=[], images, chirurgies,.....?
-		
-	def Print(self):
-		print '#attributes: '+','.join(self.TableFields)
-		for i in self.TableFields:
-			print '%s : %s\t\t\t(%s)'%(i,str(self.__dict__[i]),type(self.__dict__[i]))
-		print 'Consultant : %s'%self.Consultant
-		print 'Référant : %s'%self.Referant
-		for i in self.ConsultationPathologies:
-			print i.Print()
-		print self.IsImage
+    """correspond au widget consultation => 1 client + liste animaux+ liste consultations"""
 
-	def GetBiologies(self,idConsultation):
-		res=self.DBase.GetDbidText("CALL GetBiologies(%i)"%idConsultation)
-		#TODO: fill self.Biologies
-		tmp=[i[1].toLatin1().data() for i in res]
-		return QtCore.QString(','.join(tmp))
-		#return self.DBase.RechercheSQL_liste("CALL GetBiologies(%i)"%idConsultation)
-			
-	def GetImages(self,idConsultation):
-		res=self.DBase.GetDbidText("CALL GetImages(%i)"%idConsultation)
-		#TODO: fill self.images
-		tmp=[i[1].toLatin1().data() for i in res]
-		return QtCore.QString(','.join(tmp))
-		
-	def GetChirurgies(self,idConsultation):	
-		res=self.DBase.GetDbidText("CALL GetChirurgie(%i)"%idConsultation)
-		tmp=[i[1].toLatin1().data() for i in res]
-		return QtCore.QString(','.join(tmp))
-			
-	def Get(self,idConsultation):
-		self.idConsultation=idConsultation
-		res=self.DBase.GetDbText("CALL GetConsultation(%i)"%idConsultation)
-		self.Set(res)
-		
-	def Set(self,res):
-		self.idConsultation=res[0].toInt()[0]
-		self.DateConsultation=QtCore.QDate.fromString(res[1], QtCore.Qt.ISODate)
-		self.TypeConsultation_idTypeConsultation=res[2]
-		self.TypeConsultation=res[3]
-		self.Personne_idConsultant=res[4].toInt()[0]
-		self.Consultant=res[5]
-		self.Personne_idReferant=res[6].toInt()[0]
-		self.Referant=res[7]
-		self.ConsultationPathologies=[]
-		for i in res[8].split(','):
-			if i.toInt()[1]:
-				tmp=CriteresConsultation(i.toInt()[0],self)
-				tmp.Get()
-				self.ConsultationPathologies.append(tmp)
-				del tmp
-		self.Examen=res[10]
-		self.Traitement=res[11]
-		self.Commentaires=res[17]
-		self.Actif=True
-		self.IsBiologie=res[12]
-		self.IsImage=res[13]
-		self.IsChirurgie=res[14]
-		self.IsOrdonnance=res[15]
-		self.IsPlaTher=res[16]
-		self.SingleDomainePathologie()
-	
-	def ConsultationPathologiesString(self):
-		tmp=[i.Pathologie_NomReference.toLatin1().data() for i in self.ConsultationPathologies]
-		return QtCore.QString(','.join(tmp))
-	
-	def SingleDomainePathologie(self):
-		domaines=[]
-		for i in self.ConsultationPathologies:
-			if i.DomainePathologie not in domaines:
-				domaines.append(i.DomainePathologie)
-		if len(domaines)==1:
-			self.DomainePathologie=domaines[0]
-		else:
-			self.DomainePathologie=None
-			
-	def MakeHTML(self):
-		if self.idConsultation is None:
-			return
-		#idConsultation,Animal_idAnimal,DateConsultation,Personne_idConsultant,Personne_idReferant,Personne_idReferent,Examen,Traitement,Actif,Commentaires
-		text="<a HREF=\"#C%i\"><b>%s</b></a>&emsp;Dr %s&emsp;&emsp;Consultation %s&emsp;%s<br>"%(self.idConsultation,self.DateConsultation.toString('dd/MM/yyyy'),self.Consultant,self.TypeConsultation,self.Referant)
-		if self.IsBiologie:
-			icone=':/newPrefix/images/analyse.png'
-			tips=self.GetBiologies(self.idConsultation)
-			text=text+"<a HREF=\"#B%i\"><img title=\"%s\" style=\"width: 32px; height: 32px;\" alt=\"Biologie\" src=\"file:%s\"></a>"%(self.idConsultation,tips,icone)
-		if self.IsImage:
-			icone='../images/echo.png'
-			tips=self.GetImages(self.idConsultation)
-			text=text+"<a HREF=\"#I%i\"><img title=\"%s\" style=\"width: 32px; height: 32px;\" alt=\"Imagerie\" src=\"file:%s\"></a>"%(self.idConsultation,tips,icone)
-		if self.IsChirurgie:
-			icone='../images/scalpel.png'
-			tips=self.GetChirurgies(self.idConsultation)
-			text=text+"<a HREF=\"#c%i\"><img title=\"%s\" style=\"width: 32px; height: 32px;\" alt=\"Chirurgie\" src=\"file:%s\"></a>"%(self.idConsultation,tips,icone)
-		if self.IsOrdonnance:
-			icone='../images/doc_all.png'
-			text=text+"<a HREF=\"#O%i\"><img style=\"width: 32px; height: 32px;\" alt=\"Ordonnance\" src=\"file:%s\"></a>"%(self.idConsultation,icone)
-		if self.IsPlanTher:
-			icone='../images/planT.png'
-			text=text+"<a HREF=\"#T%i\"><img style=\"width: 32px; height: 32px;\" alt=\"Plan Thérapeutique\" src=\"file:%s\"></a>"%(self.idConsultation,icone)
-		text=text+"&emsp;&emsp;&emsp;&emsp;<font color=\"red\">%s</font>"%self.ConsultationPathologiesString()
-		text=text+"<br>%s<br><span style=\"text-decoration:underline;\">Traitements</span> : %s<br>"%(self.Examen,self.Traitement)
-		return text
+    idClients=[]
+    listeClients=[]
 
-	def GetConsultants(self):
-		return self.DBase.GetDbidText("""SELECT idPersonne,CONCAT(Nom," ",Prenom) FROM Personne WHERE IsConsultant""")
-	
-	def GetReferants(self):
-		return self.DBase.GetDbidText("""SELECT idPersonne,CONCAT(Nom," ",Prenom) FROM Personne WHERE IsReferant""")
-	
-	def IsValidVeterinaire(self,id):
-		res=[]
-		if id==self.Personne_idConsultant:
-			res=self.DBase.GetDbidText("SELECT idPersonne,CONCAT(Nom,\" \",Prenom) FROM Personne WHERE idPersonne=%i AND isConsultant=TRUE"%self.Personne_idConsultant)
-			if len(res)==0:
-				return False
-			if res[0][1]!=self.Consultant:
-				return False
-			else:
-				return True
-		elif id==self.Personne_idReferant:
-			res=self.DBase.GetDbidText("SELECT idPersonne,CONCAT(Nom,\" \",Prenom) FROM Personne WHERE idPersonne=%i AND isReferant=TRUE"%self.Personne_idReferant)
-			if len(res)==0:
-				return False
-			if res[0][1]!=self.Referant:
-				return False
-			else:
-				return True
-		
-	def IsValidTypeConsultation(self):
-		res=self.DBase.GetDbidText("SELECT idTypeConsultation, TypeConsultation FROM TypeConsultation WHERE idTypeConsultation=%i"%self.TypeConsultation_idTypeConsultation)
-		if res[0][1]!=self.TypeConsultation:
-			return False
-		return True
-	
-	def GetTypesConsultation(self):
-		return self.DBase.GetDbidText("SELECT idTypeConsultation,TypeConsultation FROM TypeConsultation")
-	
-	def GetConsultationPathologies(self):
-		tmp=[[i.Pathologie_idPathologie,i.Pathologie_NomReference.toLatin1().data()] for i in self.ConsultationPathologies]
-		return tmp
-	
-	def GetIndexConsultationPathologie(self,idPathologie):
-		for i,n in zip(self.ConsultationPathologies,range(len(self.ConsultationPathologies))):
-			if i.Pathologie_idPathologie==idPathologie:
-				return n
-	
-	def GetConsultationCriteres(self,idPathologie):
-		for i in self.ConsultationPathologies:
-			if i.Pathologie_idPathologie==idPathologie:
-				return i.Get()
-			
-	def GetCritereGrade(self,idCritere,Valeur):	
-		Grade=QtCore.QString('')
-		res=self.DBase.GetDbText("CALL GetCritereGrade(%i,%.2f)"%(idCritere,Valeur))
-		if len(res)>0:
-			Grade=res[0]+QtCore.QString('/')+res[1]
-		return Grade
-	
-	def CheckDoublonPathologieRef(self,idpathologie):
-		for i in self.ConsultationPathologies:
-			if i.Pathologie_idPathologie==idpathologie:
-				return True
-		return False
-	
-	def UpdateCritere(self,indexPathologie,indexCritere,idCritere,valeur,grade):
-		#attributes: idConsultationCritere,Critere_idCritere,PathologieRef_idPathologieRef,CritereQuantitatif,CritereQualitatif,Grade
-		if indexCritere>=0:
-			self.ConsultationPathologies[indexPathologie].Criteres[indexCritere].SetValues(valeur,grade)
-		else:
-			#TODO: debug pathologie doublée
-			pathologie=self.ConsultationPathologies[indexPathologie]
-			tmp=CritereConsultation(pathologie)
-			tmp.Set([0,idCritere,pathologie.idPathologieRef,None,None,None])
-			tmp.SetValues(valeur, grade)
-			pathologie.Criteres.append(tmp)
-			del tmp
-			
-	def Save(self):
-		#attributes: idConsultation,Animal_idAnimal,DateConsultation,TypeConsultation_idTypeConsultation,
-		#Personne_idConsultant,Personne_idReferant,Personne_idReferent,Examen,Traitement,Actif,Commentaires
-		values=[]
-		erreurs=[]
-		ToDelete=False
-		if self.idConsultation>=0:
-			values.append('%i'%self.idConsultation)
-		else:
-			ToDelete=True
-			values.append('%i'%abs(self.idConsultation))
-		if not self.DBase.RechercheSQL_id("SELECT idAnimal FROM Animal WHERE idAnimal=%i"%self.Animal_idAnimal) is None:
-			values.append('%i'%self.Animal_idAnimal)
-		else:
-			erreurs.append('idAnimal')
-		if self.DateConsultation.isValid():
-			values.append('\"%s\"'%self.DateConsultation.toString('yyyy-MM-dd'))
-		else:
-			erreurs.append('DateConsultation')
-		self.TypeConsultation_idTypeConsultation=self.TypeConsultation_idTypeConsultation
-		if self.IsValidTypeConsultation():
-			values.append('%i'%self.TypeConsultation_idTypeConsultation)
-		else:
-			erreurs.append('idTypeConsultation')
-		if self.IsValidVeterinaire(self.Personne_idConsultant):
-			values.append('%i'%self.Personne_idConsultant)
-		else:
-			erreurs.append('idConsultant')
-		if self.Personne_idReferant is None:
-			values.append('NULL')
-		elif self.IsValidVeterinaire(self.Personne_idReferant):
-			values.append('%i'%self.Personne_idReferant)
-		else:
-			erreurs.append('idReferant')	
-		if self.Examen.size()>65536:
-			erreurs.append('Examen')
-		else:
-			values.append(u'\"%s\"'%self.Examen)
-		if self.Traitement.size()>65536:
-			erreurs.append('Traitement')
-		else:
-			values.append(u'\"%s\"'%self.Traitement)
-		values.append('TRUE')
-		if self.Commentaires is None:
-			values.append('NULL')
-		elif self.Commentaires.size()>200:
-			erreurs.append('Commentaires')
-		else:
-			values.append(u'\"%s\"'%self.Commentaires)
-		if ToDelete:
-			self.DBase.DbDelete(self.Table,[self.TableFields[0],values[0]])
-			return
-		if len(erreurs)==0:  
-			#TODO StartTransaction
-			if self.idConsultation==0:
-				self.idConsultation=self.DBase.DbAdd( self.Table, values,True)
-			else:
-				fields=[self.TableFields[0]]
-				fields.extend(self.TableFields[2:])
-				Nvalues=[values[0]]
-				Nvalues.extend(values[2:])
-				self.DBase.DbUpdate(self.Table,fields,Nvalues)
-			for i in self.ConsultationPathologies:
-				i.Save(self.idConsultation)
-			#TODO commit
-			return self.idConsultation
-		else:
-			msg='Erreur Save %s: %s'%(self.Table,','.join(erreurs))
-			print msg
-			return msg				
+    def __init__(self):
+        
+        unclient=TableClient(DATABASE, 'viewPersonne','Personne')#,  auto=True)
+        unanimal=TableAnimal(DATABASE, 'Animal')#,  auto=True) #TODO: utiliser viewAnimal (ajoute espece en clair, etc...)
+        tablelien=Table(DATABASE, 'ClientAnimalRef ')#,  auto=True)
+        uneconsult=Table(DATABASE, 'viewConsultation', 'Consultation')
+        table_animal_consultation=TableLiee(unanimal, uneconsult, None, 'Animal_idAnimal')#relation 1:n
+        #table_client_animal=TableLiee(unclient, unanimal, 'Animal_idAnimal', 'Client_idClient' , tablelien     )
+        self.table_client_animal_consultation=TableLiee(unclient,  table_animal_consultation, 'Animal_idAnimal', 'Client_idClient' , tablelien  )
 
-	
-class Consultations:
-	def __init__(self,DBase,idAnimal):
-		self.consultations=[]
-		self.textHTML=''
-		self.DBase=DBase
-		self.idAnimal=idAnimal
-		
-	def Get(self):
-		self.textHTML=''
-		self.consultations=self.DBase.GetDbLines("CALL GetConsultations(%i)"%self.idAnimal)
-		for i in self.consultations:
-			MyConsult=Consultation(self.DBase,self.idAnimal)
-			MyConsult.Set(i)
-			self.textHTML=self.textHTML+MyConsult.MakeHTML()+'<br>'
-			del MyConsult
-		icone=config.WorkingPath+'/images/add.png'
-		self.textHTML=self.textHTML+"<a HREF=\"#N-1\"><img title=\"Nouvelle Consultation\" style=\"width: 32px; height: 32px;\" alt=\"Nouvelle Consultation\" src=\"file://%s\"></a>"%(icone)
-		return self.textHTML
 
-	
-# class Pathologie:
-# 	def __init__(self,DBase):
-# 		self.idPathologie=0
-# 		self.NomReference=''
-# 		self.IsChronic=False
-# 		self.Descriptif=''
-# 		self.Domaines=[]
-# 		self.Synonymes=[]
-# 		self.idEspece=None
-# 		#self.Criteres=[]
-# 		self.DBase=DBase
-# 	
-# 	def SetEspece(self,IdEspece):
-# 		self.idEspece=IdEspece
-# 		
-# 	def GetDomaines(self):
-# 		return self.DBase.GetDbidText("CALL GetDomaines()",'Tous')
-# 	
-# 	def GetPathologies(self,idPathologieDomaine):
-# 		return self.DBase.GetDbidText("CALL SelectPathologies(%i,%i)"%(self.idEspece,idPathologieDomaine),u'Néant')
-# 
-# 	def GetDefinitionPathologie(self,idPathologie):
-# 		return self.DBase.GetDbText("SELECT DescriptifPublic FROM Pathologie WHERE idPathologie=%i"%idPathologie)[0]
-# 	
-# 	def GetPathologie(self,idPathologie):
-# 		self.idPathologie=idPathologie
-# 		res=self.DBase.RechercheSQL_liste("CALL GetPathologie(%i)"%idPathologie)
-# 		self.NomReference=res[0][0].decode(config.dbCodec)
-# 		self.IsChronic=(res[0][1]==1)
-# 		self.Descriptif=res[0][2].decode(config.dbCodec)
-# 		if not res[0][3] is None:
-# 			self.Synonymes=[i.decode(config.dbCodec) for i in res[0][3].split(',') if len(i)>0]
-# 			for i in range(max(7-len(res[0][3].split(',')),2)):
-# 				self.Synonymes.append('')
-# 				
-# 	def GetExamens(self):	
-# 		return self.DBase.GetDbidText("CALL GetExamens(%i)"%self.idPathologie)
-# 	
-#  	def GetCriteres(self,idExamen):
-#  		return self.DBase.GetDbidText("CALL GetCriteres(%i,%i)"%(self.idPathologie,idExamen))
-# 	
-# 	def GetDocuments(self):
-# 		return self.DBase.GetDbText("CALL GetPathologieDocuments(%i)"%self.idPathologie)
-# 	
-# 		#TODO GetDocuments,GetTraitements
-# 		#TODO SetCriteres Pathologie
-		
+        
+        self.Date=time.strftime("%d/%m/%Y")
+        self.DBase=self.table_client_animal_consultation.DataBase
+        self.idAnimaux= []
 
+        
+    def PrintConsultation(self, etiquettes=False, imprimechampvide=False, nbTab=0):
+        return self.table_client_animal_consultation.PrintParentEnfant(etiquettes, imprimechampvide, nbTab)
+    
+    def PrintClientsConsultationActifs(self, etiquettes=False, imprimechampvide=False, nbTab=0):  
+        return self.table_client_animal_consultation.PrintParentEnfantActifs( etiquettes, imprimechampvide, nbTab)
+            
+    def ActiveClientId(self, id):
+        return self.table_client_animal_consultation.ActiveId(id)
+        
+    def GetIdClientActif(self):
+        return self.table_client_animal_consultation.TableParent.Id()
+        #self.table_client_animal_consultation.Id()
+        
+    def GetNomClientActif(self):
+        try :
+            txt=client=self.table_client_animal_consultation.TableParent.DescriptionHTML()
+            return txt
+        except :
+            pass
+        
+    def ActiveAnimalId(self, id):
+        self.table_client_animal_consultation.ActiveEnfantId(id)
+        
+    def ActiveConsultationId(self, id):
+        animalactif=self.table_client_animal_consultation.EnfantActif
+        if animalactif :
+            animalactif.ActiveEnfantId(id)
+            
+    def DesactiveConsultation(self):
+        animalactif=self.table_client_animal_consultation.EnfantActif
+        if animalactif :
+            animalactif.DesactiveEnfant()
+            
+    def NouvelleConsultation(self):
+        consult=self.table_client_animal_consultation.TableEnfant.TableEnfant   # client->animal->consultation
+        return consult.New()
+            
+    def RafraichissementListeConsultations(self, idconsultation=None, actualiseListeId=False):
+        """relecture dans la data base de la consultation no idconsultation (ou toutes les consult si None) de l'animal actif"""
+        animalactif=self.table_client_animal_consultation.EnfantActif
+        if animalactif :
+            animalactif.RafraichissementListeEnfants( idconsultation, actualiseListeId)
+        else :
+            AfficheErreur('Warning : Core_Consultation.py:RafraichissementListeConsultations  ATTENTION pas d\'animal actif')
+        
+    def GetAnimalActif(self):
+        return self.table_client_animal_consultation.EnfantActif
+        
+    def GetListeAnimauxActif(self): #generateur 
+        """générateur : liste des instances d'Animal (animaux du client actif)"""
+        for animal in self.table_client_animal_consultation.GetListeEnfant() :
+            yield animal
+        
+    def GetConsultationActive(self):
+        animalactif=self.table_client_animal_consultation.EnfantActif
+        if animalactif :
+            return animalactif.EnfantActif
+            
+    def GetDateConsultation(self):#consultation active
+        try:
+            cs=self.GetConsultationActive()
+            date=cs.Get('DateConsultation')
+            date='%02i/%02i/%i'%(date.day,date.month,date.year)
+            return date
+        except :
+            return None
+            
+        
+
+
+    def Print(self):#TODO: a revoir
+        for j in [i for i in self.__dict__.keys() if i[:1] != '_']:
+            print'%s : %s'%(j,getattr(self,j))
+        
+    def GetBiologies(self,idConsultation):
+        return self.DBase.RechercheSQL_liste("CALL GetBiologies(%i)"%idConsultation)
+
+    def GetImages(self,idConsultation):
+        return self.DBase.RechercheSQL_liste("CALL GetImages(%i)"%idConsultation)
+    
+    def GetChirurgies(self,idConsultation): 
+        return self.DBase.RechercheSQL_liste("CALL GetChirurgie(%i)"%idConsultation)
+            
+    def GetConsultation(self,idConsultation):       
+        return self.DBase.RechercheSQL_liste("CALL GetConsultation(%i)"%idConsultation)
+    
+            
+    def GetConsultationsHTML(self):
+        text=''
+        animalactif=self.GetAnimalActif()
+        if animalactif :
+            listeconsult = animalactif.ListeTableEnfant
+            for consult in listeconsult :
+                text+=self.HTML(consult)
+        return text
+        
+    def HTML(self, consult):
+        
+        idconsult=consult.Id()
+        date=consult.Get('DateConsultation')
+        try:
+            date='%02i/%02i/%i'%(date.day,date.month,date.year)
+        except:
+            date=''
+        veto=consult.Get('Consultant')
+        type=consult.Get('TypeConsultation')
+        ref=consult.Get('Referant')
+        
+        if ref == None : ref=''
+        
+        text="<a HREF=\"#C%i\"><b>%s</b></a>&emsp;Dr %s&emsp;&emsp;Consultation %s&emsp;%s<br>"%(idconsult,date,veto,type, ref)
+        
+        if consult.Get('Biologie')>0:
+            icone=config.WorkingPath+'/images/analyse.png'
+            res=self.GetBiologies(idconsult)
+#            tips=';'.join([i[1].decode(config.dbCodec) for i in res])  #TODO: DEBUG A REVOIR decode ou pas
+            tips=';'.join([i[1]  for i in res])
+            tips=tips.decode('utf8')
+            text=text+"<a HREF=\"#B%i\"><img title=\"%s\" style=\"width: 32px; height: 32px;\" alt=\"Biologie\" src=\"file://%s\"></a>"%(idconsult,tips,icone)
+        if consult.Get('Imagerie')>0:
+            icone=config.WorkingPath+'/images/echo.png'
+            res=self.GetImages(idconsult)
+            tips=';'.join([i[1]  for i in res])
+            tips=tips.decode('utf8')
+            text=text+"<a HREF=\"#I%i\"><img title=\"%s\" style=\"width: 32px; height: 32px;\" alt=\"Imagerie\" src=\"file://%s\"></a>"%(idconsult,tips,icone)
+        if consult.Get('Chirurgie')>0:
+            icone=config.WorkingPath+'/images/scalpel.png'
+            res=self.GetChirurgies(idconsult)
+            tips=';'.join([i[1]  for i in res])
+            tips=tips.decode('utf8')
+            text=text+"<a HREF=\"#c%i\"><img title=\"%s\" style=\"width: 32px; height: 32px;\" alt=\"Chirurgie\" src=\"file://%s\"></a>"%(idconsult,tips,icone)
+        if consult.Get('Ordonnance')>0:
+            icone=config.WorkingPath+'/images/doc_all.png'
+            text=text+"<a HREF=\"#O%i\"><img style=\"width: 32px; height: 32px;\" alt=\"Ordonnance\" src=\"file://%s\"></a>"%(idconsult,icone)
+        if consult.Get('PlanTherapeutique')>0:
+            icone=config.WorkingPath+'/images/planT.png'
+            text=text+"<a HREF=\"#T%i\"><img style=\"width: 32px; height: 32px;\" alt=\"%s\" src=\"file://%s\"></a>"%(idconsult,u'Plan Thérapeutique',icone)
+        text=text+"&emsp;&emsp;&emsp;&emsp;<font color=\"red\">%s</font>"%consult.Get('Pathologies')  
+        text=text+"<br>%s<br><span style=\"text-decoration:underline;\">Traitements</span> : %s<br>"%(consult.Get('Examen') ,consult.Get('Traitement'))
+
+
+        return text
+        
+
+    def GetConsultants(self):
+        res=self.DBase.RechercheSQL_liste("""SELECT idPersonne,CONCAT(Nom," ",Prenom) FROM Personne WHERE IsConsultant""")
+        clst=QtCore.QStringList()
+        self.idConsultants=[]
+        for i in res:
+#           print i[1].decode(config.dbCodec).decode('utf8')
+            clst.append(i[1].decode(config.dbCodec))
+            self.idConsultants.append(i[0])
+        return clst
+        
+    def GetClients(self):
+        #res=self.DBase.RechercheSQL_liste("""SELECT idPersonne,CONCAT(Nom,"  ",Prenom) FROM Personne WHERE  isClient""")
+        
+        res=self.DBase.RechercheSQL_liste("""SELECT idPersonne,
+#        
+#        CONCAT (viewPersonne.Nom," ",viewPersonne.Prenom," (",Commune,")" ,
+#                " Animal:",(SELECT GROUP_CONCAT(Nom) FROM Animal LEFT JOIN ClientAnimalRef ON Animal.idAnimal=ClientAnimalRef.Animal_idAnimal 
+#                WHERE Client_idClient=idPersonne)) 
+#                
+#                FROM viewPersonne ;""")  #CONCAT nom,prenom,liste animaux   pb nom,prenom Null si pas d'animaux!!!
+
+
+        res=self.DBase.RechercheSQL_liste("""SELECT idPersonne, 
+        CONCAT (viewPersonne.Nom," ",viewPersonne.Prenom," (",Commune,")") ,
+        (SELECT GROUP_CONCAT(Nom) FROM Animal LEFT JOIN ClientAnimalRef ON Animal.idAnimal=ClientAnimalRef.Animal_idAnimal 
+        WHERE Client_idClient=idPersonne) FROM viewPersonne WHERE isClient;
+""")  #CONCAT nom,prenom,liste animaux
+
+
+        
+        clst=QtCore.QStringList()
+        self.idListeClients=[]
+        for i in res:
+#           print i[1].decode(config.dbCodec).decode('utf8')
+            try :
+                clst.append(    i[1].decode(config.dbCodec) + ' animal:'+i[2].decode(config.dbCodec)   )
+            except :  #pas d'animal
+                clst.append(    i[1].decode(config.dbCodec)   )
+                
+            self.idListeClients.append(i[0])
+        return clst
+    
+    def GetIdConsultant(self,index):
+        return self.idConsultants[index]
+    
+    def GetReferants(self):
+        res=self.DBase.RechercheSQL_liste("""SELECT idPersonne,CONCAT(Nom," ",Prenom) FROM Personne WHERE IsReferant""")
+        clst=QtCore.QStringList()
+        self.idReferants=[]
+        for i in res:
+            clst.append(i[1].decode(config.dbCodec))
+            self.idReferants.append(i[0])
+        return clst
+        
+    def GetIdReferant(self,index):
+        return self.idReferants[index]    
+        
+        
+    def GetTypesConsultation(self):
+        res=self.DBase.RechercheSQL_liste("SELECT idTypeConsultation,TypeConsultation FROM TypeConsultation")
+        clst=QtCore.QStringList()
+        self.idTypesConsultation=[]
+        for i in res:
+            clst.append(i[1].decode(config.dbCodec))
+            self.idTypesConsultation.append(i[0])
+        return clst
+        
+    def GetIdTypeConsultation(self,index):
+        return self.idTypesConsultation[index]
+        
+    def GetListeAnimaux(self):#animaux du client actif
+        """retourne la liste des animaux (du client actif) sous forme de QStringList"""
+        clst=QtCore.QStringList()
+        self.idAnimaux=[]
+        for animal in self.GetListeAnimauxActif():
+            nomanimal=animal.DescriptionHTML()
+#            clst.append(nomanimal.decode(config.dbCodec))#(i[1].decode(config.dbCodec))
+            #clst.append(nomanimal.decode('utf8'))
+            clst.append(nomanimal)
+            self.idAnimaux.append(animal.Id())
+        return clst    
+        
+    def GetListeClients(self):
+        """retourne la liste des clients (tous ceux déjà lus au moins 1 fois) sous forme de QStringList """
+        #idclientactif=self.table_client_animal_consultation.TableParent.Id()#clientactif=self.table_client_animal_consultation.TableParent
+        idclientactif=self.GetIdClientActif()
+        if not idclientactif in self.idClients : #client activé pour la 1ere fois
+            self.idClients.append(idclientactif) 
+            newClient=TableClient(DATABASE, 'viewPersonne','Personne')#,  auto=True)
+            newClient.LectureId(idclientactif)
+            self.listeClients.append(newClient)#garde une copie du client
+            
+        clst=QtCore.QStringList()
+        for unclient in self.listeClients :
+            nomclient=unclient.DescriptionHTML()
+#            clst.append(nomclient.decode('utf8'))
+            clst.append(nomclient)
+        return clst
+            
+    def GetIndexClientId(self, id):
+        try :
+            index = self.idClients.index(id)
+        except :
+            index= 'erreur id '+str(id)+' n\'est pas dans la liste idClients'
+        return index
+            
+        
 if __name__ == '__main__':
-	import Tables
-	import config 
-	DBase=Tables.DataBase(config.database)
- 	MyConsult=Consultation(DBase,1)
- 	MyConsult.Get(1)
- 	MyConsult.Print()
-# 	print MyConsult.MakeHTML()
-# 	MyConsults=Consultations(DBase,1)
-# 	MyConsults.Get()
-#	MyConsult.Print()
-#	MyConsult.GetPathologiesConsultation()
-#	MyConsult.GetConsultants()
-
+    
+    MyConsult=Consultation()
+    liste= MyConsult.GetConsultants()
+    for item in liste :
+        print str(item.toUtf8())
+        
+    #MyConsult.ActiveSQL(True,'Nom', '%POINT%')
+    MyConsult.ActiveClientId(1)
+    MyConsult.ActiveAnimalId(1)    
+    print MyConsult.GetConsultationsHTML()
+    
+    #res=MyConsult.GetConsultation(2)
+    #MyConsult.FormatConsultation(res[0])
+    
+    #MyDossier=Consultations()
+    #print MyDossier.GetConsultations(1)
 
 
 
