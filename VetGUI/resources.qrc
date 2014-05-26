@@ -1,0 +1,16 @@
+<RCC>
+  <qresource prefix="newPrefix">
+    <file>../images/doc_abst.png</file>
+    <file>../images/doc_all.png</file>
+    <file>../images/add1.png</file>
+    <file>../images/delete2.png</file>
+    <file>../images/edit1.png</file>
+    <file>../images/icone.png</file>
+    <file>../images/loupe2.png</file>
+    <file>../images/openvet.png</file>
+    <file>../images/scalpel.png</file>
+    <file>../images/echo.png</file>
+    <file>../images/analyse.png</file>
+    <file>../images/planT.png</file>
+  </qresource>
+</RCC>
