@@ -3,6 +3,7 @@
 import os
 
 
+
 DEBUG=True
 DEBUG_AFFICHE_MESSAGE_CONSOLE=True  #TODO: a enlever lorsuqe les msg d erreurs seront geres par gestion_erreurs.py
 #DEBUG = True

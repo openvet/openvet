@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Project SYSTEM "Project-4.6.dtd">
+<!-- eric4 project file for project openvet_git -->
+<!-- Saved: 2014-05-26, 16:15:25 -->
+<!-- Copyright (C) 2014 ,  -->
+<Project version="4.6">
+  <Language>en</Language>
+  <ProgLanguage mixed="0">Python</ProgLanguage>
+  <ProjectType>Qt4</ProjectType>
+  <Description></Description>
+  <Version>0.1</Version>
+  <Author></Author>
+  <Email></Email>
+  <Sources>
+    <Source>openvet.py</Source>
+    <Source>initialiseDB/DbPopulate.py</Source>
+    <Source>initialiseDB/old/formatefichier.py</Source>
+    <Source>initialiseDB/old/__init__.py</Source>
+    <Source>initialiseDB/old/parametres.py</Source>
+    <Source>initialiseDB/myrequest2.py</Source>
+    <Source>VetCore/Tables_Base.py</Source>
+    <Source>VetCore/__init__.py</Source>
+    <Source>VetCore/Core_Consultation.py</Source>
+    <Source>VetCore/Tables.py</Source>
+    <Source>VetCore/Core.py</Source>
+    <Source>test_tables.py</Source>
+    <Source>__init__.py</Source>
+    <Source>VetGUI/ui_Form_DialogBase.py</Source>
+    <Source>VetGUI/ui_Form_DialogOuvreClient.py</Source>
+    <Source>VetGUI/ui_Form_consultation_base.py</Source>
+    <Source>VetGUI/ui_Form_consultation_old.py</Source>
+    <Source>VetGUI/ui_Form_openvet.py</Source>
+    <Source>VetGUI/Gui_openvet.py</Source>
+    <Source>VetGUI/ui_Form_pathologie.py</Source>
+    <Source>VetGUI/ui_OLD Form_consultation.py</Source>
+    <Source>VetGUI/ERR ui_Form_consultation_base.py</Source>
+    <Source>VetGUI/ui_test_Form_openvet.py</Source>
+    <Source>VetGUI/mkpyqtMANJARO.py</Source>
+    <Source>VetGUI/PASSURMANJAROmkpyqt.py</Source>
+    <Source>VetGUI/Gui_Consultation_base.py</Source>
+    <Source>VetGUI/Mywidgets.py</Source>
+    <Source>VetGUI/ui_Form_consultation.py</Source>
+    <Source>VetGUI/ui_Form_animal.py</Source>
+    <Source>VetGUI/ui_060514 Form_consultation_base.py</Source>
+    <Source>VetGUI/ui_Form_critere.py</Source>
+    <Source>VetGUI/ui_Form_DialogPathologie.py</Source>
+    <Source>VetGUI/ui_OLDForm_DialogClient.py</Source>
+    <Source>VetGUI/resources_rc.py</Source>
+    <Source>VetGUI/ui_Form_client.py</Source>
+    <Source>VetGUI/ui_oldForm_consultation.py</Source>
+    <Source>VetGUI/ui_Form_consultation_base 0605err.py</Source>
+    <Source>gestion_erreurs.py</Source>
+    <Source>config.py</Source>
+    <Source>Creation_et_Fill_DB.py</Source>
+  </Sources>
+  <Forms>
+    <Form>VetGUI/Form_consultation_base 0605err.ui</Form>
+    <Form>VetGUI/Form_critere.ui</Form>
+    <Form>VetGUI/Form_pathologie.ui</Form>
+    <Form>VetGUI/OLD Form_consultation.ui</Form>
+    <Form>VetGUI/Form_consultation.ui</Form>
+    <Form>VetGUI/Form_openvet.ui</Form>
+    <Form>VetGUI/OLDForm_DialogClient.ui</Form>
+    <Form>VetGUI/test_Form_openvet.ui</Form>
+    <Form>VetGUI/Form_consultation_old.ui</Form>
+    <Form>VetGUI/Form_DialogOuvreClient.ui</Form>
+    <Form>VetGUI/Form_DialogPathologie.ui</Form>
+    <Form>VetGUI/Form_DialogBase.ui</Form>
+    <Form>VetGUI/060514 Form_consultation_base.ui</Form>
+    <Form>VetGUI/Form_consultation_base.ui</Form>
+  </Forms>
+  <Translations>
+  </Translations>
+  <Resources>
+    <Resource>VetGUI/resources.qrc</Resource>
+  </Resources>
+  <Interfaces>
+  </Interfaces>
+  <Others>
+  </Others>
+  <Vcs>
+    <VcsType>None</VcsType>
+  </Vcs>
+  <FiletypeAssociations>
+    <FiletypeAssociation pattern="*.ui" type="FORMS" />
+    <FiletypeAssociation pattern="*.idl" type="INTERFACES" />
+    <FiletypeAssociation pattern="*.qm" type="TRANSLATIONS" />
+    <FiletypeAssociation pattern="*.ptl" type="SOURCES" />
+    <FiletypeAssociation pattern="*.pyw" type="SOURCES" />
+    <FiletypeAssociation pattern="*.ui.h" type="FORMS" />
+    <FiletypeAssociation pattern="*.ts" type="TRANSLATIONS" />
+    <FiletypeAssociation pattern="*.py" type="SOURCES" />
+    <FiletypeAssociation pattern="*.qrc" type="RESOURCES" />
+  </FiletypeAssociations>
+</Project>
