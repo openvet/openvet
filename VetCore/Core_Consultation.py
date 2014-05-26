@@ -2,7 +2,7 @@
 
 
 #*************************************************** VERSION CORE CONSULTATION NEW********************************
-#import Tables
+
 from Tables import *
 import time
 import config
@@ -15,34 +15,6 @@ DATABASE=config.database
 IDUSER=config.IDUSER
 
 
-class TableAnimal(Table):
-    def __init__(self,nomBase,nomTable, TableBase='', auto=True, USER=config.user, PWD=config.password, dataBase=None):
-        Table. __init__(self, nomBase,nomTable, TableBase, auto, USER, PWD, dataBase)
-        
-    def New(self): #important pour creer nouveaux enfants dans table liées (sinon crée instance de Table au lieu de TableAnimal)
-        unetable=TableAnimal(self.nomDB,self.NomTable, self.NomTableBase,  dataBase=self.DataBase)
-        return unetable
-        
-    def DescriptionHTML(self):#TODO: a completer ex barré pour dcd, etc...
-        txt=''
-        txt+=self.Get('Nom')
-        txt+=u' (espèce='+str(self.Get('Especes_idEspeces'))+')'
-        return txt
-
-
-class TableClient(Table):
-    def __init__(self,nomBase,nomTable, TableBase='', auto=True, USER=config.user, PWD=config.password, dataBase=None):
-        Table. __init__(self, nomBase,nomTable, TableBase, auto, USER, PWD, dataBase)
-        
-    def New(self): #important pour creer nouveaux enfants dans table liées (sinon crée instance de Table au lieu de TableAnimal)
-        unetable=TableAnimal(self.nomDB,self.NomTable, self.NomTableBase,  dataBase=self.DataBase)
-        return unetable
-        
-    def DescriptionHTML(self):#TODO: a completer ex barré pour dcd, etc...
-        txt=''
-        txt+=self.Get('Nom')+self.Get('Prenom')
-        txt+=' (id='+str(self.Id())+')'
-        return txt
 
 class Consultation:
     """correspond au widget consultation => 1 client + liste animaux+ liste consultations"""
@@ -76,6 +48,9 @@ class Consultation:
     def ActiveClientId(self, id):
         return self.table_client_animal_consultation.ActiveId(id)
         
+    def GetClientActif(self):
+        return self.table_client_animal_consultation.TableParent 
+        
     def GetIdClientActif(self):
         return self.table_client_animal_consultation.TableParent.Id()
         #self.table_client_animal_consultation.Id()
@@ -103,6 +78,10 @@ class Consultation:
     def NouvelleConsultation(self):
         consult=self.table_client_animal_consultation.TableEnfant.TableEnfant   # client->animal->consultation
         return consult.New()
+        
+    def NouveauClient(self):
+        client=self.table_client_animal_consultation.TableParent
+        return client.New()
             
     def RafraichissementListeConsultations(self, idconsultation=None, actualiseListeId=False):
         """relecture dans la data base de la consultation no idconsultation (ou toutes les consult si None) de l'animal actif"""
@@ -221,23 +200,17 @@ class Consultation:
             self.idConsultants.append(i[0])
         return clst
         
-    def GetClients(self):
-        #res=self.DBase.RechercheSQL_liste("""SELECT idPersonne,CONCAT(Nom,"  ",Prenom) FROM Personne WHERE  isClient""")
-        
-        res=self.DBase.RechercheSQL_liste("""SELECT idPersonne,
-#        
-#        CONCAT (viewPersonne.Nom," ",viewPersonne.Prenom," (",Commune,")" ,
-#                " Animal:",(SELECT GROUP_CONCAT(Nom) FROM Animal LEFT JOIN ClientAnimalRef ON Animal.idAnimal=ClientAnimalRef.Animal_idAnimal 
-#                WHERE Client_idClient=idPersonne)) 
-#                
-#                FROM viewPersonne ;""")  #CONCAT nom,prenom,liste animaux   pb nom,prenom Null si pas d'animaux!!!
+    def GetClients(self, filtre = 'isClient'):# ex  filtre='isClient AND IsVeterinaire AND  not isValide'
 
-
-        res=self.DBase.RechercheSQL_liste("""SELECT idPersonne, 
+        sql="""SELECT idPersonne, 
         CONCAT (viewPersonne.Nom," ",viewPersonne.Prenom," (",Commune,")") ,
         (SELECT GROUP_CONCAT(Nom) FROM Animal LEFT JOIN ClientAnimalRef ON Animal.idAnimal=ClientAnimalRef.Animal_idAnimal 
-        WHERE Client_idClient=idPersonne) FROM viewPersonne WHERE isClient;
-""")  #CONCAT nom,prenom,liste animaux
+        WHERE Client_idClient=idPersonne) FROM viewPersonne 
+        """
+        if filtre :
+            sql=sql+'WHERE '+filtre
+
+        res=self.DBase.RechercheSQL_liste(sql)  #CONCAT nom,prenom,liste animaux
 
 
         
@@ -296,12 +269,14 @@ class Consultation:
     def GetListeClients(self):
         """retourne la liste des clients (tous ceux déjà lus au moins 1 fois) sous forme de QStringList """
         #idclientactif=self.table_client_animal_consultation.TableParent.Id()#clientactif=self.table_client_animal_consultation.TableParent
-        idclientactif=self.GetIdClientActif()
+        idclientactif=self.GetIdClientActif()  
         if not idclientactif in self.idClients : #client activé pour la 1ere fois
             self.idClients.append(idclientactif) 
-            newClient=TableClient(DATABASE, 'viewPersonne','Personne')#,  auto=True)
-            newClient.LectureId(idclientactif)
-            self.listeClients.append(newClient)#garde une copie du client
+            
+            self.listeClients.append(self.GetClientActif() )
+#            newClient = TableClient(DATABASE, 'viewPersonne','Personne')#,  auto=True)
+#            newClient.LectureId(idclientactif)
+#            self.listeClients.append(newClient)#garde une copie du client    <=========  erreur, éviter de faire des copies, pb de mise à jour affichage lors modif client si 2 références clients<>
             
         clst=QtCore.QStringList()
         for unclient in self.listeClients :

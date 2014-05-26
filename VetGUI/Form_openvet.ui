@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1284</width>
-    <height>800</height>
+    <height>822</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -27,7 +27,7 @@
       <x>0</x>
       <y>10</y>
       <width>1291</width>
-      <height>751</height>
+      <height>781</height>
      </rect>
     </property>
     <property name="autoFillBackground">
@@ -62,7 +62,7 @@
      <x>0</x>
      <y>0</y>
      <width>1284</width>
-     <height>25</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuDossiers_M_dicaux">

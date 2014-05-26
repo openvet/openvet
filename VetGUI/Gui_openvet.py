@@ -9,7 +9,10 @@ import sys
 sys.path.append('./VetCore')
 sys.path.append('./VetGUI')
 sys.path.append('./images')
+sys.path.append('..')
 
+
+import config
 
 from PyQt4 import QtCore, QtGui
 import PyQt4.Qt as qt
@@ -18,12 +21,15 @@ import PyQt4.Qt as qt
 #from ui_Form_animal import Ui_Dialog_animal
 
 from ui_Form_openvet import  Ui_MainWindow
+
+
 from ui_Form_consultation_base import Ui_MainWindowConsultation
-#from ui_Form_consultation import Ui_MainWindowConsultation
+#from ui_Form_consultation import Ui_tabWidget_medical
+#Ui_MainWindowConsultation = Ui_tabWidget_medical
 
 from ui_Form_DialogOuvreClient import  Ui_Dialog_OuvreClient
 
-from Gui_Consultation_base import WindowConsultation
+from Gui_Consultation_base import WindowConsultation,  FormClient
 import Core_Consultation
 
 from gestion_erreurs import * 
@@ -37,6 +43,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.editClient = None
         self.editAnimal = None
         self.DialOuvrir  = None
+        self.formulaireclient = None
 
         self.connect(self.tabWidgetClient, QtCore.SIGNAL("tabCloseRequested(int)"), self.CloseClient)
         self.connect(self.tabWidgetClient, QtCore.SIGNAL("currentChanged(int)"), self.TabChanged)
@@ -44,15 +51,29 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.actionQuitter.triggered.connect(self.Mycloseapp)
         
         self.UneConsult=Core_Consultation.Consultation()
+        
+        
+        if config.MASQUE_WIDGET_NON_DEV :
+            self.DesactiveLesWidgetsNonImplementes()
+        
         self.InitialiseListeClient()
+        
+        
+    def DesactiveLesWidgetsNonImplementes(self):
+        
+        self.menubar.hide()
         
         
         
         
     def InitialiseListeClient(self): 
+        
+        if not self.formulaireclient : #prepare formulaire pour edition client
+            self.formulaireclient = FormClient()
+        
         if not self.DialOuvrir : #prepare Dialogue Ouvrir Client
             self.DialOuvrir= FormOuvreClient(self)
-            listeclient=self.UneConsult.GetClients() #TODO: barre de progression 
+            listeclient=self.UneConsult.GetClients(filtre='') #TODO: barre de progression 
             self.DialOuvrir.comboBox_ListeClient.addItems(listeclient)
             
         index_ongletAjouter=0
@@ -93,24 +114,43 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
     def InsertClient(self, index=0, id=None):
                 
 #                i, ok = QtGui.QInputDialog.getInteger(self,'id client', 'id client')
-                
-                idclient = id or self.DialogueIdClient()
-                
+        
+        idclient = id or self.DialogueIdClient()
+        
 #                if ok :
-                if idclient:
-                    page=WindowConsultation()
-                    err = page.ActiveClientId(idclient)
-                    nomclient=page.GetNomClientActif()
-                    self.tabWidgetClient.insertTab(index, page, nomclient)
-                    self.tabWidgetClient.setCurrentIndex(index)
-                    pagecourante=self.tabWidgetClient.currentWidget()
+        if idclient:
+            page=WindowConsultation(parent=self, formulaireclient=self.formulaireclient)
+            err = page.ActiveClientId(idclient)
+            nomclient=page.GetNomClientActif()
+            self.tabWidgetClient.insertTab(index, page, nomclient)
+            self.tabWidgetClient.setCurrentIndex(index)
+            pagecourante=self.tabWidgetClient.currentWidget()
+            
+            self.ActualiseListeClientsDeTousLesOngletsConsultation(ignore=page)
+            
+#            nbPage=self.tabWidgetClient.count()
+#            for index in range(nbPage ):  #actualise la liste du comboBox client de chaque onglet consultation
+#                try :
+#                    window_consult=self.tabWidgetClient.widget(index)
+#                    if window_consult <> page :
+#                        window_consult.ActualiseListeClients()
+#                except :
+#                    pass
                     
 #                if index == 0 :  #au debut du programme enleve boutton close de l'onglet ajouter
 #                    index_ongletAjouter=self.tabWidgetClient.count()-1  
 #                    tb=self.tabWidgetClient.tabBar()
 #                    tb.setTabButton(index_ongletAjouter, QtGui.QTabBar.RightSide, None) #enleve boutton close de l'onglet ajouter
 #                    
-
+    def ActualiseListeClientsDeTousLesOngletsConsultation(self, ignore=''):
+            nbPage=self.tabWidgetClient.count()
+            for index in range(nbPage ):  #actualise la liste du comboBox client de chaque onglet consultation
+                try :
+                    window_consult=self.tabWidgetClient.widget(index)
+                    if window_consult <> ignore :
+                        window_consult.ActualiseListeClients() #TODO:  actualiser aussi la liste de tous les clients (ex si modifie nom client, n'apparait pas lors nouvel onglet)
+                except :
+                    pass
 
     def CloseClient( self, index):
         

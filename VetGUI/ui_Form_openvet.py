@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'Form_openvet.ui'
+# Form implementation generated from reading ui file './Form_openvet.ui'
 #
-# Created: Fri Jan 31 17:33:10 2014
-#      by: PyQt4 UI code generator 4.9.1
+# Created: Tue May  6 18:37:12 2014
+#      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -12,20 +12,29 @@ from PyQt4 import QtCore, QtGui
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
-    _fromUtf8 = lambda s: s
+    def _fromUtf8(s):
+        return s
+
+try:
+    _encoding = QtGui.QApplication.UnicodeUTF8
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+except AttributeError:
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName(_fromUtf8("MainWindow"))
-        MainWindow.resize(1284, 800)
+        MainWindow.resize(1284, 822)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(_fromUtf8("../images/icone.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(_fromUtf8("../../../../../../.designer/images/icone.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setStyleSheet(_fromUtf8(""))
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName(_fromUtf8("centralwidget"))
         self.tabWidgetClient = QtGui.QTabWidget(self.centralwidget)
-        self.tabWidgetClient.setGeometry(QtCore.QRect(0, 10, 1291, 751))
+        self.tabWidgetClient.setGeometry(QtCore.QRect(0, 10, 1291, 781))
         self.tabWidgetClient.setAutoFillBackground(False)
         self.tabWidgetClient.setTabShape(QtGui.QTabWidget.Rounded)
         self.tabWidgetClient.setTabsClosable(True)
@@ -38,7 +47,7 @@ class Ui_MainWindow(object):
         self.tabWidgetClient.addTab(self.tabWidgetOuvrir, icon1, _fromUtf8(""))
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1284, 25))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1284, 20))
         self.menubar.setObjectName(_fromUtf8("menubar"))
         self.menuDossiers_M_dicaux = QtGui.QMenu(self.menubar)
         self.menuDossiers_M_dicaux.setObjectName(_fromUtf8("menuDossiers_M_dicaux"))
@@ -126,34 +135,34 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "Open Vet", None, QtGui.QApplication.UnicodeUTF8))
-        self.menuDossiers_M_dicaux.setTitle(QtGui.QApplication.translate("MainWindow", "Dossiers Médicaux", None, QtGui.QApplication.UnicodeUTF8))
-        self.menuComptabilit.setTitle(QtGui.QApplication.translate("MainWindow", "Comptabilité", None, QtGui.QApplication.UnicodeUTF8))
-        self.menuD_clarations.setTitle(QtGui.QApplication.translate("MainWindow", "Déclarations", None, QtGui.QApplication.UnicodeUTF8))
-        self.menuConfiguration.setTitle(QtGui.QApplication.translate("MainWindow", "Paramètres", None, QtGui.QApplication.UnicodeUTF8))
-        self.menuBase_de_donn_es.setTitle(QtGui.QApplication.translate("MainWindow", "Base de données", None, QtGui.QApplication.UnicodeUTF8))
-        self.menuQuitter.setTitle(QtGui.QApplication.translate("MainWindow", "Quitter", None, QtGui.QApplication.UnicodeUTF8))
-        self.menuStock.setTitle(QtGui.QApplication.translate("MainWindow", "Stock", None, QtGui.QApplication.UnicodeUTF8))
-        self.menuStatistiques.setTitle(QtGui.QApplication.translate("MainWindow", "Statistiques", None, QtGui.QApplication.UnicodeUTF8))
-        self.action_Recettes.setText(QtGui.QApplication.translate("MainWindow", "&Recettes", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionD_penses.setText(QtGui.QApplication.translate("MainWindow", "&Dépenses", None, QtGui.QApplication.UnicodeUTF8))
-        self.action_Banque.setText(QtGui.QApplication.translate("MainWindow", "&Banque", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionRecoupement_bancaire.setText(QtGui.QApplication.translate("MainWindow", "Recoupement bancaire", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionTVA.setText(QtGui.QApplication.translate("MainWindow", "TVA", None, QtGui.QApplication.UnicodeUTF8))
-        self.action2035.setText(QtGui.QApplication.translate("MainWindow", "2035", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionCommandes.setText(QtGui.QApplication.translate("MainWindow", "&Commandes", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionAnalyse.setText(QtGui.QApplication.translate("MainWindow", "Visualisation", None, QtGui.QApplication.UnicodeUTF8))
-        self.action_Facturation.setText(QtGui.QApplication.translate("MainWindow", "&Facturation", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionBureau.setText(QtGui.QApplication.translate("MainWindow", "Bureau", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionBureau.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+Alt+B", None, QtGui.QApplication.UnicodeUTF8))
-        self.action_M_dicaments.setText(QtGui.QApplication.translate("MainWindow", "&Médicaments", None, QtGui.QApplication.UnicodeUTF8))
-        self.action_Pathologies.setText(QtGui.QApplication.translate("MainWindow", "&Pathologies", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionBackup.setText(QtGui.QApplication.translate("MainWindow", "Backup", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionRestore.setText(QtGui.QApplication.translate("MainWindow", "Restore", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionImport.setText(QtGui.QApplication.translate("MainWindow", "Import", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionR_seau_S_curit.setText(QtGui.QApplication.translate("MainWindow", "Réseau/Sécurité", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionQuitter.setText(QtGui.QApplication.translate("MainWindow", "Quitter", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionQuitter.setToolTip(QtGui.QApplication.translate("MainWindow", "Quitter l\'application", None, QtGui.QApplication.UnicodeUTF8))
-        self.actionQuitter.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+Q", None, QtGui.QApplication.UnicodeUTF8))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Open Vet", None))
+        self.menuDossiers_M_dicaux.setTitle(_translate("MainWindow", "Dossiers Médicaux", None))
+        self.menuComptabilit.setTitle(_translate("MainWindow", "Comptabilité", None))
+        self.menuD_clarations.setTitle(_translate("MainWindow", "Déclarations", None))
+        self.menuConfiguration.setTitle(_translate("MainWindow", "Paramètres", None))
+        self.menuBase_de_donn_es.setTitle(_translate("MainWindow", "Base de données", None))
+        self.menuQuitter.setTitle(_translate("MainWindow", "Quitter", None))
+        self.menuStock.setTitle(_translate("MainWindow", "Stock", None))
+        self.menuStatistiques.setTitle(_translate("MainWindow", "Statistiques", None))
+        self.action_Recettes.setText(_translate("MainWindow", "&Recettes", None))
+        self.actionD_penses.setText(_translate("MainWindow", "&Dépenses", None))
+        self.action_Banque.setText(_translate("MainWindow", "&Banque", None))
+        self.actionRecoupement_bancaire.setText(_translate("MainWindow", "Recoupement bancaire", None))
+        self.actionTVA.setText(_translate("MainWindow", "TVA", None))
+        self.action2035.setText(_translate("MainWindow", "2035", None))
+        self.actionCommandes.setText(_translate("MainWindow", "&Commandes", None))
+        self.actionAnalyse.setText(_translate("MainWindow", "Visualisation", None))
+        self.action_Facturation.setText(_translate("MainWindow", "&Facturation", None))
+        self.actionBureau.setText(_translate("MainWindow", "Bureau", None))
+        self.actionBureau.setShortcut(_translate("MainWindow", "Ctrl+Alt+B", None))
+        self.action_M_dicaments.setText(_translate("MainWindow", "&Médicaments", None))
+        self.action_Pathologies.setText(_translate("MainWindow", "&Pathologies", None))
+        self.actionBackup.setText(_translate("MainWindow", "Backup", None))
+        self.actionRestore.setText(_translate("MainWindow", "Restore", None))
+        self.actionImport.setText(_translate("MainWindow", "Import", None))
+        self.actionR_seau_S_curit.setText(_translate("MainWindow", "Réseau/Sécurité", None))
+        self.actionQuitter.setText(_translate("MainWindow", "Quitter", None))
+        self.actionQuitter.setToolTip(_translate("MainWindow", "Quitter l\'application", None))
+        self.actionQuitter.setShortcut(_translate("MainWindow", "Ctrl+Q", None))
 
 import resources_rc

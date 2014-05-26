@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1198</width>
-    <height>800</height>
+    <width>1080</width>
+    <height>751</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Open Vet</string>
@@ -26,8 +32,8 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>1091</width>
-      <height>801</height>
+      <width>1080</width>
+      <height>771</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -39,11 +45,17 @@
     <widget class="QFrame" name="frame_haut">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>40</y>
-       <width>1071</width>
-       <height>161</height>
+       <x>10</x>
+       <y>20</y>
+       <width>1070</width>
+       <height>160</height>
       </rect>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -54,9 +66,9 @@
      <widget class="QFrame" name="frame_client">
       <property name="geometry">
        <rect>
-        <x>0</x>
+        <x>2</x>
         <y>20</y>
-        <width>474</width>
+        <width>470</width>
         <height>120</height>
        </rect>
       </property>
@@ -148,8 +160,8 @@
       <property name="geometry">
        <rect>
         <x>570</x>
-        <y>30</y>
-        <width>482</width>
+        <y>20</y>
+        <width>470</width>
         <height>120</height>
        </rect>
       </property>
@@ -405,9 +417,9 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>180</y>
-       <width>1071</width>
-       <height>591</height>
+       <y>190</y>
+       <width>1070</width>
+       <height>561</height>
       </rect>
      </property>
      <property name="frameShape">
@@ -419,10 +431,10 @@
      <widget class="QTabWidget" name="tabWidget_medical">
       <property name="geometry">
        <rect>
-        <x>30</x>
-        <y>20</y>
+        <x>10</x>
+        <y>10</y>
         <width>1031</width>
-        <height>521</height>
+        <height>541</height>
        </rect>
       </property>
       <property name="currentIndex">
@@ -431,6 +443,699 @@
       <widget class="QWidget" name="tab_consulation">
        <attribute name="title">
         <string>Consultation</string>
+       </attribute>
+       <widget class="QWidget" name="verticalLayoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>1021</width>
+          <height>531</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QTextBrowser" name="textBrowser_consultations">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>10000</width>
+               <height>15000</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-position: right; background-image:  url(:/newPrefix/images/openvet.png);background-repeat: no-repeat; 
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(220, 220, 220, 255), stop:1 rgba(255, 255, 255, 255));</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="frame_vaccin">
+             <property name="minimumSize">
+              <size>
+               <width>380</width>
+               <height>90</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>370</width>
+               <height>220</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <widget class="QPushButton" name="button_vacciner">
+              <property name="geometry">
+               <rect>
+                <x>230</x>
+                <y>180</y>
+                <width>93</width>
+                <height>27</height>
+               </rect>
+              </property>
+              <property name="toolTip">
+               <string>Ajouter ce vaccin dans le dossier</string>
+              </property>
+              <property name="text">
+               <string>Vacciner</string>
+              </property>
+             </widget>
+             <widget class="QTableWidget" name="tableWidget_vacciner">
+              <property name="geometry">
+               <rect>
+                <x>50</x>
+                <y>0</y>
+                <width>311</width>
+                <height>121</height>
+               </rect>
+              </property>
+              <property name="rowCount">
+               <number>3</number>
+              </property>
+              <property name="columnCount">
+               <number>3</number>
+              </property>
+              <attribute name="verticalHeaderVisible">
+               <bool>false</bool>
+              </attribute>
+              <row/>
+              <row/>
+              <row/>
+              <column/>
+              <column/>
+              <column/>
+             </widget>
+             <widget class="QLabel" name="label_vaccinerStart">
+              <property name="geometry">
+               <rect>
+                <x>40</x>
+                <y>140</y>
+                <width>31</width>
+                <height>17</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>Le :</string>
+              </property>
+             </widget>
+             <widget class="QComboBox" name="comboBox_rappel">
+              <property name="geometry">
+               <rect>
+                <x>70</x>
+                <y>160</y>
+                <width>141</width>
+                <height>27</height>
+               </rect>
+              </property>
+              <property name="toolTip">
+               <string>Période de rappel</string>
+              </property>
+             </widget>
+             <widget class="QDateEdit" name="dateEdit_vacciner_end">
+              <property name="geometry">
+               <rect>
+                <x>230</x>
+                <y>150</y>
+                <width>101</width>
+                <height>27</height>
+               </rect>
+              </property>
+              <property name="toolTip">
+               <string>Date de rappel</string>
+              </property>
+              <property name="calendarPopup">
+               <bool>true</bool>
+              </property>
+             </widget>
+             <widget class="QDateEdit" name="dateEdit_vacciner_start">
+              <property name="geometry">
+               <rect>
+                <x>80</x>
+                <y>130</y>
+                <width>101</width>
+                <height>27</height>
+               </rect>
+              </property>
+              <property name="toolTip">
+               <string>Date de vaccination</string>
+              </property>
+              <property name="calendarPopup">
+               <bool>true</bool>
+              </property>
+             </widget>
+             <widget class="QLabel" name="label_23">
+              <property name="geometry">
+               <rect>
+                <x>10</x>
+                <y>160</y>
+                <width>62</width>
+                <height>17</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>Rappel :</string>
+              </property>
+             </widget>
+             <widget class="QComboBox" name="comboBox_vacciner">
+              <property name="geometry">
+               <rect>
+                <x>230</x>
+                <y>120</y>
+                <width>101</width>
+                <height>27</height>
+               </rect>
+              </property>
+              <property name="toolTip">
+               <string>Vaccin</string>
+              </property>
+             </widget>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QFrame" name="frame_edit_consult">
+           <property name="minimumSize">
+            <size>
+             <width>800</width>
+             <height>266</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>10000</height>
+            </size>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <widget class="QWidget" name="layoutWidget_8">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>10</y>
+              <width>987</width>
+              <height>246</height>
+             </rect>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_10">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_12">
+               <property name="spacing">
+                <number>6</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="label_17">
+                 <property name="maximumSize">
+                  <size>
+                   <width>25</width>
+                   <height>27</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Le :</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QDateEdit" name="dateEdit_consult">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>112</width>
+                   <height>27</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>27</height>
+                  </size>
+                 </property>
+                 <property name="toolTip">
+                  <string>Date de consultation</string>
+                 </property>
+                 <property name="displayFormat">
+                  <string>dd/MM/yyyy</string>
+                 </property>
+                 <property name="calendarPopup">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_24">
+                 <property name="minimumSize">
+                  <size>
+                   <width>82</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>82</width>
+                   <height>27</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Vétérinaire :</string>
+                 </property>
+                 <property name="textFormat">
+                  <enum>Qt::AutoText</enum>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                 <property name="textInteractionFlags">
+                  <set>Qt::LinksAccessibleByMouse</set>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="MyComboBox" name="comboBox_veterinaire">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>200</width>
+                   <height>27</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>27</height>
+                  </size>
+                 </property>
+                 <property name="toolTip">
+                  <string>Vétérinaire consultant</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">selection-background-color: rgb(255, 255, 127);</string>
+                 </property>
+                 <property name="editable">
+                  <bool>true</bool>
+                 </property>
+                 <property name="frame">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_25">
+                 <property name="maximumSize">
+                  <size>
+                   <width>50</width>
+                   <height>27</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>   Type :</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="MyComboBox" name="comboBox_consultType">
+                 <property name="minimumSize">
+                  <size>
+                   <width>160</width>
+                   <height>27</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>27</height>
+                  </size>
+                 </property>
+                 <property name="toolTip">
+                  <string>Choir le type dominant de la consultation</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">selection-background-color: rgb(255, 255, 127);</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_Referant">
+                 <property name="maximumSize">
+                  <size>
+                   <width>63</width>
+                   <height>27</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Référant :</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="MyComboBox" name="comboBox_Referant">
+                 <property name="minimumSize">
+                  <size>
+                   <width>181</width>
+                   <height>27</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>27</height>
+                  </size>
+                 </property>
+                 <property name="toolTip">
+                  <string>Choisir un vétérinaire référant</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">selection-background-color: rgb(255, 255, 127);</string>
+                 </property>
+                 <property name="editable">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_13">
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_11">
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_14">
+                   <item>
+                    <widget class="QLabel" name="label_26">
+                     <property name="maximumSize">
+                      <size>
+                       <width>160</width>
+                       <height>27</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>Domaine Pathologique :</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="MyComboBox" name="comboBox_PathologieDomaine">
+                     <property name="minimumSize">
+                      <size>
+                       <width>191</width>
+                       <height>27</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>200</width>
+                       <height>27</height>
+                      </size>
+                     </property>
+                     <property name="toolTip">
+                      <string>Domaine pathologique dominant de la consultation</string>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">selection-background-color: rgb(255, 255, 127);</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="label_Pathologie">
+                     <property name="minimumSize">
+                      <size>
+                       <width>81</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>81</width>
+                       <height>27</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>Pathologie :</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="MyComboBox" name="comboBox_Pathologie">
+                     <property name="minimumSize">
+                      <size>
+                       <width>221</width>
+                       <height>27</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>261</width>
+                       <height>27</height>
+                      </size>
+                     </property>
+                     <property name="toolTip">
+                      <string>Choisir une Pathologie Dominante pour cette Consultation</string>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">selection-background-color: rgb(255, 255, 127);</string>
+                     </property>
+                     <property name="editable">
+                      <bool>false</bool>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QToolButton" name="toolButton_Pathologie">
+                     <property name="minimumSize">
+                      <size>
+                       <width>27</width>
+                       <height>27</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>27</width>
+                       <height>27</height>
+                      </size>
+                     </property>
+                     <property name="toolTip">
+                      <string>Accès au formulaire de pathologie</string>
+                     </property>
+                     <property name="text">
+                      <string>...</string>
+                     </property>
+                     <property name="icon">
+                      <iconset resource="resources.qrc">
+                       <normaloff>:/newPrefix/images/pathologie.png</normaloff>:/newPrefix/images/pathologie.png</iconset>
+                     </property>
+                     <property name="iconSize">
+                      <size>
+                       <width>36</width>
+                       <height>36</height>
+                      </size>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QToolButton" name="toolButton_comment">
+                     <property name="minimumSize">
+                      <size>
+                       <width>27</width>
+                       <height>27</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>27</width>
+                       <height>27</height>
+                      </size>
+                     </property>
+                     <property name="text">
+                      <string>...</string>
+                     </property>
+                     <property name="icon">
+                      <iconset resource="resources.qrc">
+                       <normaloff>:/newPrefix/images/info.png</normaloff>:/newPrefix/images/info.png</iconset>
+                     </property>
+                     <property name="iconSize">
+                      <size>
+                       <width>48</width>
+                       <height>48</height>
+                      </size>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                 <item>
+                  <layout class="QFormLayout" name="formLayout_3">
+                   <property name="fieldGrowthPolicy">
+                    <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+                   </property>
+                   <item row="0" column="0">
+                    <widget class="QLabel" name="label_27">
+                     <property name="text">
+                      <string>Observations :</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <widget class="QTextEdit" name="textEdit_consultObs">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>760</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>111</height>
+                      </size>
+                     </property>
+                     <property name="toolTip">
+                      <string>Insérer les observations cliniques</string>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">background-color: rgb(255, 255, 255);</string>
+                     </property>
+                     <property name="frameShape">
+                      <enum>QFrame::Box</enum>
+                     </property>
+                     <property name="frameShadow">
+                      <enum>QFrame::Sunken</enum>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="0">
+                    <widget class="QLabel" name="label_28">
+                     <property name="text">
+                      <string>Traitements :</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item row="1" column="1">
+                    <widget class="QTextEdit" name="textEdit_consultTrait">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>760</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>51</height>
+                      </size>
+                     </property>
+                     <property name="toolTip">
+                      <string>Inserez les traitements</string>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">background-color: rgb(255, 255, 255);</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_12">
+                 <item>
+                  <widget class="QPushButton" name="pushButton_valider">
+                   <property name="minimumSize">
+                    <size>
+                     <width>0</width>
+                     <height>27</height>
+                    </size>
+                   </property>
+                   <property name="toolTip">
+                    <string>Enregistrer cette consultation</string>
+                   </property>
+                   <property name="text">
+                    <string>Valider</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="pushButton_Nouveau">
+                   <property name="toolTip">
+                    <string>Nouvelle Consultation</string>
+                   </property>
+                   <property name="text">
+                    <string>Nouveau</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="pushButton_Hospit">
+                   <property name="toolTip">
+                    <string>Imprimer la fiche d'hospitalisation</string>
+                   </property>
+                   <property name="text">
+                    <string>Hospitalisation</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="pushButton_Facturation">
+                   <property name="toolTip">
+                    <string>Basculer en facturation</string>
+                   </property>
+                   <property name="text">
+                    <string>Facturation</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_vaccins">
+       <attribute name="title">
+        <string>Vaccinations</string>
        </attribute>
       </widget>
       <widget class="QWidget" name="tab_analyses">
@@ -541,7 +1246,7 @@
          <string>Ajouter image</string>
         </property>
        </widget>
-       <widget class="Line" name="line_7">
+       <widget class="Line" name="line_4">
         <property name="geometry">
          <rect>
           <x>620</x>
@@ -554,7 +1259,7 @@
          <enum>Qt::Vertical</enum>
         </property>
        </widget>
-       <widget class="Line" name="line_8">
+       <widget class="Line" name="line_5">
         <property name="geometry">
          <rect>
           <x>270</x>
@@ -567,7 +1272,7 @@
          <enum>Qt::Vertical</enum>
         </property>
        </widget>
-       <widget class="QLabel" name="label_43">
+       <widget class="QLabel" name="label_12">
         <property name="geometry">
          <rect>
           <x>660</x>
@@ -605,7 +1310,7 @@
          </size>
         </property>
        </widget>
-       <widget class="QLabel" name="label_44">
+       <widget class="QLabel" name="label_13">
         <property name="geometry">
          <rect>
           <x>50</x>
@@ -651,7 +1356,7 @@
          <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
        </widget>
-       <widget class="QWidget" name="layoutWidget_14">
+       <widget class="QWidget" name="layoutWidget_9">
         <property name="geometry">
          <rect>
           <x>303</x>
@@ -660,11 +1365,11 @@
           <height>438</height>
          </rect>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout_16">
+        <layout class="QVBoxLayout" name="verticalLayout_5">
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_20">
+          <layout class="QHBoxLayout" name="horizontalLayout_7">
            <item>
-            <widget class="QLabel" name="label_45">
+            <widget class="QLabel" name="label_14">
              <property name="baseSize">
               <size>
                <width>0</width>
@@ -707,7 +1412,7 @@
           </layout>
          </item>
          <item>
-          <widget class="QLabel" name="label_46">
+          <widget class="QLabel" name="label_15">
            <property name="text">
             <string>Description de l'analyse:</string>
            </property>
@@ -733,7 +1438,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_47">
+          <widget class="QLabel" name="label_30">
            <property name="text">
             <string>Prélèvement :</string>
            </property>
@@ -759,7 +1464,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_48">
+          <widget class="QLabel" name="label_31">
            <property name="text">
             <string>Observations :</string>
            </property>
@@ -803,7 +1508,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_49">
+          <widget class="QLabel" name="label_32">
            <property name="text">
             <string>Conclusions :</string>
            </property>
@@ -838,7 +1543,7 @@
           </widget>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_21">
+          <layout class="QHBoxLayout" name="horizontalLayout_8">
            <item>
             <widget class="QPushButton" name="pushButton_valide">
              <property name="maximumSize">
@@ -861,6 +1566,32 @@
           </layout>
          </item>
         </layout>
+       </widget>
+       <widget class="QToolButton" name="toolButton_AddTypeAnalyse">
+        <property name="geometry">
+         <rect>
+          <x>970</x>
+          <y>10</y>
+          <width>26</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <property name="toolTip">
+         <string>AJouter des types d'analyses</string>
+        </property>
+        <property name="text">
+         <string>...</string>
+        </property>
+        <property name="icon">
+         <iconset resource="resources.qrc">
+          <normaloff>:/newPrefix/images/add1.png</normaloff>:/newPrefix/images/add1.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
        </widget>
       </widget>
       <widget class="QWidget" name="tab_ordonnances">
@@ -896,7 +1627,7 @@
          <cstring>textBrowser_medicament</cstring>
         </property>
        </widget>
-       <widget class="Line" name="line_9">
+       <widget class="Line" name="line_6">
         <property name="geometry">
          <rect>
           <x>515</x>
@@ -909,7 +1640,7 @@
          <enum>Qt::Vertical</enum>
         </property>
        </widget>
-       <widget class="QToolButton" name="toolButton_5">
+       <widget class="QToolButton" name="toolButton_3">
         <property name="geometry">
          <rect>
           <x>960</x>
@@ -935,7 +1666,7 @@
          </size>
         </property>
        </widget>
-       <widget class="QToolButton" name="toolButton_6">
+       <widget class="QToolButton" name="toolButton_4">
         <property name="geometry">
          <rect>
           <x>920</x>
@@ -961,7 +1692,7 @@
          </size>
         </property>
        </widget>
-       <widget class="QWidget" name="layoutWidget_15">
+       <widget class="QWidget" name="layoutWidget_10">
         <property name="geometry">
          <rect>
           <x>543</x>
@@ -1097,7 +1828,7 @@
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="layoutWidget_16">
+       <widget class="QWidget" name="layoutWidget_11">
         <property name="geometry">
          <rect>
           <x>540</x>
@@ -1106,7 +1837,7 @@
           <height>29</height>
          </rect>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_22">
+        <layout class="QHBoxLayout" name="horizontalLayout_15">
          <item>
           <widget class="QPushButton" name="pushButton_validOrdonnance">
            <property name="text">
@@ -1115,7 +1846,7 @@
           </widget>
          </item>
          <item>
-          <spacer name="horizontalSpacer_12">
+          <spacer name="horizontalSpacer_6">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
@@ -1138,7 +1869,7 @@
           </widget>
          </item>
          <item>
-          <spacer name="horizontalSpacer_13">
+          <spacer name="horizontalSpacer_7">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
@@ -1162,23 +1893,23 @@
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="layoutWidget_17">
+       <widget class="QWidget" name="layoutWidget_12">
         <property name="geometry">
          <rect>
           <x>11</x>
           <y>31</y>
-          <width>513</width>
+          <width>512</width>
           <height>387</height>
          </rect>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout_17">
+        <layout class="QVBoxLayout" name="verticalLayout_6">
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_23">
+          <layout class="QHBoxLayout" name="horizontalLayout_16">
            <property name="sizeConstraint">
             <enum>QLayout::SetDefaultConstraint</enum>
            </property>
            <item>
-            <widget class="QLabel" name="label_50">
+            <widget class="QLabel" name="label_33">
              <property name="text">
               <string>Le :</string>
              </property>
@@ -1219,7 +1950,7 @@
             </widget>
            </item>
            <item>
-            <spacer name="horizontalSpacer_14">
+            <spacer name="horizontalSpacer_8">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
              </property>
@@ -1235,7 +1966,7 @@
             </spacer>
            </item>
            <item>
-            <widget class="QLabel" name="label_51">
+            <widget class="QLabel" name="label_34">
              <property name="text">
               <string>Poids :</string>
              </property>
@@ -1355,7 +2086,7 @@
          <cstring>listView_doc</cstring>
         </property>
        </widget>
-       <widget class="QWidget" name="layoutWidget_18">
+       <widget class="QWidget" name="layoutWidget_13">
         <property name="geometry">
          <rect>
           <x>320</x>
@@ -1364,9 +2095,9 @@
           <height>378</height>
          </rect>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout_18">
+        <layout class="QVBoxLayout" name="verticalLayout_13">
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_24">
+          <layout class="QHBoxLayout" name="horizontalLayout_17">
            <item>
             <widget class="QLabel" name="label_docDate">
              <property name="text">
@@ -1397,7 +2128,7 @@
             </widget>
            </item>
            <item>
-            <spacer name="horizontalSpacer_15">
+            <spacer name="horizontalSpacer_9">
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
              </property>
@@ -1481,701 +2212,6 @@
             <string notr="true">background-color: rgb(255, 255, 255);</string>
            </property>
           </widget>
-         </item>
-        </layout>
-       </widget>
-      </widget>
-     </widget>
-     <widget class="QSplitter" name="splitter">
-      <property name="geometry">
-       <rect>
-        <x>40</x>
-        <y>80</y>
-        <width>1018</width>
-        <height>491</height>
-       </rect>
-      </property>
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <widget class="QFrame" name="frame_med_sup">
-       <property name="styleSheet">
-        <string notr="true"/>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::Box</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
-       </property>
-       <widget class="QTextBrowser" name="textBrowser_consultations">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>10</y>
-          <width>671</width>
-          <height>401</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-position: right; background-image:  url(:/newPrefix/images/openvet.png);background-repeat: no-repeat; 
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(220, 220, 220, 255), stop:1 rgba(255, 255, 255, 255));</string>
-        </property>
-       </widget>
-       <widget class="QFrame" name="frame_vaccin">
-        <property name="geometry">
-         <rect>
-          <x>680</x>
-          <y>10</y>
-          <width>341</width>
-          <height>231</height>
-         </rect>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <widget class="QTableWidget" name="tableWidget_vacciner">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>10</y>
-           <width>311</width>
-           <height>121</height>
-          </rect>
-         </property>
-         <property name="rowCount">
-          <number>3</number>
-         </property>
-         <property name="columnCount">
-          <number>3</number>
-         </property>
-         <attribute name="verticalHeaderVisible">
-          <bool>false</bool>
-         </attribute>
-         <row/>
-         <row/>
-         <row/>
-         <column/>
-         <column/>
-         <column/>
-        </widget>
-        <widget class="QLabel" name="label_35">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>170</y>
-           <width>62</width>
-           <height>17</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Rappel :</string>
-         </property>
-         <property name="buddy">
-          <cstring>comboBox_rappel</cstring>
-         </property>
-        </widget>
-        <widget class="QDateEdit" name="dateEdit_vacciner_end">
-         <property name="geometry">
-          <rect>
-           <x>220</x>
-           <y>160</y>
-           <width>101</width>
-           <height>27</height>
-          </rect>
-         </property>
-         <property name="toolTip">
-          <string>Date de rappel</string>
-         </property>
-         <property name="autoFillBackground">
-          <bool>false</bool>
-         </property>
-         <property name="calendarPopup">
-          <bool>true</bool>
-         </property>
-        </widget>
-        <widget class="QComboBox" name="comboBox_vacciner">
-         <property name="geometry">
-          <rect>
-           <x>220</x>
-           <y>130</y>
-           <width>101</width>
-           <height>27</height>
-          </rect>
-         </property>
-         <property name="toolTip">
-          <string>Vaccin</string>
-         </property>
-        </widget>
-        <widget class="QComboBox" name="comboBox_rappel">
-         <property name="geometry">
-          <rect>
-           <x>60</x>
-           <y>160</y>
-           <width>141</width>
-           <height>27</height>
-          </rect>
-         </property>
-         <property name="toolTip">
-          <string>Période de rappel</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_vaccinerStart">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>140</y>
-           <width>31</width>
-           <height>17</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Le :</string>
-         </property>
-         <property name="buddy">
-          <cstring>dateEdit_vacciner_start</cstring>
-         </property>
-        </widget>
-        <widget class="QPushButton" name="button_vacciner">
-         <property name="geometry">
-          <rect>
-           <x>220</x>
-           <y>190</y>
-           <width>93</width>
-           <height>27</height>
-          </rect>
-         </property>
-         <property name="toolTip">
-          <string>Ajouter ce vaccin dans le dossier</string>
-         </property>
-         <property name="text">
-          <string>Vacciner</string>
-         </property>
-        </widget>
-        <widget class="QDateEdit" name="dateEdit_vacciner_start">
-         <property name="geometry">
-          <rect>
-           <x>60</x>
-           <y>160</y>
-           <width>101</width>
-           <height>27</height>
-          </rect>
-         </property>
-         <property name="toolTip">
-          <string>Date de vaccination</string>
-         </property>
-         <property name="autoFillBackground">
-          <bool>false</bool>
-         </property>
-         <property name="calendarPopup">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </widget>
-      </widget>
-      <widget class="QFrame" name="frame_med_inf">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="toolTip">
-        <string>Ajouter un commentaire</string>
-       </property>
-       <property name="styleSheet">
-        <string notr="true"/>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::Box</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
-       </property>
-       <widget class="QWidget" name="layoutWidget_13">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>10</y>
-          <width>1007</width>
-          <height>221</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout_13">
-         <property name="spacing">
-          <number>3</number>
-         </property>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_17">
-           <item>
-            <widget class="QLabel" name="label_36">
-             <property name="maximumSize">
-              <size>
-               <width>25</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Le :</string>
-             </property>
-             <property name="buddy">
-              <cstring>dateEdit_consult</cstring>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QDateEdit" name="dateEdit_consult">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>112</width>
-               <height>27</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Date de consultation</string>
-             </property>
-             <property name="displayFormat">
-              <string>dd/MM/yyyy</string>
-             </property>
-             <property name="calendarPopup">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="horizontalSpacer_11">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Fixed</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>18</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_37">
-             <property name="text">
-              <string>Vétérinaire :</string>
-             </property>
-             <property name="textFormat">
-              <enum>Qt::AutoText</enum>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-             <property name="textInteractionFlags">
-              <set>Qt::LinksAccessibleByMouse</set>
-             </property>
-             <property name="buddy">
-              <cstring>comboBox_veterinaire</cstring>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QComboBox" name="comboBox_veterinaire">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>221</width>
-               <height>27</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Vétérinaire consultant</string>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">selection-background-color: rgb(255, 255, 127);</string>
-             </property>
-             <property name="editable">
-              <bool>true</bool>
-             </property>
-             <property name="frame">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_38">
-             <property name="maximumSize">
-              <size>
-               <width>50</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>   Type :</string>
-             </property>
-             <property name="buddy">
-              <cstring>comboBox_consultType</cstring>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QComboBox" name="comboBox_consultType">
-             <property name="minimumSize">
-              <size>
-               <width>131</width>
-               <height>27</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Choir le type dominant de la consultation</string>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">selection-background-color: rgb(255, 255, 127);</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_Referant">
-             <property name="maximumSize">
-              <size>
-               <width>63</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Référant :</string>
-             </property>
-             <property name="buddy">
-              <cstring>comboBox_Referant</cstring>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QComboBox" name="comboBox_Referant">
-             <property name="minimumSize">
-              <size>
-               <width>181</width>
-               <height>27</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Choisir un vétérinaire référant</string>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">selection-background-color: rgb(255, 255, 127);</string>
-             </property>
-             <property name="editable">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_18">
-           <property name="spacing">
-            <number>16</number>
-           </property>
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_14">
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_19">
-               <item>
-                <widget class="QLabel" name="label_39">
-                 <property name="maximumSize">
-                  <size>
-                   <width>160</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Domaine Pathologique :</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QComboBox" name="comboBox_5">
-                 <property name="minimumSize">
-                  <size>
-                   <width>191</width>
-                   <height>27</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>241</width>
-                   <height>32</height>
-                  </size>
-                 </property>
-                 <property name="toolTip">
-                  <string>Domaine pathologique dominant de la consultation</string>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">selection-background-color: rgb(255, 255, 127);</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_40">
-                 <property name="minimumSize">
-                  <size>
-                   <width>81</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>81</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Pathologie :</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QComboBox" name="comboBox_6">
-                 <property name="minimumSize">
-                  <size>
-                   <width>221</width>
-                   <height>27</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>261</width>
-                   <height>32</height>
-                  </size>
-                 </property>
-                 <property name="toolTip">
-                  <string>Choisir une Pathologie Dominante pour cette Consultation</string>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">selection-background-color: rgb(255, 255, 127);</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QToolButton" name="toolButton_Pathologie">
-                 <property name="minimumSize">
-                  <size>
-                   <width>27</width>
-                   <height>27</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>36</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="toolTip">
-                  <string>Ouvre un plan thérapeutique</string>
-                 </property>
-                 <property name="text">
-                  <string>...</string>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="resources.qrc">
-                   <normaloff>:/newPrefix/images/pathologie.png</normaloff>:/newPrefix/images/pathologie.png</iconset>
-                 </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>36</width>
-                   <height>36</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QToolButton" name="toolButton_comment">
-                 <property name="minimumSize">
-                  <size>
-                   <width>27</width>
-                   <height>27</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>36</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>...</string>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="resources.qrc">
-                   <normaloff>:/newPrefix/images/info.png</normaloff>:/newPrefix/images/info.png</iconset>
-                 </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>48</width>
-                   <height>48</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QFormLayout" name="formLayout">
-               <item row="0" column="0">
-                <widget class="QLabel" name="label_41">
-                 <property name="text">
-                  <string>Observations :</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="1">
-                <widget class="QTextEdit" name="textEdit_consultObs">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>760</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>111</height>
-                  </size>
-                 </property>
-                 <property name="toolTip">
-                  <string>Insérer les observations cliniques</string>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
-                 </property>
-                 <property name="frameShape">
-                  <enum>QFrame::Box</enum>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Sunken</enum>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <widget class="QLabel" name="label_42">
-                 <property name="text">
-                  <string>Traitements :</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="1">
-                <widget class="QTextEdit" name="textEdit_consultTrait">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>760</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>51</height>
-                  </size>
-                 </property>
-                 <property name="toolTip">
-                  <string>Inserez les traitements</string>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_15">
-             <item>
-              <widget class="QPushButton" name="pushButton_valider">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>27</height>
-                </size>
-               </property>
-               <property name="toolTip">
-                <string>Enregistrer cette consultation</string>
-               </property>
-               <property name="text">
-                <string>Valider</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="pushButton_Nouveau">
-               <property name="toolTip">
-                <string>Nouvelle Consultation</string>
-               </property>
-               <property name="text">
-                <string>Nouveau</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="pushButton_Hospit">
-               <property name="toolTip">
-                <string>Imprimer la fiche d'hospitalisation</string>
-               </property>
-               <property name="text">
-                <string>Hospitalisation</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="pushButton_Facturation">
-               <property name="toolTip">
-                <string>Basculer en facturation</string>
-               </property>
-               <property name="text">
-                <string>Facturation</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
          </item>
         </layout>
        </widget>
@@ -2279,6 +2315,13 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MyComboBox</class>
+   <extends>QComboBox</extends>
+   <header>Mywidgets</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="resources.qrc"/>
  </resources>

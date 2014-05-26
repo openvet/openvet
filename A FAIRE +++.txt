@@ -3,22 +3,23 @@ consultation : trier par date
 ascenseur dans onglet consultation  faire  reglage 
 petit bug  lors champs null  enregistre texte 'null' revoir requete
 
-
+formulaire nouvelle ville, prevoir autre pays
 
 database : creer variable de classe pour database
 
+BUG faire mise à jour liste de tous les clients (cf edition client, change nom, ouvre nouvel onglet : la liste garde l'ancien nom)
 
-
-BUG : edition consult + changer d'animal +  edition+valise consult=> err car consultActive=None
+BUG : edition consult + changer d'animal +  edition+valide consult=> err car consultActive=None
 ==> lors changement animal annuler mode edition
 
 
-empecher deplacement onglet +  (tabconsultation)
+FAIT                                empecher deplacement onglet +  (tabconsultation) OK
 
 database :
 ajouter  Unsigned pour les types entier.
+ne pas limiter salaire horaire à 99.99
 retirer int(11) tinyint(1)  inutile car ne change pas la taille des entiers
-
+ERREUR DB  personne isReferent et isReferAnt
 
 Table.py
 FAIT  verifier format decimal et taille, type date...
@@ -28,3 +29,5 @@ FAIT prevoir table join ou regrouper tables avec id
 remplacer tous msg erreur par AfficheErreur(msg)
 
 FAIRE LOCK UNLOCK **********************
+
+formulaire edition client : fixer la taille des combobox, forcer majuscules NOM Prenom,ajouter nouveau client a la liste des clients,ajouter formulaire nouvelle ville
