@@ -2,6 +2,7 @@
 # -*- coding: utf8 -*-
 import re
 from PyQt4 import QtCore
+import Tables
 
 def GetDbLines(DBase,request):
 	clst=[]
@@ -40,6 +41,21 @@ def GetDbidText(DBase,request,Tous=False):
 		clst.append([i[0],txt])
 	return clst
 
+def DbAdd(DBase,table,valeurs):
+	valeurs=','.join(valeurs)
+	#print "INSERT INTO %s VALUES (%s)"%(table,valeurs)
+	DBase.ExecuteSQL("INSERT INTO %s VALUES (%s)"%(table,valeurs))
+	
+#	Mytable=Tables.Table(DBase, table,  auto=True)
+	#Mytable.SetChamps(True,  values[0],  values[1], values[2],values[3],values[4])
+	
+def DbUpdate(DBase,table,champs,valeurs):
+	idtable='='.join(zip(champs,valeurs)[0])
+	sets=','.join(['='.join(i) for i in zip(champs,valeurs)[1:]])
+	#print "UPDATE %s SET %s WHERE %s"%(table,sets,idtable)
+	DBase.ExecuteSQL("UPDATE %s SET %s WHERE %s"%(table,sets,idtable))
+		
+	
 def ValideDate(date,formatin='dmyy'):
 	if not isinstance(date, basestring):
 		return None
@@ -73,4 +89,6 @@ def Logout(chaine):
 	
 
 if __name__ == '__main__':
-	pass
+	a=QtCore.QString(u'')
+	print a.toUtf8()
+	

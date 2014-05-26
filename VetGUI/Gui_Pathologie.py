@@ -17,9 +17,11 @@ class FormPathologie(QtGui.QDialog, Ui_DialogPathologie):   #On click button_P]
         self.MyPathologie=parent.MyPathologie
         self.MyConsult=parent.MyConsult
         self.MyCritere=Core_Consultation.Critere(self.MyPathologie.DBase)
+        self.ChangedRows=[]
         #format table
         self.tableWidget_Criteres.setHorizontalHeaderLabels(QtCore.QStringList()<<u'Examen'<<u'Critère'<<u'Valeur'<<u'Unitée'<<u'Norme'<<u'Grade')
-        widths=[180,240,60,60,116,60]
+        widths=[180,240,76,50,110,60]
+        #TODO: limit size string for cells 
         for i in range(len(widths)):
             self.tableWidget_Criteres.setColumnWidth(i,widths[i])
         for i in range(12):
@@ -32,10 +34,12 @@ class FormPathologie(QtGui.QDialog, Ui_DialogPathologie):   #On click button_P]
         self.comboBox_Examen.currentIndexChanged.connect(self.OnExamen)
         self.comboBox_Critere.activated.connect(self.OnCritere)
         self.tableWidget_Criteres.itemChanged.connect(self.OnCritereEnter)
+        #self.tableWidget_Criteres.itemActivated.connect(self.OnCritereEnter)
         self.comboBox_PathologiePathologie.activated.connect(self.OnPathologie)
         self.comboBox_PathologieSelection.activated.connect(self.OnSelection)
         self.toolButton_AddPathologie.clicked.connect(self.OnAddPathologie) #in selection
         self.toolButton_deletePathologie.clicked.connect(self.OnRemovePathologie)
+        self.accepted.connect(self.SaveCriteresConsultation)
         #fill pathologies pour Tous 
         self.OnPathologieDomaine()
         
@@ -63,14 +67,16 @@ class FormPathologie(QtGui.QDialog, Ui_DialogPathologie):   #On click button_P]
         if not idPathologie is None:
             self.MyPathologie.GetPathologie(idPathologie)
         self.comboBox_Examen.Fill(self.MyPathologie.GetExamens())
+        if self.NbCriteres>0:
+            self.SaveCriteresConsultation()
         self.NbCriteres=0
         self.tableWidget_Criteres.clearContents()
         res=self.MyConsult.GetCriteresConsultation(idPathologie)
         for i in res:
             self.FillTable(i)
+        self.ChangedRows=[]
             
     def FillTable(self,ligne):
-        print ligne
         if len(ligne)==0:
             return
         self.NbCriteres+=1
@@ -78,39 +84,38 @@ class FormPathologie(QtGui.QDialog, Ui_DialogPathologie):   #On click button_P]
             self.tableWidget_Criteres.insertRow(self.tableWidget_Criteres.rowCount())
         for i,align in zip(range(6),[QtCore.Qt.AlignLeft,QtCore.Qt.AlignLeft,QtCore.Qt.AlignRight,QtCore.Qt.AlignRight,QtCore.Qt.AlignCenter,QtCore.Qt.AlignRight]):
             self.tableWidget_Criteres.setItem(self.NbCriteres-1,i,QtGui.QTableWidgetItem(ligne[i+2]))
-            self.tableWidget_Criteres.item(self.NbCriteres-1,i).setTextAlignment(align) 
-
+            self.tableWidget_Criteres.item(self.NbCriteres-1,i).setTextAlignment(align)
+            self.tableWidget_Criteres.item(self.NbCriteres-1,i).setData(QtCore.Qt.UserRole,QtCore.QVariant([ligne[0],ligne[1]]))
+            
     def OnExamen(self):
         if not self.comboBox_Examen.GetData() is None:
             self.comboBox_Critere.Fill(self.MyPathologie.GetCriteres(self.comboBox_Examen.GetData()))                
 
     def OnCritere(self):
-        #TODO:
         if not self.comboBox_Critere.GetData() is None:
             res=self.MyCritere.GetCritere(self.comboBox_Critere.GetData())
-            #TODO: Use FillTable
-            n=len(self.MyPathologie.Criteres)
-            if n>self.tableWidget_Criteres.rowCount():
-                self.tableWidget_Criteres.insertRow(self.tableWidget_Criteres.rowCount())
-            for i,align in zip(range(5),[QtCore.Qt.AlignLeft,QtCore.Qt.AlignRight,QtCore.Qt.AlignRight,QtCore.Qt.AlignCenter,QtCore.Qt.AlignRight]):
-                if i in [1,4]:
-                    self.tableWidget_Criteres.setItem(n,i,QtGui.QTableWidgetItem(''))
-                    self.tableWidget_Criteres.item(n,i).setData(QtCore.Qt.UserRole,QtCore.QVariant(self.comboBox_Critere.GetData()))  
-                else:
-                    self.tableWidget_Criteres.setItem(n,i,QtGui.QTableWidgetItem(res[max(i-1,0)]))
-                self.tableWidget_Criteres.item(n,i).setTextAlignment(align)  
-#            self.tableWidget_Criteres.editItem(self.tableWidget_Criteres.item(n,1))
-            self.MyPathologie.Criteres.append(self.MyCritere.ToList())
+            if len(res)>0:
+                self.FillTable([0,res[0],res[1],res[2],'',res[3],res[4],''])
+                self.tableWidget_Criteres.editItem(self.tableWidget_Criteres.item(self.NbCriteres-1,2))
 
     def OnCritereEnter(self,item):
         if item is None:
             return
-        if item.column()==1:
+        if item.column()==2:
+            if len(item.data(QtCore.Qt.UserRole).toList())==2:
+                self.MyCritere.idCritere=item.data(QtCore.Qt.UserRole).toList()[1].toInt()[0]
             res=self.MyCritere.GetCritereGrade(item.text().toFloat()[0])
             if len(res)==0 :
                 return
-            self.tableWidget_Criteres.setItem(item.row(),4,QtGui.QTableWidgetItem(res[0]+'/'+res[1]))
-            self.tableWidget_Criteres.item(item.row(),4).setTextAlignment(QtCore.Qt.AlignRight) 
+            self.tableWidget_Criteres.setItem(item.row(),5,QtGui.QTableWidgetItem(res[0]+'/'+res[1]))
+            self.tableWidget_Criteres.item(item.row(),5).setTextAlignment(QtCore.Qt.AlignRight)
+        if item.isSelected():
+            if item.data(QtCore.Qt.UserRole).toList()[0].toInt()[0]!=0:
+                if not item.row in self.ChangedRows:
+                    self.ChangedRows.append(item.row())
+            else:
+                #TODO: sort by examen if data[0]==0
+                pass
            
     def OnAddPathologie(self):
         if self.comboBox_PathologieSelection.findData(self.MyPathologie.idPathologie)==-1:
@@ -119,3 +124,13 @@ class FormPathologie(QtGui.QDialog, Ui_DialogPathologie):   #On click button_P]
         
     def OnRemovePathologie(self):
         self.comboBox_PathologieSelection.removeItem(self.comboBox_PathologieSelection.currentIndex())  
+        
+    def SaveCriteresConsultation(self):
+        for i in range(self.NbCriteres):
+            ids=self.tableWidget_Criteres.item(i,2).data(QtCore.Qt.UserRole).toList()
+            ids.append(QtCore.QVariant(self.comboBox_PathologieSelection.GetData()))
+            valeur=self.tableWidget_Criteres.item(i,2).text()
+            grade=self.tableWidget_Criteres.item(i,5).text()
+            if ids[0].toInt()[0]==0 or i in self.ChangedRows:
+                self.MyConsult.SaveCritere(ids,valeur,grade)
+     

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file './Form_pathologie.ui'
 #
-# Created: Wed Feb 19 13:38:50 2014
+# Created: Wed Feb 19 23:32:27 2014
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -132,7 +132,7 @@ class Ui_DialogPathologie(object):
         self.verticalLayout_3.addLayout(self.horizontalLayout_4)
         self.buttonBox = QtGui.QDialogButtonBox(self.layoutWidget)
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
-        self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
+        self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Save)
         self.buttonBox.setObjectName("buttonBox")
         self.verticalLayout_3.addWidget(self.buttonBox)
         self.layoutWidget1 = QtGui.QWidget(DialogPathologie)

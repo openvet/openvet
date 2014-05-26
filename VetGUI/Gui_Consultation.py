@@ -1,19 +1,12 @@
-#!/usr/bin/env python
 # -*- coding: utf8 -*-
 import sys
 from PyQt4 import QtCore, QtGui
 #from PySide import QtCore, QtGui
-sys.path.append('../VetCore')
-import Core_Consultation
 from ui_Form_consultation import Ui_MainWindow
-from ui_Form_pathologie import Ui_DialogPathologie
 from ui_Form_client import Ui_Dialog_client
 from ui_Form_animal import Ui_Dialog_animal
-import Gui_Core
-import time
-import Tables
-import config
-from Gui_Pathologie import FormPathologie
+sys.path.append('../VetCore')
+import Core_Consultation
 
 
 class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
@@ -21,19 +14,14 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
     dataAnimal=''
     idClient=0
     idAnimal=1
-    idEspece=1
     idConsultation=0
     NewConsultation=True
     
     def __init__(self, parent=None):
         QtGui.QMainWindow.__init__(self, parent)
         self.setupUi(self)
-        self.DBase=Tables.DataBase(config.database)
         self.editClient = None
         self.editAnimal = None
-        self.editPathologie=None
-        self.MyConsult=Core_Consultation.Consultation(self.DBase)     #TODO transmit DataBase Connection object
-        self.MyPathologie=Core_Consultation.Pathologie(self.DBase)    #TODO transmit DataBase Connection object
         #init dates
         now=QtCore.QDate.currentDate()
         self.dateEdit_consult.setDate(now)
@@ -51,39 +39,22 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.toolButton_fichier.setVisible(False)
         self.label_Referant.setVisible(False)
         self.comboBox_Referant.setVisible(False)
+        #fill comboboxes
+        self.MyConsult=Core_Consultation.Consultation()
+        self.comboBox_veterinaire.addItems(self.MyConsult.GetConsultants())
+        self.comboBox_consultType.addItems(self.MyConsult.GetTypesConsultation())
+        self.comboBox_Referant.addItems(self.MyConsult.GetReferants())
         #connect actions
         self.toolButton_addClient.clicked.connect(self.DoClientEdit)
         self.toolButton_addAnimal.clicked.connect(self.DoAnimalEdit)
-        self.comboBox_Animal.activated.connect(self.OnSelectAnimal)
+        self.comboBox_Animal.activated.connect(self.DoGetConsultations)
         self.comboBox_consultType.currentIndexChanged.connect(self.OnTypeConsultation)
-        #self.connect(self.comboBox_veterinaire,QtCore.SIGNAL("keyPressEvent(QKeyEvent)"),self.OnNewConsultant)
-        self.comboBox_PathologieDomaine.currentIndexChanged.connect(self.OnDomaine)
-        self.connect(self.comboBox_Pathologie, QtCore.SIGNAL("highlighted(int)"),self.OnPathologie)
         self.connect(self.textBrowser_consultations, QtCore.SIGNAL("anchorClicked(QUrl)"),self.OnConsultationClicked)
         self.toolButton_comment.clicked.connect(self.DoEditCommentaire)
-        self.connect(self.comboBox_veterinaire,QtCore.SIGNAL("OnEnter"),self.OnConsultantEnter)
-        self.toolButton_Pathologie.clicked.connect(self.EditPathologie)
         self.pushButton_valider.clicked.connect(self.DoEditConsultation)
         self.pushButton_Nouveau.clicked.connect(self.OnNewConsultation)
         self.actionQuitter.triggered.connect(self.Mycloseapp)
-   
-              
-    def FillConsultation_Combo(self):
-        self.comboBox_veterinaire.Fill(self.MyConsult.GetConsultants())
-        self.comboBox_Referant.Fill(self.MyConsult.GetReferants())
-        Gui_Core.FillCombobox(self.comboBox_consultType,self.MyConsult.GetTypesConsultation())#TODO :use MyCombobox
-        Gui_Core.FillCombobox(self.comboBox_PathologieDomaine,self.MyPathologie.GetDomaines())
-        Gui_Core.FillCombobox( self.comboBox_Pathologie,self.MyPathologie.GetPathologies(0))
-       
-              
-    def OnSelectAnimal(self):
-        #TODO get idEspece from animal
-        self.idEspece=1
-        #MAKE consultation enabled
-        self.MyPathologie.SetEspece(self.idEspece)
-        self.FillConsultation_Combo()
-        self.GetConsultations()
-        
+
     def DoClientEdit(self):
         self.dataClient='Mon nom est untel'
         if self.editClient is None:
@@ -98,19 +69,18 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         if self.editAnimal.exec_():
             print self.editAnimal.data
             
-    def GetConsultations(self):
-        MyDossier=Core_Consultation.Consultations(self.DBase)
+    def DoGetConsultations(self):
+        MyDossier=Core_Consultation.Consultations()
         self.textBrowser_consultations.setText(MyDossier.GetConsultations(self.idAnimal))
         self.splitter.resize(1021,820)
         
-    def OnConsultationClicked(self,link):#TODO OnConsultationSelect
-        self.FillConsultation_Combo()
+    def OnConsultationClicked(self,link):
         self.NewConsultation=False
         self.idConsultation=int(link.toString().toAscii()[2:])
         if link.toString().toAscii()[1]=='C':
             self.FillFormConsultation()
         if link.toString().toAscii()[1]=='N':
-            self.OnNewConsultation()   
+            self.DoNewConsultation()   
         if link.toString().toAscii()[1]=='B':
             print 'view biologie'
         if link.toString().toAscii()[1]=='I':
@@ -133,12 +103,6 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.textEdit_consultObs.setText(QtCore.QString(self.MyConsult.Observations))
         self.textEdit_consultTrait.setText(QtCore.QString(self.MyConsult.Traitements))
         self.toolButton_comment.setToolTip(QtCore.QString(self.MyConsult.Commentaire))
-        if len(self.MyConsult.Pathologies.split(','))==1:
-            self.comboBox_Pathologie.setCurrentIndex(self.comboBox_Pathologie.findText(QtCore.QString(self.MyConsult.Pathologies)))
-        else:
-            self.comboBox_Pathologie.setEditText(QtCore.QString(self.MyConsult.Pathologies))
-        if self.MyConsult.DomainePathologie!='':
-            self.comboBox_PathologieDomaine.setCurrentIndex(self.comboBox_PathologieDomaine.findText(QtCore.QString(self.MyConsult.DomainePathologie)))
         self.splitter.resize(1021,470)
         
     def OnTypeConsultation(self):
@@ -148,18 +112,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         else:
             self.label_Referant.setVisible(False)
             self.comboBox_Referant.setVisible(False)
-
-    def OnDomaine(self):
-        iddomaine=self.comboBox_PathologieDomaine.itemData(self.comboBox_PathologieDomaine.currentIndex())
-        Gui_Core.FillCombobox( self.comboBox_Pathologie,self.MyPathologie.GetPathologies(iddomaine.toInt()[0]))
-        
-    def OnPathologie(self,link):
-        txt=self.MyPathologie.GetDefinitionPathologie(self.comboBox_Pathologie.itemData(link).toInt()[0])
-        QtGui.QToolTip.showText(QtGui.QCursor.pos(), QtCore.QString(txt), widget=self.comboBox_Pathologie)
-     
-    def OnConsultantEnter(self):
-        print'Ouvre formulaire veto'
-        
+            
     def DoEditConsultation(self):
         self.MyConsult.IdConsultation=self.idConsultation
         q=self.dateEdit_consult.date()
@@ -192,20 +145,13 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         self.comboBox_veterinaire.setCurrentIndex(0)
         self.comboBox_consultType.setCurrentIndex(0)
         self.comboBox_Referant.setCurrentIndex(0)
-        self.comboBox_PathologieDomaine.setCurrentIndex(0)
         self.label_Referant.setVisible(False)
         self.comboBox_Referant.setVisible(False)
         self.textEdit_consultObs.clear()
         self.textEdit_consultTrait.clear()
         self.toolButton_comment.setToolTip(QtCore.QString('Ajouter un Commentaire'))
         self.splitter.resize(1021,470) 
-    
-    def EditPathologie(self):
-        if self.editPathologie is None:
-            self.editPathologie = FormPathologie(self)
-        if self.editPathologie.exec_():
-            print 'Pathologie éditée'
-     
+        
     def Mycloseapp(self):
         self.close()
 
@@ -239,8 +185,7 @@ class FormComment(QtGui.QDialog):
         self.plainTextEdit.setGeometry(QtCore.QRect(20, 50, 361, 141))
         self.connect(self.buttonBox, QtCore.SIGNAL("accepted()"), self.accept)
         self.connect(self.buttonBox, QtCore.SIGNAL("rejected()"), self.reject)
-        
-    
+
 if __name__ == '__main__':
 
     app = QtGui.QApplication(sys.argv)

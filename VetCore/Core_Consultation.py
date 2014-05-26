@@ -130,7 +130,7 @@ class Consultation:
 	def GetCriteresConsultation(self,idPathologie):
 		return Core.GetDbLines(self.DBase,"CALL GetCriteresConsult(%i,%i)"%(self.idConsultation,idPathologie))	
 		
-	def SaveData(self,isNew):
+	def SaveData(self,isNew):#TODO: change to SaveConsultation
 		values=[]
 		erreurs=[]
 		values.append(self.IdConsultation)
@@ -190,7 +190,49 @@ class Consultation:
 			return None
 		else:
 			return ','.join(erreurs)
-			
+
+	def SaveCritere(self,ids,valeur,grade):	#TODO test fields size
+		err=[]
+		if self.idConsultation==0:
+			err.append('erreur idConsultation')
+		else:
+			idConsultation='%i'%self.idConsultation
+		if ids[0].toInt()[1]:
+			idConsultationCritere='%i'%ids[0].toInt()[0]
+		else:
+			err.append('erreur pour idCritereConsultation')
+		if ids[1].toInt()[1]:
+			idCritere='%i'%ids[1].toInt()[0]
+		else:
+			err.append('erreur pour idCritere')
+		if ids[2].toInt()[1]:
+			idPathologie='%i'%ids[2].toInt()[0]
+		else:
+			err.append('erreur pour idPathologie')	
+		if valeur.toFloat()[1]:
+			CritereQuantitatif='%.2f'%valeur.toFloat()[0]
+			CritereQualitatif='NULL'
+		else:
+			CritereQualitatif='\"%s\"'%valeur.toUtf8().data()
+			if len(CritereQualitatif)>20:
+				err.append('Critere Qualitatif trop long')
+			CritereQuantitatif='NULL'
+			if len(CritereQualitatif)==0:
+				err.append('erreur Valeur non renseignée')
+		Grade='\"%s\"'%grade.toUtf8().data()
+		if len(CritereQualitatif)>20:
+				err.append('Grade trop long')
+		if len(Grade)==0:
+			Grade='NULL'
+		if len(err)==0:
+			if idConsultationCritere=='0':
+				valeurs=[idConsultationCritere,idCritere,idConsultation,idPathologie,CritereQuantitatif,CritereQualitatif,Grade]
+				Core.DbAdd(self.DBase, 'ConsultationCritere', valeurs)
+			else:
+				valeurs=[idConsultationCritere,CritereQuantitatif,CritereQualitatif,Grade]
+				Core.DbUpdate(self.DBase,'ConsultationCritere',['idConsultationCritere','CritereQuantitatif','CritereQualitatif','Grade'],valeurs)
+		else:
+			print err		
 	
 class Consultations:
 	def __init__(self,DBase):
@@ -218,7 +260,7 @@ class Pathologie:
 		self.Domaines=[]
 		self.Synonymes=[]
 		self.idEspece=None
-		self.Criteres=[]
+		#self.Criteres=[]
 		self.DBase=DBase
 	
 	def SetEspece(self,IdEspece):

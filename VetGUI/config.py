@@ -1,26 +1,21 @@
 # -*- coding: utf8 -*-
 
-import os
-
-
-DEBUG=True
-DEBUG_AFFICHE_MESSAGE_CONSOLE=True  #TODO: a enlever lorsuqe les msg d erreurs seront geres par gestion_erreurs.py
+DEBUG=False
 #DEBUG = True
 
 
 
 #user='root'#pour ouvrir la base
 
-repertoire='/home/francois/Programmes/Kiwi/OpenVet/OpenVet/'
+#repertoire='/home/francois/Programmes/Kiwi/OpenVet/OpenVet/'
 WorkingPath='/media/Datas/Kiwi/OpenVet'
 dbCodec='ISO-8859-1'
 user='root'
 password='horizons'
 
-if os.path.exists('/home/yvon') :
-    repertoire='/home/yvon//Documents/programmation/openvet2/openvet2_python/'
-    user='user_openvet'
-    password='0000'
+#repertoire='/home/yvon//Documents/programmation/openvet2/openvet2_python/'
+#user='user_openvet'
+#password='0000'
 
 
 #**************************************defferentes version a tester**************
