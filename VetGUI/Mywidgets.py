@@ -23,6 +23,9 @@ class MyComboBox(QtGui.QComboBox):
             self.indiceTableEtModel=0
             self.motif2model={}
             self.maxModel=50
+            
+#            self.maxModel=3 #DEBUG********************************
+            
             self.limitSql=' LIMIT 100 '
             self.sqlBase=sql.split('LIMIT')[0]   #enleve LIMIT...
             self.nomTable=nomTable
@@ -33,8 +36,8 @@ class MyComboBox(QtGui.QComboBox):
             self.InitialiseCombo(tableliste )
             
             self.connect(self, QtCore.SIGNAL("OnEnter"),self.OnEnter)
-            
-        
+            self.connect(self, QtCore.SIGNAL("editTextChanged ( QString  )"),  self.OnEditTextChanged )            
+            self.desactivesignaux =False
         
     def InitialiseCombo(self, table ):
         
@@ -58,7 +61,8 @@ class MyComboBox(QtGui.QComboBox):
         self.setModel(model)   
         
     def Filtre(self, motif):
-        if motif in self.motif2model :
+        if motif in self.motif2model and 'debug'=='annule ce test':
+            print 'debug : recupere ancien motif' #BUG NE MARCHE PAS TJRS (popup vide)=>A REVOIR
             nouveaumodel= self.motif2model[motif]
         else :
             sql= self.sqlBase + ' WHERE '+motif + self.limitSql
@@ -100,6 +104,23 @@ class MyComboBox(QtGui.QComboBox):
 
     def OnEnter(self):
         print 'debug'
+        
+        
+    def OnEditTextChanged(self, txt) :
+        txt=txt.toUpper()  #TODO: a revoir , pour Personne autoriser les minuscules
+#        print txt #debug 
+        if not self.desactivesignaux :
+            self.desactivesignaux =True     #évite répétition signal lors de changement de motif
+            motif=self.PrepareMotifRecherche(txt)
+            if motif :
+                self.Filtre(motif)
+            self.lineEdit().setText(txt)
+            self.desactivesignaux =False
+                
+        
+    def PrepareMotifRecherche(self, txt):#a surcharger dans combo dérivés
+        return ''
+    
 
 	def Fill(self,function):
 		self.clear()
@@ -134,11 +155,21 @@ class MyComboBoxVille(MyComboBox):
         liste = TableVille(sql=self.sql)
         super(MyComboBoxVille,self).__init__(parent, nomTable, self.sql, tableliste=liste)
 
-    def NouvelleTableSelectAll(self, nomTable, sql): #à surcharger dans comboBox dérivés de MyComboBox
+    def NouvelleTableSelectAll(self, nomTable, sql): # surcharge de MyComboBox.Nouvelle...
         return  TableVille(sql=sql)  #ATTENTION pas self.sql mais new sql
     
-    
-
+    def PrepareMotifRecherche(self, txt):
+        if txt :
+            
+            if txt.endsWith(')') : return  #pas de filtre car txt=une ville complete
+            
+            (cip, isInt)=txt.toInt()
+            if isInt :
+                
+                txt= ' CIP LIKE "'+txt+'%"' 
+            else :
+                txt= ' Commune LIKE "'+txt+'%"'
+        return txt
 
 class MyTableWidget(QtGui.QTableWidget):
 	def __init__(self,parent=None):
