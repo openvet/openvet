@@ -142,9 +142,8 @@ class DataBase:
         if err.isValid() :
             return err.text()
         else :
-#            res=query_model.setHeaderData(0, Qt.Horizontal, "Nom")
             res=query_model.setHeaderData(1, Qt.Horizontal, "Nom")
-#            res=query_model.setHeaderData(0, Qt.Horizontal, "idCommune")
+#            res=query_model.setHeaderData(0, Qt.Horizontal, "id")
             return query_model           
     
     def RechercheSQL_liste(self,requete):  

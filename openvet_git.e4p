@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-4.6.dtd">
 <!-- eric4 project file for project openvet_git -->
-<!-- Saved: 2014-05-26, 16:15:25 -->
+<!-- Saved: 2014-05-26, 16:30:53 -->
 <!-- Copyright (C) 2014 ,  -->
 <Project version="4.6">
   <Language>en</Language>
@@ -25,33 +25,13 @@
     <Source>VetCore/Core.py</Source>
     <Source>test_tables.py</Source>
     <Source>__init__.py</Source>
-    <Source>VetGUI/ui_Form_DialogBase.py</Source>
-    <Source>VetGUI/ui_Form_DialogOuvreClient.py</Source>
-    <Source>VetGUI/ui_Form_consultation_base.py</Source>
-    <Source>VetGUI/ui_Form_consultation_old.py</Source>
-    <Source>VetGUI/ui_Form_openvet.py</Source>
     <Source>VetGUI/Gui_openvet.py</Source>
-    <Source>VetGUI/ui_Form_pathologie.py</Source>
-    <Source>VetGUI/ui_OLD Form_consultation.py</Source>
-    <Source>VetGUI/ERR ui_Form_consultation_base.py</Source>
-    <Source>VetGUI/ui_test_Form_openvet.py</Source>
-    <Source>VetGUI/mkpyqtMANJARO.py</Source>
-    <Source>VetGUI/PASSURMANJAROmkpyqt.py</Source>
     <Source>VetGUI/Gui_Consultation_base.py</Source>
     <Source>VetGUI/Mywidgets.py</Source>
-    <Source>VetGUI/ui_Form_consultation.py</Source>
-    <Source>VetGUI/ui_Form_animal.py</Source>
-    <Source>VetGUI/ui_060514 Form_consultation_base.py</Source>
-    <Source>VetGUI/ui_Form_critere.py</Source>
-    <Source>VetGUI/ui_Form_DialogPathologie.py</Source>
-    <Source>VetGUI/ui_OLDForm_DialogClient.py</Source>
-    <Source>VetGUI/resources_rc.py</Source>
-    <Source>VetGUI/ui_Form_client.py</Source>
-    <Source>VetGUI/ui_oldForm_consultation.py</Source>
-    <Source>VetGUI/ui_Form_consultation_base 0605err.py</Source>
     <Source>gestion_erreurs.py</Source>
     <Source>config.py</Source>
     <Source>Creation_et_Fill_DB.py</Source>
+    <Source>exemples et test/test_tables.py</Source>
   </Sources>
   <Forms>
     <Form>VetGUI/Form_consultation_base 0605err.ui</Form>
