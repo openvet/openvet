@@ -12,12 +12,19 @@ from Tables import *
 
 class MyComboBox(QtGui.QComboBox):
     """ affiche une liste (nb elements max = limitSql) avec motif de recherche sql, et conservation des resultats de  la 
-    recherche dans listeModel + motif2model (évite une requete sql si la recherche a déjà été faite)"""
-    def __init__(self,parent=None, nomTable='', sql='', tableliste=''):
+    recherche dans listeModel + motif2model (évite une requete sql si la recherche a déjà été faite) A FAIRE"""
+    def __init__(self,parent=None, nomTable='', sql='', tableliste='', nomchampid=''):
 
         super(MyComboBox,self).__init__(parent)
         
-        if nomTable : # compatibilité avec ancien MyComboBox
+        if not nomchampid and sql:
+            self.nomChampId=sql.split('SELECT')[1].split(',')[0]  #par defaut SELECT id ,...
+            
+        self.nomChampId=nomchampid
+        
+            
+        
+        if nomTable : # nouveau MyComboBox (pour garder compatibilité avec ancien MyComboBox)
             self.listeModel=[]
             self.listeTable=[]
             self.indiceTableEtModel=0
@@ -60,8 +67,15 @@ class MyComboBox(QtGui.QComboBox):
     def ChangeModel(self, model):
         self.setModel(model)   
         
+        
+    def SetId(self, id):  #filtre selon l'id (permet de positionner la valeur du  combobox sur l'id correspondant dans la data base
+        if not self.nomChampId :
+            self.nomChampId=self.sqlBase.split('SELECT')[1].split(',')[0]  #par defaut SELECT id ,...
+        motif = self.nomChampId +' = '+str(id)
+        self.Filtre(motif)
+        
     def Filtre(self, motif):
-        if motif in self.motif2model and 'debug'=='annule ce test':
+        if motif in self.motif2model and 'debug'=='annule ce test':    #TODO:  IMPORTANT 
             print 'debug : recupere ancien motif' #BUG NE MARCHE PAS TJRS (popup vide)=>A REVOIR
             nouveaumodel= self.motif2model[motif]
         else :
@@ -95,6 +109,15 @@ class MyComboBox(QtGui.QComboBox):
                 if self.motif2model[motif] == ancienmodel :
                     del( self.motif2model[motif])
                     break
+            
+    def GetId(self, index, colonne_id=0):  #renvoie l'id (cf sql= SELECT id, autres champs FROM...) à partir de l'index  (cf widget curent index)
+        #colonne_id=0 si sql = SELECT id, autres champs 
+        model=self.model()
+        r=model.record(index)  #enregistrement (sql) de la ligne   no index   (lecture de la ligne index: renvoie un Qrecord)
+        (valeur, isvalid)=r.value(colonne_id).toInt()   
+        if isvalid :
+            return valeur            
+            
             
     def keyPressEvent(self,event):
         if event.key()==QtCore.Qt.Key_Return or event.key()==QtCore.Qt.Key_Enter:

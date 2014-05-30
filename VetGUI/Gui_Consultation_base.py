@@ -13,6 +13,8 @@ import config
 from ui_Form_consultation_base import Ui_MainWindowConsultation
 from ui_Form_animal import Ui_Dialog_animal
 from ui_Form_DialogBase import Ui_DialogBase
+from Mywidgets import *
+
 from Core_Consultation import *
 from gestion_erreurs import * 
 
@@ -381,10 +383,9 @@ class WindowConsultation(QtGui.QMainWindow, Ui_MainWindowConsultation):
                 idReferant= self.MyConsult.GetIdReferant(indexReferant) 
             
 
-        Observations=self.textEdit_consultObs.toPlainText().toUtf8()
-#        Observations=str(Observations).decode('utf8') #TODO: revoir erreur encodage (eventuellemnt au niveau table setchamp)
+        Observations=self.textEdit_consultObs.toPlainText().toUtf8()  #TODO:  +++++++++ ESSAYER SANS toUtf8++++
         Traitements=self.textEdit_consultTrait.toPlainText() #.toUtf8()
-#        Traitements=str(Traitements).decode('utf8')
+
         
         idAnimal=self.MyConsult.GetAnimalActif().Id()
         
@@ -472,7 +473,13 @@ class FormClient(QtGui.QDialog, Ui_DialogBase):
     Civilite=NouvelleTableCivilite()   #Civilite  et Ville = variable de classe
     Ville=NouvelleTableVille(idPays=config.PAYS)
     
-    def __init__(self, parent=None, client=None):
+    def __init__(self, parent=None, client=None, version='mycomboville'):
+        """ 
+        version='liste'   utilise une liste pour remplir combo ville = le + lent  
+        version='model'  utilise model/view pour combo ville, avec la liste complète des ville, un peu+rapide
+        version='mycomboville' utilise combo personnalisé, nb de ville limité => très rapide
+        """
+        self.version= version 
         QtGui.QDialog.__init__(self, parent)
         self.setupUi(self)
         
@@ -513,6 +520,10 @@ class FormClient(QtGui.QDialog, Ui_DialogBase):
         
         self.TypeChamp={'Civilite_idCivilite':'comboBox', 'Commune_idCommune':'comboBox','Commentaires':'textEdit', 'NbRetardRV':'spinBox', \
         'NbOublieRV':'spinBox', 'NbOublieOpe':'spinBox', 'Cadre':'checkBox', 'Temporaire':'checkBox', 'DateEntree':'date' ,'FinContrat':'date' , 'DateNaissance':'date' } #defaut=LineEdit
+        if self.version=='mycomboville':
+            self.TypeChamp['Commune_idCommune']='myComboBoxVille'#nouvelle methode
+            del( self.ListeChampAffiches[self.ListeChampAffiches.index('WIDGETEditCIP')] )
+            
         for champ in self.ListeGroupeBox1+self.ListeGroupeBox2+self.ListeGroupeBox3 +self.ListeGroupeBox2b+self.ListeGroupeBox3b:
             self.TypeChamp[champ]='checkBox'
 
@@ -571,7 +582,7 @@ class FormClient(QtGui.QDialog, Ui_DialogBase):
 
 
         comboVille=self.dicoWidget['Commune_idCommune'] #comboBox affichant la liste des villes
-        self.version='model'#debug
+        
         
         if self.version=='model':  #methode model/view
 #            model=self.__class__.Ville.GetModel(proxymodel=True)
@@ -594,7 +605,7 @@ class FormClient(QtGui.QDialog, Ui_DialogBase):
             view.setColumnHidden(0, True)#cache colonne 0 (idVille) dans popup du comboBox
 
             
-        else:  #ancienne methode 
+        elif self.version=='liste':  #ancienne methode 
             listeville=self.__class__.Ville.GetListe()   #creation liste ville (lent)
             comboVille=self.dicoWidget['Commune_idCommune'] #comboBox affichant la liste des villes.addItems(listeville)
         
@@ -605,7 +616,7 @@ class FormClient(QtGui.QDialog, Ui_DialogBase):
 #        linedit=comboVille.lineEdit()
 #        linedit.selectAll()
         
-        if self.version <>'model': #debug
+        if self.version =='liste': #debug
             index=self.__class__.Ville.GetIndex( config.SELECTIONNEVILLEPREFEREE )    #retourne index à partir de idCommune
             w.setCurrentIndex(index)  # à l'ouverture positionne comboBox Ville sur  SELECTIONNEVILLEPREFEREE (si -1=> vide)
 
@@ -787,7 +798,9 @@ class FormClient(QtGui.QDialog, Ui_DialogBase):
             if not taille :
                 taille=config.MAXWIDTHQLINEEDIT
         elif typechamp=='comboBox':
-            unwidget=QComboBox(self) 
+            unwidget=QComboBox(self)
+        elif typechamp=='myComboBoxVille':
+            unwidget=MyComboBoxVille(self)             
         elif typechamp=='checkBox':
             unwidget=QCheckBox(self)
         elif typechamp=='textEdit':
@@ -835,14 +848,11 @@ class FormClient(QtGui.QDialog, Ui_DialogBase):
             widget.setMaximumWidth(taille)
         except :
             pass
-
             
-#        self.ListeChampIndependant.append( (champ, widget) )  
         self.dicoWidgetIndependant[champ]=widget
         return([nomchamp, widget])
         
     def ConnectSignalWidgetIndependant(self ):
-#        for (champ, widget) in self.ListeChampIndependant:
         for champ in self.dicoWidgetIndependant.keys() :
             widget=self.dicoWidgetIndependant[champ]
             if champ=='WIDGETdatefincontrat' :
@@ -863,12 +873,12 @@ class FormClient(QtGui.QDialog, Ui_DialogBase):
 
         
         
-    def OnFinEditCIP(self):
+    def OnFinEditCIP(self): #version<> mycomboville
         cip=self.dicoWidgetIndependant['WIDGETEditCIP'].text()
         self.SelectionneCip(cip)
         
 
-    def SelectionneCip(self, cip):
+    def SelectionneCip(self, cip):  #version<> mycomboville
             cip=cip.replace(' ', '')
             if self.cip == cip :#ne filtre pas si le cip n'a pas changé
                 return
@@ -951,18 +961,18 @@ class FormClient(QtGui.QDialog, Ui_DialogBase):
                     
             try :
                 widget=self.dicoWidget['Commune_idCommune']        
-                index=self.__class__.Ville.GetIndex( config.SELECTIONNEVILLEPREFEREE)
-                widget.setCurrentIndex(index)
-                nomville=widget.currentText()
-                cip=nomville.split('(')[1].split(')')[0]#récupère code postal entre ()
-                self.dicoWidgetIndependant['WIDGETEditCIP'].setText(cip)
+                if self.version == 'mycomboville' :
+                    pass #TODO: ++++++++++
+                else :
+                    index=self.__class__.Ville.GetIndex( config.SELECTIONNEVILLEPREFEREE)
+                    widget.setCurrentIndex(index)
+                    nomville=widget.currentText()
+                    cip=nomville.split('(')[1].split(')')[0]#récupère code postal entre ()
+                    self.dicoWidgetIndependant['WIDGETEditCIP'].setText(cip)
             except :
                 pass
                 
             self.dicoWidget['IsClient'].setCheckState(Qt.Checked)
-#            self.dicoWidget['FinContrat'].setEnabled(False)
-#            self.dicoWidget['DateEntree'].setEnabled(False)
-#                
              #Fin efface
             
         
@@ -979,15 +989,20 @@ class FormClient(QtGui.QDialog, Ui_DialogBase):
                         widget.setCheckState(Qt.Checked)
                     else :
                         widget.setCheckState(Qt.Unchecked)
+                        
+                elif typechamp == 'myComboBoxVille' :
+                    idville=unchamp.Value()
+                    widget.SetId(idville)
+                        
                 elif typechamp ==  'comboBox' :
                     #index=widget.currentIndex()
                     if nomchamp == 'Civilite_idCivilite' :
                         idcivilite=unchamp.Value()
                         index=self.__class__.Civilite.GetIndex(idcivilite)
                         widget.setCurrentIndex(index)
-                    elif nomchamp == 'Commune_idCommune' :
+                    elif nomchamp == 'Commune_idCommune' :#self.version <>'mycomboville' 
                         idville=unchamp.Value()
-                        index=self.__class__.Ville.GetIndex(idville)
+                        index=self.__class__.Ville.GetIndex(idville)  # récupère index dans liste des Villes
                         widget.setCurrentIndex(index)
                         nomville=widget.currentText()
                         try :
@@ -1049,11 +1064,14 @@ class FormClient(QtGui.QDialog, Ui_DialogBase):
             
             if 'WIDGET' in unchamp :    # ne fait pas partie de la data base
                 continue                        #champ suivant
-            
+
             if 'list' in str(type(unchamp)) : # => liste groupe box
                 err=self.VerifieChamps(  unchamp)  #unchamp est en realité une liste de champs => appel récursif
             
-            else :
+            else :              
+                
+                #1/ récupère la valeur du widget
+            
                 widget=self.dicoWidget[unchamp]   #widget associé au champ
                 if not widget.isEnabled() :  #ne lit pas les widget désactivés
                     continue
@@ -1066,11 +1084,16 @@ class FormClient(QtGui.QDialog, Ui_DialogBase):
                         valeur=widget.toPlainText()
                 elif typechamp == 'checkBox' :
                     valeur = widget.isChecked()
+                    
+                elif typechamp == 'myComboBoxVille':
+                    index=widget.currentIndex()
+                    valeur=widget.GetId(index)
+                    
                 elif typechamp ==  'comboBox' :
                     index=widget.currentIndex()
                     if unchamp == 'Civilite_idCivilite' :
                         valeur=self.__class__.Civilite.GetId(index)
-                    elif unchamp == 'Commune_idCommune' :
+                    elif unchamp == 'Commune_idCommune' : #self.version <> 'mycomboville'  car typechamp ==  'comboBox' 
                         valeur=self.ListeVilleActif.GetId(index)
                         if not valeur :
                             valeur='__aucunevaleur__' 
@@ -1081,12 +1104,12 @@ class FormClient(QtGui.QDialog, Ui_DialogBase):
                 elif typechamp ==  'date' :
                     valeur=widget.date()
                     
+                #2/ mémorise (dans un client)  et test si valeur est correct
                 if valeur <> '__aucunevaleur__' :
-                    err=self.unclient.SetChamp(unchamp, valeur)
+                    err=self.unclient.SetChamp(unchamp, valeur)  
                     
             if err :
                 if 'ne peut pas etre NULL' in err : err=u' à renseigner !' #change le msg d'erreur
-                #erreur+='"'+self.NomChamp[unchamp]+'"'+err +'\n'
                 erreur+=self.NomChamp[unchamp]+err +'\n'
                 
         return erreur
@@ -1097,13 +1120,11 @@ class FormClient(QtGui.QDialog, Ui_DialogBase):
         if bool_edit :
             self.EnableWidget(True)
             self.edition=True
-            #self.pushButton_editer.setEnabled(False)
             self.pushButton_editer.setText('Annuler')  #si clique => repasse mode lecture (=> empèche enregistrement client des modifications)
             
         else :
             self.EnableWidget(False)
             self.edition=False
-            #self.pushButton_editer.setEnabled(True)
             self.pushButton_editer.setText('Editer')
             
             
@@ -1114,17 +1135,6 @@ class FormClient(QtGui.QDialog, Ui_DialogBase):
             self.BasculeModeEdition(False)
             
     def accept(self):
-        
-#        if not self.edition and not self.isNouveauclient :
-#            self.BasculeModeEdition(True)  #ancien client, en lecture =>bascule en mode édition (et return)
-#        else :
-#            erreur=self.VerifieChamps() or self.unclient.EnregistreTable()     #si VerifieChamps ne retourne pas d'erreur, EnregistreTable
-#            if erreur :
-#                AfficheErreur(erreur, fenetre=self)
-#            else :
-#                self.idnouveauclient=self.unclient.Id()
-#                QtGui.QDialog.accept(self)
-
         save = self.edition #en mode edition enregistre le client
         
         if self.derniereAction == 'Annuler' :#propose de sauvegarder si on a appuyé avant sur annuler

@@ -218,6 +218,8 @@ class DataBase:
                     return result
         #execute la requète
         try:
+            if 'NULL' in requete : #TODO: DEBUG ++++++++++++++++  semble ok
+                requete=requete.replace('"NULL"','NULL' )  # remplace la chaine de caractere "NULL" par la valeur NULL  
             cursor = conn.Execute(requete)
             result=cursor.Affected_Rows()
             
@@ -321,8 +323,12 @@ class Champ:
             try :
                 valeur = str( valeur.toUtf8() )#valeur = str( valeur )
             except :
-                err='Erreur Tables.py:ConvertirEnUnicode '+type(valeur) 
-                return( err, valeur)
+                try :
+                    valeur=str( valeur )  #ex QByteArray 
+                except :
+                    err='Erreur Tables.py:ConvertirEnUnicode '+type(valeur) 
+                    print err
+                    return( err, valeur)
                 
         
         if 'str' in str( type(valeur)  ): #=> conversion string en unicode
@@ -372,8 +378,11 @@ class Champ:
             
         
     def SetDirect(self, valeur): #fonction plus rapide à utiliser  lors de lecture de la base de donnée
-        if self.isTxt and valeur :
-            valeur=valeur.decode('utf8')
+        if self.isTxt : #and valeur :
+            if valeur :
+                valeur=valeur.decode('utf8')  #TODO: ++++++++++++++  ESSAYER SANS DECODE ++++++++++
+            else : 
+                valeur=''   # remplace NULL par '' dans champ texte #TODO: DEBUG ++++++++ VERIFIER SI OK ++++changé 30/5/14 
         self.Valeur=valeur
 
     def Efface(self):
@@ -798,11 +807,11 @@ class Table:
             
     def Get(self, nomchamp):
         """input : nom champ
-            return: valeur du champ ou None"""
+            return: valeur du champ ou None """ 
         try :
             return self.dicoChamps[nomchamp].Value()
-        except :
-            return None
+        except :  
+            return None #nomchamp n'existe pas
             
     def SetChamps(self, enregistre_nouveau=False,  enregistre_auto=False,efface= False,   **arg) :
         """input:  enregistre_auto=False,   champ=valeur,...,champ= valeur
