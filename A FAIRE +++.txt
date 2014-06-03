@@ -1,4 +1,7 @@
 
+
+BUG mycomboBox (mycomboville mycomboclient) cf bug.txt
+
 consultation : trier par date
 ascenseur dans onglet consultation  faire  reglage 
 petit bug  lors champs null  enregistre texte 'null' revoir requete

@@ -10,6 +10,9 @@ from PyQt4 import QtCore, QtGui
 from Tables import *
 
 
+#TODO:   BUG++++++++   si création 2eme comboBox le 1er ne s'affiche pas bien (meme si combo differents ex comboville comboclient)
+
+
 class MyComboBox(QtGui.QComboBox):
     """ affiche une liste (nb elements max = limitSql) avec motif de recherche sql, et conservation des resultats de  la 
     recherche dans listeModel + motif2model (évite une requete sql si la recherche a déjà été faite) A FAIRE"""
@@ -38,7 +41,8 @@ class MyComboBox(QtGui.QComboBox):
             self.nomTable=nomTable
             if not tableliste :
                 sql =  self.sqlBase + self.limitSql
-                tableliste =   TableSelectAll(nomTable, sql=sql)
+                tableliste = NouvelleTableSelectAll(nomTable, sql=sql) #DEBUG ++++
+#                tableliste =   TableSelectAll(nomTable, sql=sql)
             self.listeTable.append(tableliste)
             self.InitialiseCombo(tableliste )
             
@@ -86,6 +90,7 @@ class MyComboBox(QtGui.QComboBox):
             self.ChangeModel(nouveaumodel)
             
     def NouvelleTableSelectAll(self, nomTable, sql): #à surcharger dans comboBox dérivés de MyComboBox
+        print 'WARNING +++++++  NouvelleTableSelectAll(self, nomTable, sql): #à surcharger dans comboBox dérivés de MyComboBox'
         return  TableSelectAll(nomTable, sql)
             
     def MemoriseTableModel(self, table, model, motif):
@@ -224,10 +229,10 @@ if __name__ == '__main__':
     
     
     cbId=QComboBox()
-    cbVille=QComboBox()
+    cbVille=MyComboBoxVille()
     
-    cbId=QLineEdit()
-    cbVille=QLineEdit()
+#    cbId=QLineEdit()
+#    cbVille=QLineEdit()
     
     
     layout.addWidget(cbId)
