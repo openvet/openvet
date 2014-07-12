@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-4.6.dtd">
 <!-- eric4 project file for project openvet_git -->
-<!-- Saved: 2014-05-26, 16:30:53 -->
+<!-- Saved: 2014-06-19, 17:06:34 -->
 <!-- Copyright (C) 2014 ,  -->
 <Project version="4.6">
   <Language>en</Language>
@@ -22,8 +22,6 @@
     <Source>VetCore/__init__.py</Source>
     <Source>VetCore/Core_Consultation.py</Source>
     <Source>VetCore/Tables.py</Source>
-    <Source>VetCore/Core.py</Source>
-    <Source>test_tables.py</Source>
     <Source>__init__.py</Source>
     <Source>VetGUI/Gui_openvet.py</Source>
     <Source>VetGUI/Gui_Consultation_base.py</Source>
@@ -32,6 +30,8 @@
     <Source>config.py</Source>
     <Source>Creation_et_Fill_DB.py</Source>
     <Source>exemples et test/test_tables.py</Source>
+    <Source>bug.txt</Source>
+    <Source>A FAIRE +++.txt</Source>
   </Sources>
   <Forms>
     <Form>VetGUI/Form_consultation_base 0605err.ui</Form>

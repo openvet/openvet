@@ -8,8 +8,8 @@ sys.path.append('./images')
 import config
 from gestion_erreurs import *
 
-
-from PyQt4 import QtCore, QtGui
+#from PyQt4 import QtCore, QtGui
+from PyQt4 import QtGui
 from Tables import *
 import Gui_openvet
 
@@ -34,7 +34,7 @@ def Login():
     
 def TestConnexionBase():
     #TODO:   verifie en mm tps la base et le login
-    Err=None
+
     db=DataBase(DATABASE, USER, PWD)
     conn = db.Connection()
     return conn

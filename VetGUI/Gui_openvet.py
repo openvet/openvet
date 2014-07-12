@@ -15,7 +15,7 @@ sys.path.append('..')
 import config
 
 from PyQt4 import QtCore, QtGui
-import PyQt4.Qt as qt
+#import PyQt4.Qt as qt
 #
 #from ui_Form_client import Ui_Dialog_client
 #from ui_Form_animal import Ui_Dialog_animal

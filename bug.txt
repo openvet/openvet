@@ -1,12 +1,18 @@
 
 
+(bug : lors creation nouveau client, ok puis annule : pb liste client cf apres)
+bug creation nouveau client : n'est pas affiché, + liste pas mise à jour
+
+amelioration: nouveau client : décocher les cases (mauvais client , etc...)
+
+
 MyWidgets MyComboBox ***********
    BUG++++++++   si création 2eme comboBox le 1er ne s'affiche pas bien (meme si combo differents ex comboville comboclient)
 dès la creation d un 2eme combobox le 1er pb affichage du pop up (liste vide)
 tests avec 2 combo ville : change model() sur un combo ok mais l'autre combo devient vide/
 essai de faire heriter comboville1 comboville2 de mycombo1 mycombo2 : marche pas, suppression attribut de class TableVille /
 utilisation 2 QSqlQueryModelVille1 et 2 /verifie que les 2 models et 2 view sont <> / deconnection signal OnEditTextChanged : le model ne change pas mais dès creation 2eme comboBox le 1er ne s'affiche pas bien (unqiqt pop up)
-
+==> non résolu mais fonctionne bien avec un seul MyComboBox
 
 1/    bcp d'exception :
 exception _mysql_exceptions.OperationalError: (2013, 'Lost connection to MySQL server during query') in <bound method Cursor.__del__ of <MySQLdb.cursors.Cursor object at 0x28aa850>> ignored

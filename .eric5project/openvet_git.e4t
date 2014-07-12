@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Tasks SYSTEM "Tasks-5.1.dtd">
+<!-- eric5 tasks file for project openvet_git -->
+<!-- Saved: 2014-07-12, 16:36:31 -->
+<Tasks version="5.1">
+  <ProjectScanFilter></ProjectScanFilter>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: barre de progression</Summary>
+    <Description></Description>
+    <Created>2014-07-11, 16:51:14</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_openvet.py</Filename>
+      <Linenumber>76</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO:  actualiser aussi la liste de tous les clients (ex si modifie nom client, n'apparait pas lors nouvel onglet)</Summary>
+    <Description></Description>
+    <Created>2014-07-11, 16:51:14</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_openvet.py</Filename>
+      <Linenumber>151</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: a faire detruire page</Summary>
+    <Description></Description>
+    <Created>2014-07-11, 16:51:14</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_openvet.py</Filename>
+      <Linenumber>164</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO:   BUG++++++++   si création 2eme comboBox le 1er ne s'affiche pas bien (meme si combo differents ex comboville comboclient)</Summary>
+    <Description></Description>
+    <Created>2014-07-11, 16:56:29</Created>
+    <Resource>
+      <Filename>VetGUI/Mywidgets.py</Filename>
+      <Linenumber>13</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO:  IMPORTANT</Summary>
+    <Description></Description>
+    <Created>2014-07-11, 16:56:29</Created>
+    <Resource>
+      <Filename>VetGUI/Mywidgets.py</Filename>
+      <Linenumber>82</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: a revoir , pour Personne autoriser les minuscules</Summary>
+    <Description></Description>
+    <Created>2014-07-11, 16:56:29</Created>
+    <Resource>
+      <Filename>VetGUI/Mywidgets.py</Filename>
+      <Linenumber>138</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: a completer ex barré pour dcd, etc...</Summary>
+    <Description></Description>
+    <Created>2014-07-11, 16:59:05</Created>
+    <Resource>
+      <Filename>VetCore/Tables.py</Filename>
+      <Linenumber>87</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: a completer ex barré pour dcd, etc...</Summary>
+    <Description></Description>
+    <Created>2014-07-11, 16:59:05</Created>
+    <Resource>
+      <Filename>VetCore/Tables.py</Filename>
+      <Linenumber>102</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: enlever</Summary>
+    <Description></Description>
+    <Created>2014-07-11, 16:59:05</Created>
+    <Resource>
+      <Filename>VetCore/Tables.py</Filename>
+      <Linenumber>194</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: a revoir (utilité?)</Summary>
+    <Description></Description>
+    <Created>2014-07-12, 16:29:18</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
+      <Linenumber>48</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: supprimer, ne marche pas</Summary>
+    <Description></Description>
+    <Created>2014-07-12, 16:29:18</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
+      <Linenumber>136</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: supprimer, ne marche pas</Summary>
+    <Description></Description>
+    <Created>2014-07-12, 16:29:18</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
+      <Linenumber>148</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: supprimer, ne marche pas</Summary>
+    <Description></Description>
+    <Created>2014-07-12, 16:29:18</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
+      <Linenumber>159</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO:   titre onglet = nom client</Summary>
+    <Description></Description>
+    <Created>2014-07-12, 16:29:18</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
+      <Linenumber>186</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: important : ajouter idclient  à la liste de tous les clients (gui_openvet)</Summary>
+    <Description></Description>
+    <Created>2014-07-12, 16:29:18</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
+      <Linenumber>265</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: a faire</Summary>
+    <Description></Description>
+    <Created>2014-07-12, 16:29:18</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
+      <Linenumber>345</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO:  +++++++++ ESSAYER SANS toUtf8++++</Summary>
+    <Description></Description>
+    <Created>2014-07-12, 16:29:18</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
+      <Linenumber>401</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO:</Summary>
+    <Description></Description>
+    <Created>2014-07-12, 16:29:18</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
+      <Linenumber>430</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO:</Summary>
+    <Description></Description>
+    <Created>2014-07-12, 16:29:18</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
+      <Linenumber>439</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: demande user et mot de passe = IDENTIQUE BASE DONNEE</Summary>
+    <Description></Description>
+    <Created>2014-07-12, 16:29:41</Created>
+    <Resource>
+      <Filename>openvet.py</Filename>
+      <Linenumber>20</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO:   verifie en mm tps la base et le login</Summary>
+    <Description></Description>
+    <Created>2014-07-12, 16:29:41</Created>
+    <Resource>
+      <Filename>openvet.py</Filename>
+      <Linenumber>36</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO:)</Summary>
+    <Description></Description>
+    <Created>2014-07-12, 16:36:28</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_FormClient.py</Filename>
+      <Linenumber>44</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: ajouter NomChamp pour ListeChampPersonnel</Summary>
+    <Description></Description>
+    <Created>2014-07-12, 16:36:28</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_FormClient.py</Filename>
+      <Linenumber>62</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: prevoir une autre liste contenant les villes preferees ou les departement preferes et une case a cocher pour afficher le combobox voullu</Summary>
+    <Description></Description>
+    <Created>2014-07-12, 16:36:28</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_FormClient.py</Filename>
+      <Linenumber>139</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: fixer la taille des widgets</Summary>
+    <Description></Description>
+    <Created>2014-07-12, 16:36:28</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_FormClient.py</Filename>
+      <Linenumber>299</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO:  chekbox ville preferees</Summary>
+    <Description></Description>
+    <Created>2014-07-12, 16:36:28</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_FormClient.py</Filename>
+      <Linenumber>388</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: ++++++++++</Summary>
+    <Description></Description>
+    <Created>2014-07-12, 16:36:28</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_FormClient.py</Filename>
+      <Linenumber>525</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: a déplacer dans un autre fichier</Summary>
+    <Description></Description>
+    <Created>2014-07-12, 16:36:28</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_FormClient.py</Filename>
+      <Linenumber>732</Linenumber>
+    </Resource>
+  </Task>
+</Tasks>
