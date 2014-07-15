@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE Project SYSTEM "Project-4.6.dtd">
-<!-- eric4 project file for project openvet_git -->
-<!-- Saved: 2014-06-19, 17:06:34 -->
+<!DOCTYPE Project SYSTEM "Project-5.1.dtd">
+<!-- eric5 project file for project openvet_git -->
+<!-- Saved: 2014-07-14, 18:48:55 -->
 <!-- Copyright (C) 2014 ,  -->
-<Project version="4.6">
+<Project version="5.1">
   <Language>en</Language>
-  <ProgLanguage mixed="0">Python</ProgLanguage>
+  <Hash>dc86cd08cb6fc6cbe1599e797aa9361a3cfb0e5f</Hash>
+  <ProgLanguage mixed="0">Python2</ProgLanguage>
   <ProjectType>Qt4</ProjectType>
   <Description></Description>
   <Version>0.1</Version>
   <Author></Author>
   <Email></Email>
+  <Eol index="-1"/>
   <Sources>
     <Source>openvet.py</Source>
     <Source>initialiseDB/DbPopulate.py</Source>
@@ -32,6 +34,10 @@
     <Source>exemples et test/test_tables.py</Source>
     <Source>bug.txt</Source>
     <Source>A FAIRE +++.txt</Source>
+    <Source>VetGUI/Gui_FormClient.py</Source>
+    <Source>VetGUI/Gui_FormAnimal.py</Source>
+    <Source>VetGUI/Gui_FormulaireBase.py</Source>
+    <Source>appliquePatch.py</Source>
   </Sources>
   <Forms>
     <Form>VetGUI/Form_consultation_base 0605err.ui</Form>
@@ -49,27 +55,26 @@
     <Form>VetGUI/060514 Form_consultation_base.ui</Form>
     <Form>VetGUI/Form_consultation_base.ui</Form>
   </Forms>
-  <Translations>
-  </Translations>
+  <Translations/>
   <Resources>
     <Resource>VetGUI/resources.qrc</Resource>
   </Resources>
-  <Interfaces>
-  </Interfaces>
+  <Interfaces/>
   <Others>
+    <Other>VetGUI/Gui_FormClient.pySAVE</Other>
   </Others>
   <Vcs>
     <VcsType>None</VcsType>
   </Vcs>
   <FiletypeAssociations>
-    <FiletypeAssociation pattern="*.ui" type="FORMS" />
-    <FiletypeAssociation pattern="*.idl" type="INTERFACES" />
-    <FiletypeAssociation pattern="*.qm" type="TRANSLATIONS" />
-    <FiletypeAssociation pattern="*.ptl" type="SOURCES" />
-    <FiletypeAssociation pattern="*.pyw" type="SOURCES" />
-    <FiletypeAssociation pattern="*.ui.h" type="FORMS" />
-    <FiletypeAssociation pattern="*.ts" type="TRANSLATIONS" />
-    <FiletypeAssociation pattern="*.py" type="SOURCES" />
-    <FiletypeAssociation pattern="*.qrc" type="RESOURCES" />
+    <FiletypeAssociation pattern="*.idl" type="INTERFACES"/>
+    <FiletypeAssociation pattern="*.ptl" type="SOURCES"/>
+    <FiletypeAssociation pattern="*.py" type="SOURCES"/>
+    <FiletypeAssociation pattern="*.pyw" type="SOURCES"/>
+    <FiletypeAssociation pattern="*.qm" type="TRANSLATIONS"/>
+    <FiletypeAssociation pattern="*.qrc" type="RESOURCES"/>
+    <FiletypeAssociation pattern="*.ts" type="TRANSLATIONS"/>
+    <FiletypeAssociation pattern="*.ui" type="FORMS"/>
+    <FiletypeAssociation pattern="*.ui.h" type="FORMS"/>
   </FiletypeAssociations>
 </Project>

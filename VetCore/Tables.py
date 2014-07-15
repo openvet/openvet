@@ -89,7 +89,9 @@ class TableAnimal(Table):
         txt+=self.Get('Nom')
         txt+=u' (espèce='+str(self.Get('Especes_idEspeces'))+')'
         return txt
-
+        
+def NewAnimal():
+    return TableAnimal(DATABASE, 'viewAnimal', 'Animal')
 
 class TableClient(Table):
     def __init__(self,nomBase,nomTable, TableBase='', auto=True, USER=config.user, PWD=config.password, dataBase=None):

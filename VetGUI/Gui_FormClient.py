@@ -10,8 +10,9 @@ from PyQt4.Qt import *
 
 import config
 
-from ui_Form_animal import Ui_Dialog_animal
-from ui_Form_DialogBase import Ui_DialogBase
+
+from Gui_FormulaireBase import *
+
 from Mywidgets import *
 
 from Core_Consultation import *
@@ -19,7 +20,7 @@ from gestion_erreurs import *
 
 
         
-class FormClient(QtGui.QDialog, Ui_DialogBase):
+class FormClient(FormulaireBase):
     """ 
     formulaire pour lire un client (self.edition=False) ou l'éditer / client self.unclient= TableClient
     à la création : formulaire vide, mode nouveau client+édition
@@ -37,10 +38,14 @@ class FormClient(QtGui.QDialog, Ui_DialogBase):
         version='model'  utilise model/view pour combo ville, avec la liste complète des ville, un peu+rapide
         version='mycomboville' utilise combo personnalisé, nb de ville limité => très rapide
         """
-        self.version= version 
-        QtGui.QDialog.__init__(self, parent)
-        self.setupUi(self)
         
+        
+        FormulaireBase.__init__(self, parent)
+        
+        self.version= version 
+#        QtGui.QDialog.__init__(self, parent)
+#        self.setupUi(self)
+#        
         self.ListeVilleActif=self.__class__.Ville   #le comboBox ville affiche toutes les villes d'un pays ou une liste plus restreinte (TODO:)
         self.dicoWidget={} # dicoWidget['nomchamp'] = widget associé
         self.dicoWidgetIndependant={}  #idem pour widgets non associés directement à un champ de la data base
@@ -123,7 +128,7 @@ class FormClient(QtGui.QDialog, Ui_DialogBase):
         w=self.dicoWidget['Commune_idCommune']
         self.connect(w, QtCore.SIGNAL("editTextChanged(QString)"), self.OncomboVilleChange)
         
-        self.connect(self.pushButton_editer, QtCore.SIGNAL("clicked(bool)"),  self.OnButtonEditerClicked)
+
         self.connect(self.pushButton_perso, QtCore.SIGNAL("clicked(bool)"),  self.OnButtonPersoClicked)
         self.ConnectSignalWidgetIndependant()
         
@@ -165,8 +170,10 @@ class FormClient(QtGui.QDialog, Ui_DialogBase):
 
             
         elif self.version=='liste':  #ancienne methode 
-            listeville=self.__class__.Ville.GetListe()   #creation liste ville (lent)
-            comboVille=self.dicoWidget['Commune_idCommune'] #comboBox affichant la liste des villes.addItems(listeville)
+            pass 
+            #a revoir
+#            listeville=self.__class__.Ville.GetListe()   #creation liste ville (lent)
+#            comboVille=self.dicoWidget['Commune_idCommune'] #comboBox affichant la liste des villes.addItems(listeville)
         
         
         
@@ -200,14 +207,7 @@ class FormClient(QtGui.QDialog, Ui_DialogBase):
         else :
             self.pushButton_perso.setText('Afficher les informations personnelles')
             
-    def OnButtonEditerClicked(self, checked):
-        
-        if self.pushButton_editer.text()=='Annuler':
-            self.derniereAction='Annuler'
-        else :
-            self.derniereAction='Editer'
-        
-        self.BasculeModeEdition( not self.edition) #inverse mode edition
+
         
     def OnIsSalarieClicked(self, state):
         if self.DesactiveSignaux: return
@@ -217,24 +217,7 @@ class FormClient(QtGui.QDialog, Ui_DialogBase):
             self.isSalarie=False
         self.ActualiseAffichagePersonnel()
         
-    def AfficheWidgetsEnfants(self, layout, affiche): #affiche ou masque tous les widgets d'un layout  
-        listeenfants=layout.children()
-        layout.setEnabled(affiche)
-        for enfant in listeenfants : #1ere methode pour retrouver les widgets (ne fonctionne pas avec layout) #AREVOIR utilité ? pour autre type layout?
-            try:
-                enfant.setVisible(affiche)
-            except:
-                pass
-        i=0
-        item=layout.itemAt(i)  #2eme methode pour retrouver les widgets
-        while (item) :
-            try :
-                item.widget().setVisible(affiche)
-            except:
-                pass
-            i+=1
-            item=layout.itemAt(i)
-            
+
             
             
     def ActualiseAffichagePersonnel(self):
@@ -269,51 +252,9 @@ class FormClient(QtGui.QDialog, Ui_DialogBase):
         
         
         
-    def AfficheChamps(self):
-        "fonction principale qui affiche tous les widgets du formulaire +/- recopie unclient dans widgets"
         
-        self.formLayout=self.formLayout1                                    #        self.formLayout.setSizeConstraint(QLayout.SetMaximumSize)
-        nbchamp=0        
-        nbchampaffiches=len( self.ListeChampAffiches )
-        for c in self.ListeChampAffiches + self.ListeChampPersonnel:
-            
-            if 'spacer' in c :  # création d'un widget espace   "spacer:Taille" de l'espace
-                size=int(c.split(':')[1])
-                spacer=QSpacerItem(size, size)
-                self.formLayout.addItem(spacer)
-            
-            elif 'list' in str(type(c)) : # => widgets regroupés sur la meme ligne, dans une hbox = liste groupe box
-                hbox=QHBoxLayout(self)                                                   #hbox.setSizeConstraint(QLayout.SetMaximumSize)
-                hbox.setSizeConstraint(QLayout.SetMinimumSize)
-                gb=QGroupBox(self)
-                gb.setFlat(True)   #masque le cadre                                                     #gb.setAlignment(Qt.AlignLeft) #a revoir ne marche pas
-                gb.setMaximumWidth(200)
-                self.widgetGroupebox.append(gb)
-                
-                
-                for souschamp in c :  # étiquette+widget
-                    nomchamp, widget=self.CreeWidget(souschamp) 
-                    label=QLabel( nomchamp)                                                                                 # marchepas:                   label.setMaximumWidth(20)
-                    hbox.addWidget(label)                                                                                   #     marchepas:               label.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
-                    hbox.addWidget(widget)                                                                                  # marchepas:                   widget.setSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
-                gb.setLayout(hbox) #TODO: fixer la taille des widgets 
-                self.formLayout.addRow( gb)
-            else: # la plupart des widgets = une étiquette + widget associé au champ de la database
-                nomchamp, widget=self.CreeWidget(c)
-                self.formLayout.addRow(nomchamp, widget)
-
-
-            nbchamp+=1
-            
-            #gestion des colonnes : 3 colonnes pour les widgets de ListeChampAffiches, la dernière colonne = widgets de ListeChampPersonnel
-            if self.formLayout<>self.formLayout_personnel :  
-                if nbchamp >= nbchampaffiches :
-                    self.formLayout=self.formLayout_personnel #derniere colonne,concerne uniquement les employés de la clinique
-                elif nbchamp==22 :
-                    self.formLayout=self.formLayout2  #2eme colonne
-                elif nbchamp ==44 :
-                    self.formLayout=self.formLayout3
-
+    def InitialiseChamps(self):
+        
         if self.edition==True:
             self.CopieClient2Widget()
         else : 
@@ -324,92 +265,6 @@ class FormClient(QtGui.QDialog, Ui_DialogBase):
             
         #for c in self.ListeChampPersonnel : #champ masqués si client =True, concerne uniquement les employés de la clinique
 
-    def CreeWidget(self, champ):  
-        "crée et retourne une étiquette de champ + widget d'édition (champ=nom du champ dans la DataBase)"
-        
-        if 'WIDGET' in champ : #widget indépendant = non lié à la Data Base (ex spacer..., bouton de controle d'affichage)
-            return (self.CreeWidgetIndependant(champ))
-        try : 
-            taille=self.TailleMax[champ]
-        except :
-            taille=0 #ne change pas taille max du widget
-            
-        unchamp=self.DataBasedicoChamps[champ] #unchamp =  objet de classe Champ, pointe directement sur le champ de l'objet unclient à éditer
-        try :
-            nomchamp=self.NomChamp[champ]
-        except :
-            nomchamp=unchamp.Nom()  #par defaut prend le meme nom  que dans la DataBase 
-            self.NomChamp[champ]=nomchamp
-        try :
-            typechamp=self.TypeChamp[champ]  #pour les checkBox, comboBox...
-        except :  #par defaut (le + fréquent) =LineEdit
-            typechamp='LineEdit'
-            self.TypeChamp[champ]='LineEdit'
-        
-        widget=self.CreeWidgetEdit(nomchamp, typechamp, taille)                                                                                 #        widget.setMaximumWidth(taille)
-        self.dicoWidget[champ]=widget  # mémorise le widget associé au champ
-        return( [nomchamp, widget])
-
-    def CreeWidgetEdit(self, nomchamp, typechamp, taille): 
-       
-        if typechamp=='LineEdit' :
-            unwidget=QLineEdit(self)
-            if not taille :
-                taille=config.MAXWIDTHQLINEEDIT
-        elif typechamp=='comboBox':
-            unwidget=QComboBox(self)
-        elif typechamp=='myComboBoxVille':
-            unwidget=MyComboBoxVille(self)             
-        elif typechamp=='checkBox':
-            unwidget=QCheckBox(self)
-        elif typechamp=='textEdit':
-            unwidget=QTextEdit(self)
-            if not taille :
-                taille=config.MAXWIDTHQTXTEDIT
-        elif typechamp=='spinBox':
-            unwidget=QSpinBox(self)
-        elif typechamp=='date' :
-            unwidget=QDateEdit(self)
-            unwidget.setDisplayFormat('dd/MM/yyyy')
-            unwidget.setCalendarPopup(True)
-            
-        if taille  : #si taille=0 ne change pas la taille 
-            unwidget.setMaximumWidth(taille)
-
-        return unwidget
-        
-    def CreeWidgetIndependant(self, champ):
-        try :
-            nomchamp=self.NomChamp[champ]
-        except :
-            nomchamp=''
-            
-        if 'checkbox' in champ :
-            pass  #TODO:  chekbox ville preferees
-            
-        elif 'date' in champ: #pour tous les widgets date optionnel => désactivés au début
-            nomchamp='Ajouter Date'
-            widget=QCheckBox(self)
-            
-        elif 'Edit' in champ : #ex WIDGETEditCIP
-            widget=QLineEdit(self)
-            
-            if champ=='WIDGETEditCIP':
-#                widget.setInputMask(config.MASQUE_CIP)
-                reg=QRegExp(config.MASQUE_CIP_REG)  # ex  MASQUE_CIP_REG='\d{2}\s{0,1}\d{5}'
-                validator=QRegExpValidator(reg, self)
-#                validator=QIntValidator(0, 99999, self) #pb accept espaces++
-                widget.setValidator( validator)
-                
-
-        try : 
-            taille=self.TailleMax[champ]
-            widget.setMaximumWidth(taille)
-        except :
-            pass
-            
-        self.dicoWidgetIndependant[champ]=widget
-        return([nomchamp, widget])
         
     def ConnectSignalWidgetIndependant(self ):
         for champ in self.dicoWidgetIndependant.keys() :
@@ -457,28 +312,7 @@ class FormClient(QtGui.QDialog, Ui_DialogBase):
         w=self.dicoWidget['DateEntree']
         w.setEnabled(state)
         
-    def AfficheTousLesChamps(self): 
-        "non utilisé : affiche tous les champs d'une table de la base de donnée"
-        self.formLayout=self.formLayout1
-        nbchamp=0
-        for champ in self.unclient.GetListeChamps():
-            nbchamp+=1
-            nomchamp=champ.Nom()
-            
-            uneligne=QLineEdit(self)
-            uneligne.setObjectName(nomchamp)
-            self.formLayout.addRow(nomchamp, uneligne)
-
-            self.ListeChampAffiches.append(nomchamp)
-            self.TypeChamp[c]='LineEdit'
-            self.dicoWidget[c]=uneligne
-
-            if nbchamp==20 :
-                self.formLayout=self.formLayout2
-            if nbchamp ==40 :
-                self.formLayout=self.formLayout3
-                
-                
+        
     def SetClient(self, client, modeinfo=False):
         self.unclient=client
         self.modeinfo=modeinfo
@@ -486,6 +320,9 @@ class FormClient(QtGui.QDialog, Ui_DialogBase):
         self.CopieClient2Widget()
         self.isNouveauclient=False
         self.BasculeModeEdition(False)
+        
+    def CopieTable2Widget(self, efface=False):
+        self.CopieClient2Widget( efface)
         
     def CopieClient2Widget(self, efface=False):
         "recopie tous les champs de unclient dans les widgets (ou efface tous les widgets)"
@@ -495,29 +332,30 @@ class FormClient(QtGui.QDialog, Ui_DialogBase):
         
         id=self.unclient.Id()
         if efface or not id : #efface tout
-            for nomchamp in self.dicoWidget.keys():
-                widget=self.dicoWidget[nomchamp]
-                try :
-                    widget.setText('')  #QLineEdit, ...
-                except :
-                    try :
-                        widget.setCheckState(Qt.Unchecked)  #checkBox
-                    except :
-                        try :
-                            widget.setValue(0)  #spinBox
-                        except:
-                            try :
-                                now=QDate.currentDate()
-                                widget.setDate(now)
-                                nomchamp=''
-                                for champ in self.dicoWidget.keys() : #retrouve le nom du champ date et DesativeChamp
-                                    if self.dicoWidget[champ] == widget :
-                                        nomchamp=champ
-                                        break
-                                self.DesativeChamp(nomchamp)
-                                
-                            except:
-                                pass
+            self.EffaceChamps()
+#            for nomchamp in self.dicoWidget.keys():
+#                widget=self.dicoWidget[nomchamp]
+#                try :
+#                    widget.setText('')  #QLineEdit, ...
+#                except :
+#                    try :
+#                        widget.setCheckState(Qt.Unchecked)  #checkBox
+#                    except :
+#                        try :
+#                            widget.setValue(0)  #spinBox
+#                        except:
+#                            try :
+#                                now=QDate.currentDate()
+#                                widget.setDate(now)
+#                                nomchamp=''
+#                                for champ in self.dicoWidget.keys() : #retrouve le nom du champ date et DesativeChamp
+#                                    if self.dicoWidget[champ] == widget :
+#                                        nomchamp=champ
+#                                        break
+#                                self.DesativeChamp(nomchamp)
+#                                
+#                            except:
+#                                pass
                     
             try :
                 widget=self.dicoWidget['Commune_idCommune']        
@@ -674,23 +512,7 @@ class FormClient(QtGui.QDialog, Ui_DialogBase):
                 
         return erreur
             
-            
-            
-    def BasculeModeEdition(self, bool_edit):
-        if bool_edit :
-            self.EnableWidget(True)
-            self.edition=True
-            self.pushButton_editer.setText('Annuler')  #si clique => repasse mode lecture (=> empèche enregistrement client des modifications)
-            
-        else :
-            self.EnableWidget(False)
-            self.edition=False
-            self.pushButton_editer.setText('Editer')
-            
-        if self.modeinfo==True :
-            self.pushButton_editer.setVisible(False)
-        else :
-            self.pushButton_editer.setVisible(True)
+    
             
     def reject(self):
         if (self.edition  and self.isNouveauclient) or (not self.edition  and not self.isNouveauclient) :
@@ -728,28 +550,3 @@ class FormClient(QtGui.QDialog, Ui_DialogBase):
                 
 
 
-
-class FormComment(QtGui.QDialog): #TODO: a déplacer dans un autre fichier
-    def __init__(self,parent=None):
-        super(FormComment,self).__init__(parent)
-        self.resize(400, 255)
-        self.setWindowTitle("Edition Consultation")
-        self.buttonBox = QtGui.QDialogButtonBox(self)
-        self.buttonBox.setGeometry(QtCore.QRect(30, 210, 341, 32))
-        self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
-        self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
-        self.label = QtGui.QLabel(self)
-        self.label.setGeometry(QtCore.QRect(20, 20, 191, 17))
-        self.label.setText("Entrez votre commentaire :")
-        self.plainTextEdit = QtGui.QPlainTextEdit(self)
-        self.plainTextEdit.setGeometry(QtCore.QRect(20, 50, 361, 141))
-        self.connect(self.buttonBox, QtCore.SIGNAL("accepted()"), self.accept)
-        self.connect(self.buttonBox, QtCore.SIGNAL("rejected()"), self.reject)
-
-if __name__ == '__main__':
-    pass
-#    
-#    app = QtGui.QApplication(sys.argv)
-#    window = WindowsTest()
-#    window.show()
-#    sys.exit(app.exec_())

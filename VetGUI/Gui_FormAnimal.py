@@ -10,8 +10,11 @@ from PyQt4.Qt import *
 
 import config
 
-from ui_Form_animal import Ui_Dialog_animal
-from ui_Form_DialogBase import Ui_DialogBase
+#from ui_Form_animal import Ui_Dialog_animal
+
+from Gui_FormulaireBase import *
+
+
 from Mywidgets import *
 
 from Core_Consultation import *
@@ -20,33 +23,50 @@ from gestion_erreurs import *
 
 
 
-class FormAnimal(QtGui.QDialog, Ui_Dialog_animal):
-    def __init__(self, parent=None):
-        QtGui.QDialog.__init__(self, parent)
-        print parent.dataAnimal
-        self.setupUi(self)
+class FormAnimal(FormulaireBase):
+    def __init__(self, parent=None, animal=None):
+        FormulaireBase.__init__(self, parent)
+        
+        self.ListeChampAffiches=['Nom', 'Naissance','Robe', 'Sexe', 'Sterilise', 'Identification', 'Commentaires', 'Espece', 'Race1', 'Race2', 'DesactiverRelances']
+        
+        
+        
+        self.NomChamp={'Naissance':'Date de naissance', 'Sterilise':u'Stérilisé', 'Espece':u'Espèces', 'Race1': 'Race', 'Race2':'Croisement', 'DesactiverRelances':u'Désactiver les relances'}
+        self.TypeChamp={'Naissance':'date','Sexe':'comboBox', 'Sterilise':'checkBox', 'Commentaires':'textEdit','Espece':'comboBox', 'Race1':'comboBox', 'Race2':'comboBox','DesactiverRelances':'checkBox'}
+        self.TailleMax={'Sexe':30,'Espece':200, 'Race1':200, 'Race2':200, 'Commentaires':300}
+        
+        
+        #création unanimal (objet de class Tablenimal intermédiaire entre affichage et database) :      widget <-> unanimal<-> database
+        if not animal :
+            self.unanimal=NewAnimal()
+            self.edition=False #mode création client
+            self.isNewAnimal=True
+        else :
+            self.unanimal=animal#édition d'un client existant
+            self.edition=True
+            self.isNewAnimal=False
+        self.modeinfo=False        
+        
+        self.DataBasedicoChamps=self.unanimal.GetDicoChamps() 
+        
+        
+        self.pushButton_perso.setVisible(False)
+        
+        self.AfficheChamps()
 
-#class FormComment(QtGui.QDialog): # cf gui_formclient
-#    def __init__(self,parent=None):
-#        super(FormComment,self).__init__(parent)
-#        self.resize(400, 255)
-#        self.setWindowTitle("Edition Consultation")
-#        self.buttonBox = QtGui.QDialogButtonBox(self)
-#        self.buttonBox.setGeometry(QtCore.QRect(30, 210, 341, 32))
-#        self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
-#        self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
-#        self.label = QtGui.QLabel(self)
-#        self.label.setGeometry(QtCore.QRect(20, 20, 191, 17))
-#        self.label.setText("Entrez votre commentaire :")
-#        self.plainTextEdit = QtGui.QPlainTextEdit(self)
-#        self.plainTextEdit.setGeometry(QtCore.QRect(20, 50, 361, 141))
-#        self.connect(self.buttonBox, QtCore.SIGNAL("accepted()"), self.accept)
-#        self.connect(self.buttonBox, QtCore.SIGNAL("rejected()"), self.reject)
+        if self.isNewAnimal:
+            self.BasculeModeEdition(True)
+        else : 
+            self.BasculeModeEdition(False)
 
-if __name__ == '__main__':
-    pass
-#    
-#    app = QtGui.QApplication(sys.argv)
-#    window = WindowsTest()
-#    window.show()
-#    sys.exit(app.exec_())
+
+
+
+
+
+
+
+
+
+
+

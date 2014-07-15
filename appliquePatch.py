@@ -286,24 +286,6 @@ if __name__ == '__main__':
     err=Login()
     
 #    SauveDB()
+    print 'applique patch'
+    AppliquePatch()
     
-    if os.path.exists('sauvegardeDB.sql'):
-        print 'Restaure DB'
-        RestaureDB()
-        print 'fin'
-        
-    else :
-        
-        
-        if err :
-            CreationDB()
-        
-        err=Login()
-        
-        if not err :
-            DbPopulate.FillCommunesAndRaces()
-            print '************ CREATION DE CLIENT / ANIMAUX /  CONSULTS***************'
-            TestFillConsult()
-            AppliquePatch()
-            TestChercheEtAfficheTableLiee(AffichageSimple=True)
-                

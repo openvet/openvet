@@ -29,7 +29,7 @@ FAIT  verifier format decimal et taille, type date...
 FAIT prevoir table join ou regrouper tables avec id 
 
 
-remplacer tous msg erreur par AfficheErreur(msg)
++/-FAIT remplacer tous msg erreur par AfficheErreur(msg)
 
 FAIRE LOCK UNLOCK **********************
 

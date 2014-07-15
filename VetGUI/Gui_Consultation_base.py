@@ -16,7 +16,7 @@ from ui_Form_consultation_base import Ui_MainWindowConsultation
 
 
 from Gui_FormClient import *
-
+from Gui_FormAnimal import *
 
 from Mywidgets import *
 
@@ -93,6 +93,8 @@ class WindowConsultation(QtGui.QMainWindow, Ui_MainWindowConsultation):
         self.toolButton_addClient.clicked.connect(self.DoNouveauClient)
         self.toolButton_ClientInfo.clicked.connect(self.DoClientInfo)
         self.toolButton_addAnimal.clicked.connect(self.DoAnimWindowConsultationalEdit)
+        self.toolButton_editAnimal.clicked.connect(self.DoAnimalEdit)
+        
         self.comboBox_Animal.activated.connect(self.DoGetConsultations)
         self.comboBox_consultType.currentIndexChanged.connect(self.OnTypeConsultation)
         self.connect(self.textBrowser_consultations, QtCore.SIGNAL("anchorClicked(QUrl)"),self.OnConsultationClicked)
@@ -272,7 +274,8 @@ class WindowConsultation(QtGui.QMainWindow, Ui_MainWindowConsultation):
         if self.editAnimal is None:
                 self.editAnimal = FormAnimal(self)
         if self.editAnimal.exec_():
-            print self.editAnimal.data
+            pass #TODO:
+            
 
 
     def GetNomClientActif(self):
