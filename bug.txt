@@ -1,4 +1,5 @@
 
+Fait 16/7/14 correction bug majeur :  table liée : client-animal-consultation Get(Champ) renvoie null pour animal car utilise self.dicoChamp de tableLiée au lieu de self.dicoChamp de la tableparent (type animal)
 
 (bug : lors creation nouveau client, ok puis annule : pb liste client cf apres)
 bug creation nouveau client : n'est pas affiché, + liste pas mise à jour

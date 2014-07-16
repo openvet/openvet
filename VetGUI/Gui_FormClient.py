@@ -22,7 +22,7 @@ from gestion_erreurs import *
         
 class FormClient(FormulaireBase):
     """ 
-    formulaire pour lire un client (self.edition=False) ou l'éditer / client self.unclient= TableClient
+    formulaire pour lire un client (self.edition=False) ou l'éditer / client self.une_table= TableClient
     à la création : formulaire vide, mode nouveau client+édition
     CopieClient2Widget => recopie le client dans les champs du widget (faire SetClient avant pour associer le client au formulaire)
     VerifieChamps => recopie les champs dans client, affiche un msg si erreur
@@ -40,7 +40,7 @@ class FormClient(FormulaireBase):
         """
         
         
-        FormulaireBase.__init__(self, parent)
+        FormulaireBase.__init__(self, parent) #TODO: deplacer client dans FormulaireBase + renomer
         
         self.version= version 
 #        QtGui.QDialog.__init__(self, parent)
@@ -94,16 +94,16 @@ class FormClient(FormulaireBase):
             
         #création unclient (objet de class TableClient intermédiaire entre affichage et database) :      widget <-> unclient <-> database
         if not client :
-            self.unclient=NouveauClient()
+            self.une_table=NouveauClient()
             self.edition=False #mode création client
             self.isNouveauclient=True
         else :
-            self.unclient=client #édition d'un client existant
+            self.une_table=client #édition d'un client existant
             self.edition=True
             self.isNouveauclient=False
         self.modeinfo=False
             
-        self.DataBasedicoChamps=self.unclient.GetDicoChamps() #liste des champs de la Table (= noms des colonnes dans la Data Base)
+        self.DataBasedicoChamps=self.une_table.GetDicoChamps() #liste des champs de la Table (= noms des colonnes dans la Data Base)
         self.isSalarie=False
         self.isVeterinaire=False
         #création des wigets
@@ -313,13 +313,18 @@ class FormClient(FormulaireBase):
         w.setEnabled(state)
         
         
-    def SetClient(self, client, modeinfo=False):
-        self.unclient=client
-        self.modeinfo=modeinfo
-        self.DataBasedicoChamps=self.unclient.GetDicoChamps()  #actualise DataBasedicoChamps avec les champs du nouveau client
-        self.CopieClient2Widget()
+#    def SetClient(self, client, modeinfo=False):
+#        self.une_table=client
+#        self.modeinfo=modeinfo
+#        self.DataBasedicoChamps=self.une_table.GetDicoChamps()  #actualise DataBasedicoChamps avec les champs du nouveau client
+#        self.CopieClient2Widget()
+#        self.isNouveauclient=False
+#        self.BasculeModeEdition(False)
+#        
+        
+    def SetClient(self, client, modeinfo=False): #TODO remplacer tt setclient par settable
+        self.SetTable(client, modeinfo=False)
         self.isNouveauclient=False
-        self.BasculeModeEdition(False)
         
     def CopieTable2Widget(self, efface=False):
         self.CopieClient2Widget( efface)
@@ -330,32 +335,9 @@ class FormClient(FormulaireBase):
         self.DesactiveFramePersonnel()
         self.DesactiveSignaux=True #empeche certains signaux (pas tous) par ex OnIsVeterinaireClicked (qui décoche isClient => indésirable ici)
         
-        id=self.unclient.Id()
+        id=self.une_table.Id()
         if efface or not id : #efface tout
             self.EffaceChamps()
-#            for nomchamp in self.dicoWidget.keys():
-#                widget=self.dicoWidget[nomchamp]
-#                try :
-#                    widget.setText('')  #QLineEdit, ...
-#                except :
-#                    try :
-#                        widget.setCheckState(Qt.Unchecked)  #checkBox
-#                    except :
-#                        try :
-#                            widget.setValue(0)  #spinBox
-#                        except:
-#                            try :
-#                                now=QDate.currentDate()
-#                                widget.setDate(now)
-#                                nomchamp=''
-#                                for champ in self.dicoWidget.keys() : #retrouve le nom du champ date et DesativeChamp
-#                                    if self.dicoWidget[champ] == widget :
-#                                        nomchamp=champ
-#                                        break
-#                                self.DesativeChamp(nomchamp)
-#                                
-#                            except:
-#                                pass
                     
             try :
                 widget=self.dicoWidget['Commune_idCommune']        
@@ -374,7 +356,7 @@ class FormClient(FormulaireBase):
              #Fin efface
             
         
-        else : #copie client dans widgets
+        else : #copie client dans widgets  TODO:deplacer le max ds formulaireBase
             for nomchamp in self.dicoWidget.keys():  #dicoWidget[nomchamp]=widget associé
                 typechamp= self.TypeChamp[nomchamp]
                 widget=self.dicoWidget[nomchamp]
@@ -504,7 +486,7 @@ class FormClient(FormulaireBase):
                     
                 #2/ mémorise (dans un client)  et test si valeur est correct
                 if valeur <> '__aucunevaleur__' :
-                    err=self.unclient.SetChamp(unchamp, valeur)  
+                    err=self.une_table.SetChamp(unchamp, valeur)  
                     
             if err :
                 if 'ne peut pas etre NULL' in err : err=u' à renseigner !' #change le msg d'erreur
@@ -538,13 +520,13 @@ class FormClient(FormulaireBase):
 
 
         if save : # enregistrer et repasser en mode lecture si pas d'erreur
-            erreur=self.VerifieChamps() or self.unclient.EnregistreTable()     #si VerifieChamps ne retourne pas d'erreur, EnregistreTable
+            erreur=self.VerifieChamps() or self.une_table.EnregistreTable()     #si VerifieChamps ne retourne pas d'erreur, EnregistreTable
             if erreur :
                 AfficheErreur(erreur, fenetre=self)
             else :
                 self.BasculeModeEdition(False)
         else : #en mode lecture ferme le formulaire
-            self.idnouveauclient=self.unclient.Id()
+            self.idnouveauclient=self.une_table.Id()
             QtGui.QDialog.accept(self)
             
                 

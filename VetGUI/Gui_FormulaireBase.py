@@ -29,13 +29,14 @@ class FormulaireBase(QtGui.QDialog, Ui_DialogBase):
     """
     
     
-    def __init__(self, parent=None, client=None, version=''):
+    def __init__(self, parent=None, unetable=None, version=''):
         
         self.version= version 
         QtGui.QDialog.__init__(self, parent)
         self.setupUi(self)
       
-
+        self.une_table = unetable
+        
         self.dicoWidget={} # dicoWidget['nomchamp'] = widget associé
         self.dicoWidgetIndependant={}  #idem pour widgets non associés directement à un champ de la data base
         
@@ -66,8 +67,11 @@ class FormulaireBase(QtGui.QDialog, Ui_DialogBase):
 
         self.modeinfo=False
             
-        #self.DataBasedicoChamps=self.unclient.GetDicoChamps() #liste des champs de la Table (= noms des colonnes dans la Data Base)
-        
+        #self.DataBasedicoChamps=self.une_table.GetDicoChamps() #liste des champs de la Table (= noms des colonnes dans la Data Base)
+        self.DataBasedicoChamps={} 
+        if self.une_table :
+            self.DataBasedicoChamps=self.une_table.GetDicoChamps()
+            
         #création des wigets
         
 #        self.AfficheChamps()  #A APPELER DANS LES CLASSES DERIVEES
@@ -186,6 +190,12 @@ class FormulaireBase(QtGui.QDialog, Ui_DialogBase):
         
         widget=self.CreeWidgetEdit(nomchamp, typechamp, taille)                                                                                 #        widget.setMaximumWidth(taille)
         self.dicoWidget[champ]=widget  # mémorise le widget associé au champ
+        try :
+            self.une_table.AssocieWidgetChamp(widget, champ)
+        except:
+            pass
+        
+        
         return( [nomchamp, widget])
 
     def CreeWidgetEdit(self, nomchamp, typechamp, taille): 
@@ -319,9 +329,66 @@ class FormulaireBase(QtGui.QDialog, Ui_DialogBase):
         
         self.BasculeModeEdition( not self.edition) #inverse mode edition
 
+    def une_table(self): #a surcharger
+        return self.une_table
+        
+    def id_une_table(self): #a surcharger
+        if self.une_table  :
+            return self.une_table.Id()
 
-    def CopieTable2Widget(self, efface=False): #a surcharger
-        pass
+    def SetTable(self, unetable, modeinfo=False):
+        if unetable :
+            self.une_table =unetable
+            self.modeinfo=modeinfo
+            self.DataBasedicoChamps=self.une_table .GetDicoChamps()  #actualise DataBasedicoChamps avec les champs du nouveau client
+            self.CopieTable2Widget()
+            self.isNouvelleTable=False
+            self.BasculeModeEdition(False)
+            
+
+    def CopieTable2Widget(self, efface=False): 
+        self.DesactiveSignaux=True #empeche certains signaux (pas tous) par ex OnIsVeterinaireClicked (qui décoche isClient => indésirable ici)
+        id=self.id_une_table
+        if efface or not id : #efface tout
+            self.EffaceChamps()
+      
+        else : #copie une_table dans widgets
+            for nomchamp in self.dicoWidget.keys():  #dicoWidget[nomchamp]=widget associé
+                typechamp= self.TypeChamp[nomchamp]
+                if 'ComboBox' in typechamp or 'comboBox' in typechamp :
+                    # +/- ajouter à une liste à traiter séparément
+                    continue   #a faire dans chq classe dérivée 
+                
+                widget=self.dicoWidget[nomchamp]
+                unchamp=self.DataBasedicoChamps[nomchamp]  #unchamp = objet champ du client
+                if 'Edit' in typechamp :
+                    txt=unchamp.Txt()
+                    widget.setText(txt)
+                elif typechamp == 'checkBox' :
+                    if unchamp.isTrue():
+                        widget.setCheckState(Qt.Checked)
+                    else :
+                        widget.setCheckState(Qt.Unchecked)
+
+                elif typechamp ==  'spinBox' :
+                    nb=unchamp.Value()
+                    try :
+                        widget.setValue(nb)
+                    except:
+                        widget.setValue(0)
+                elif typechamp ==  'date' :
+                    date=unchamp.GetDate('QDate')
+                    if date :
+                        widget.setDate(date)
+                        self.DesativeChamp(nomchamp, active=True)
+                    else : 
+                        now=QDate.currentDate()
+                        widget.setDate(now)
+                        self.DesativeChamp(nomchamp)
+
+            
+        self.DesactiveSignaux=False
+             
 
     def EffaceChamps(self):
         for nomchamp in self.dicoWidget.keys():

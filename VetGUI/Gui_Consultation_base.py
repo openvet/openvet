@@ -60,7 +60,9 @@ class WindowConsultation(QtGui.QMainWindow, Ui_MainWindowConsultation):
         self.__class__.Formulaire_Client=  formulaireclient or FormClient()
         
         self.formulaireEditClient = None
-        self.editAnimal = None
+        
+        self.__class__.Formulaire_Animal=None
+        self.formulaireEditAnimal = None
         #init dates
         now=QtCore.QDate.currentDate()
         self.dateEdit_consult.setDate(now)
@@ -235,6 +237,12 @@ class WindowConsultation(QtGui.QMainWindow, Ui_MainWindowConsultation):
         if not self.__class__.Formulaire_Client : #utilise le meme FormClient pour toutes les instances de classes
             self.__class__.Formulaire_Client = FormClient()
         self.formulaireEditClient = self.__class__.Formulaire_Client 
+        
+    def CreeFormAnimal(self):
+        if not self.__class__.Formulaire_Animal : #utilise le meme Form Animal pour toutes les instances de classes
+            self.__class__.Formulaire_Animal = FormAnimal()
+        self.formulaireEditAnimal = self.__class__.Formulaire_Animal 
+        
 
     def DoClientEdit(self):
         if not self.formulaireEditClient :  # self.formulaireEditClient   =  formulaire client  pour edition ou nouveau client/création  s'il n'existe pas 
@@ -270,10 +278,12 @@ class WindowConsultation(QtGui.QMainWindow, Ui_MainWindowConsultation):
                 
 
     def DoAnimalEdit(self):
-        self.dataAnimal='Son nom est minou'
-        if self.editAnimal is None:
-                self.editAnimal = FormAnimal(self)
-        if self.editAnimal.exec_():
+#        self.dataAnimal='Son nom est minou'
+        if not self.formulaireEditAnimal :
+            self.CreeFormAnimal()
+            
+        self.formulaireEditAnimal.SetTable(self.MyConsult.GetAnimalActif())
+        if self.formulaireEditAnimal.exec_():
             pass #TODO:
             
 

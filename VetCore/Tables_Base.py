@@ -275,10 +275,10 @@ class Champ:
         self.isDate=('date'in self.Type)
         self.TailleMax=self.CalculeTailleMax()    # strictement < a taille max
         self.Valeur=None
-        self.Widget=None
+        self.ListeWidget=[]
     
-    def SetWidget(self, w):
-        self.Widget=w
+    def AddWidget(self, w):
+        self.ListeWidget.append(w)
         
     def Nom(self):   
         return self.NomChamp
@@ -533,8 +533,8 @@ class Table:
         self.champ={}
         self.clefprimaire=None
         self.erreur= None
-#        self.Widget=None
-        self.Widget={} #TODO: DEBUG revoir si autorise plusieurs widget associés
+        self.Widget=None #TODO:  revoir si utilie /un widget associé à une table ! (attention référencé ailleurs)
+#        self.Widget={} #T
 #        self.ListeTableEnfant=None
         self.enCoursDEdition=False #si True => la table n'est pas encore enregistrée dans la data base 
         self.Initialise(auto)
@@ -542,11 +542,14 @@ class Table:
     def ListeEnfants(self): #pour TableLiee (dans Table pour eviter tester si TableLiee)
         return None
         
-    def AddWidget(self, w):
-        self.Widget.append(w)
+    def AssocieWidgetChamp(self, w, nomchamp):
+        try :
+            self.dicoChamps[nomchamp].AddWidget(w)
+        except :
+            print 'warning exception Table.AssocieWidgetChamp()'
         
-    def GetListeWidget(self):
-        return self.Widget
+#    def GetListeWidget(self):
+#        return self.Widget
 
     def SetTableBase(self, nomtable):
             self.NomTableBase = nomtable or self.NomTable    
@@ -1003,6 +1006,9 @@ class TableLiee(Table):
         Table. __init__(self,tableparent.nomDB,tableparent.NomTable, tableparent.NomTableBase, dataBase=tableparent.DataBase)
         self.TableLien=tablelien
         self.TableParent=tableparent
+        self.dicoChamps =  tableparent.dicoChamps  #pour que Get(Champ) et SetChamp de TableLiee utilisent la tableparent (sinon dicoChamps pointe sur des champs dont la valeur reste tjrs null)
+        self.listeChamps = tableparent.listeChamps
+        
         self.TableEnfant=tableenfant
         self.NomIdParent2Enfant=nomidparent2enfant  #nom de idenfant dans la table parent 
         self.NomIdEnfant2Parent=nomidenfant2parent  #nom de idparent dans la table enfant 

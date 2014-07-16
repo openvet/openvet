@@ -38,16 +38,16 @@ class FormAnimal(FormulaireBase):
         
         #création unanimal (objet de class Tablenimal intermédiaire entre affichage et database) :      widget <-> unanimal<-> database
         if not animal :
-            self.unanimal=NewAnimal()
+            self.une_table=NewAnimal()
             self.edition=False #mode création client
             self.isNewAnimal=True
         else :
-            self.unanimal=animal#édition d'un client existant
+            self.une_table=animal#édition d'un client existant
             self.edition=True
             self.isNewAnimal=False
         self.modeinfo=False        
         
-        self.DataBasedicoChamps=self.unanimal.GetDicoChamps() 
+        self.DataBasedicoChamps=self.une_table.GetDicoChamps() 
         
         
         self.pushButton_perso.setVisible(False)
