@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Tasks SYSTEM "Tasks-5.1.dtd">
 <!-- eric5 tasks file for project openvet_git -->
-<!-- Saved: 2014-07-18, 11:15:22 -->
+<!-- Saved: 2014-07-18, 11:31:41 -->
 <Tasks version="5.1">
   <ProjectScanFilter></ProjectScanFilter>
   <Task priority="1" completed="False" type="1">
@@ -367,7 +367,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: DEBUG ++++++++++++++++  semble ok</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:15:19</Created>
+    <Created>2014-07-18, 11:31:38</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>221</Linenumber>
@@ -376,7 +376,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: ajouter h,min,sec</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:15:19</Created>
+    <Created>2014-07-18, 11:31:38</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>390</Linenumber>
@@ -385,7 +385,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: ++++++++++++++  ESSAYER SANS DECODE ++++++++++</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:15:19</Created>
+    <Created>2014-07-18, 11:31:38</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>412</Linenumber>
@@ -394,7 +394,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: DEBUG ++++++++ VERIFIER SI OK ++++changé 30/5/14</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:15:19</Created>
+    <Created>2014-07-18, 11:31:38</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>414</Linenumber>
@@ -403,7 +403,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: verifier type decimal, type date etc....</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:15:19</Created>
+    <Created>2014-07-18, 11:31:38</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>453</Linenumber>
@@ -412,7 +412,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: a revoir si utilité calculer max</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:15:19</Created>
+    <Created>2014-07-18, 11:31:38</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>524</Linenumber>
@@ -421,7 +421,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: voir si supprime fonction</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:15:19</Created>
+    <Created>2014-07-18, 11:31:38</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>555</Linenumber>
@@ -430,7 +430,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO:  revoir si utilie /un widget associé à une table ! (attention référencé ailleurs)</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:15:19</Created>
+    <Created>2014-07-18, 11:31:38</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>565</Linenumber>
@@ -439,7 +439,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: eventuellement creer la Table</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:15:19</Created>
+    <Created>2014-07-18, 11:31:38</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>593</Linenumber>
@@ -448,7 +448,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: ne pas enlever les ' mais voir si on peut remplacer par \'  +/- deplacer dans class Champ?</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:15:19</Created>
+    <Created>2014-07-18, 11:31:38</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>679</Linenumber>
@@ -457,7 +457,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: encours</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:15:19</Created>
+    <Created>2014-07-18, 11:31:38</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>717</Linenumber>
@@ -466,145 +466,145 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO:  verifie DB.Table.Lock = 0 pour self.clefprimaire (si &gt;0 return = idUserLock) (si = 0 =&gt; DB.TableLock = idUser)</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:15:19</Created>
+    <Created>2014-07-18, 11:31:38</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
-      <Linenumber>837</Linenumber>
+      <Linenumber>840</Linenumber>
     </Resource>
   </Task>
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: met DB.Table lock=0</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:15:19</Created>
+    <Created>2014-07-18, 11:31:38</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
-      <Linenumber>843</Linenumber>
+      <Linenumber>846</Linenumber>
     </Resource>
   </Task>
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: VERIFIER TOUS LES TYPES</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:15:19</Created>
+    <Created>2014-07-18, 11:31:38</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
-      <Linenumber>919</Linenumber>
+      <Linenumber>922</Linenumber>
     </Resource>
   </Task>
   <Task priority="1" completed="False" type="1">
     <Summary>TODO:  ???  fonction Delete      def Delete(self): #suppression de l'item de la base de donee         sql=&quot;DELETE FROM &quot;+split(self.NomTable)[0]+&quot; WHERE &quot;+split(self.listechamps,&quot;,&quot;)[0]+&quot;=&quot;+str(self.id) #split(nomtable) car nomtable peut etre complexe (ex: Client LEFT OUTER JOIN)</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:15:19</Created>
+    <Created>2014-07-18, 11:31:38</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
-      <Linenumber>1016</Linenumber>
+      <Linenumber>1019</Linenumber>
     </Resource>
   </Task>
   <Task priority="1" completed="False" type="1">
     <Summary>TODO:  DEBUG******************verifier si enfant-&gt;enfant propage signal</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:15:19</Created>
+    <Created>2014-07-18, 11:31:38</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
-      <Linenumber>1072</Linenumber>
+      <Linenumber>1075</Linenumber>
     </Resource>
   </Task>
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: à tester</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:15:19</Created>
+    <Created>2014-07-18, 11:31:38</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
-      <Linenumber>1167</Linenumber>
+      <Linenumber>1170</Linenumber>
     </Resource>
   </Task>
   <Task priority="1" completed="False" type="1">
     <Summary>TODO:  A TESTER</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:15:19</Created>
+    <Created>2014-07-18, 11:31:38</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
-      <Linenumber>1182</Linenumber>
+      <Linenumber>1185</Linenumber>
     </Resource>
   </Task>
   <Task priority="1" completed="False" type="1">
     <Summary>TODO:   #normalement inutile, on change plutot le parent</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:15:19</Created>
+    <Created>2014-07-18, 11:31:38</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
-      <Linenumber>1187</Linenumber>
+      <Linenumber>1190</Linenumber>
     </Resource>
   </Task>
   <Task priority="1" completed="False" type="1">
     <Summary>TODO:  DEBUG   *****AREVOIR*******utilité?????(+verifier id&lt;&gt;old_id)</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:15:19</Created>
+    <Created>2014-07-18, 11:31:38</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
-      <Linenumber>1194</Linenumber>
+      <Linenumber>1197</Linenumber>
     </Resource>
   </Task>
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: CREE LE LIEN SI TABLE LIEN</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:15:19</Created>
+    <Created>2014-07-18, 11:31:38</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
-      <Linenumber>1262</Linenumber>
+      <Linenumber>1265</Linenumber>
     </Resource>
   </Task>
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: VERIFIER PAS DE DOUBLON ENFANT (verifer sur idenfant) ***************************</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:15:19</Created>
+    <Created>2014-07-18, 11:31:38</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
-      <Linenumber>1289</Linenumber>
+      <Linenumber>1292</Linenumber>
     </Resource>
   </Task>
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: ajouter seulement 1 enfant (si pas doublon)</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:15:19</Created>
+    <Created>2014-07-18, 11:31:38</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
-      <Linenumber>1332</Linenumber>
+      <Linenumber>1335</Linenumber>
     </Resource>
   </Task>
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: ENLEVE LE LIEN</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:15:19</Created>
+    <Created>2014-07-18, 11:31:38</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
-      <Linenumber>1337</Linenumber>
+      <Linenumber>1340</Linenumber>
     </Resource>
   </Task>
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: à revoir , libérer mémoire?</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:15:19</Created>
+    <Created>2014-07-18, 11:31:38</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
-      <Linenumber>1344</Linenumber>
+      <Linenumber>1347</Linenumber>
     </Resource>
   </Task>
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: afaire ou enlever ???</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:15:19</Created>
+    <Created>2014-07-18, 11:31:38</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
-      <Linenumber>1365</Linenumber>
+      <Linenumber>1368</Linenumber>
     </Resource>
   </Task>
   <Task priority="1" completed="False" type="1">
     <Summary>TODO:</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:15:19</Created>
+    <Created>2014-07-18, 11:31:38</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
-      <Linenumber>1378</Linenumber>
+      <Linenumber>1381</Linenumber>
     </Resource>
   </Task>
 </Tasks>

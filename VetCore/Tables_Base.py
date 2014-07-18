@@ -758,6 +758,9 @@ class Table:
         try :
             for champ in self.listeChamps :
                 if champ.IsModifiable()  and champ.Value() :
+                    
+                    if str( champ.Value() ) == 'NULL':
+                        continue
                     if champ.IsNumerique() :
                         sql+= champ.Nom() + ' = ' + str( champ.Value() )+','
                         
