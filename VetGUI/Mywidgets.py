@@ -12,6 +12,16 @@ from Tables import *
 
 #TODO:   BUG++++++++   si création 2eme comboBox le 1er ne s'affiche pas bien (meme si combo differents ex comboville comboclient)
 
+class MyLineEdit(QtGui.QLineEdit):
+    def __init__(self,parent=None):
+        super(MyLineEdit,self).__init__(parent)
+        
+    def Set(self, valeur):
+        self.setText(valeur)
+        
+        
+    def Get(self):
+        return self.text()
 
 class MyComboBox(QtGui.QComboBox):
     """ affiche une liste (nb elements max = limitSql) avec motif de recherche sql, et conservation des resultats de  la 

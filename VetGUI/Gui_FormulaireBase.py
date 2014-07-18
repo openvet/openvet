@@ -44,6 +44,8 @@ class FormulaireBase(QtGui.QDialog, Ui_DialogBase):
 
         self.DesactiveSignaux=False
         self.derniereAction=''
+        self.idnouvelletable=None
+
         
         #regroupement de widget : groupés dans ListeGroupeBox ou masqués ListeChampPersonnel = employés)
         self.ListeGroupeBox1= []    
@@ -191,7 +193,7 @@ class FormulaireBase(QtGui.QDialog, Ui_DialogBase):
         widget=self.CreeWidgetEdit(nomchamp, typechamp, taille)                                                                                 #        widget.setMaximumWidth(taille)
         self.dicoWidget[champ]=widget  # mémorise le widget associé au champ
         try :
-            self.une_table.AssocieWidgetChamp(widget, champ)
+            self.une_table.AssocieWidgetChamp(widget, champ) # mémorise le widget associé à l'objet champ
         except:
             pass
         
@@ -201,7 +203,8 @@ class FormulaireBase(QtGui.QDialog, Ui_DialogBase):
     def CreeWidgetEdit(self, nomchamp, typechamp, taille): 
        
         if typechamp=='LineEdit' :
-            unwidget=QLineEdit(self)
+#            unwidget=QLineEdit(self)
+            unwidget=MyLineEdit(self)
             if not taille :
                 taille=config.MAXWIDTHQLINEEDIT
         elif typechamp=='comboBox':
@@ -294,10 +297,7 @@ class FormulaireBase(QtGui.QDialog, Ui_DialogBase):
 
         
         
-    def VerifieChamps(self, listedeschamps=None):
-        "copie le formulaire (la valeur des widgets) dans unetable et retourne les erreurs"
-        pass
-            
+
             
     def BasculeModeEdition(self, bool_edit):
         if bool_edit :
@@ -323,6 +323,8 @@ class FormulaireBase(QtGui.QDialog, Ui_DialogBase):
         
         if self.pushButton_editer.text()=='Annuler':
             self.derniereAction='Annuler'
+            
+#            self.accept() #bouton ok => propose de sauvegarder ou réécrit (table2widget) #marche pas boucle sur 
             self.CopieTable2Widget() #réinitialise les champs
         else :
             self.derniereAction='Editer'
@@ -338,15 +340,36 @@ class FormulaireBase(QtGui.QDialog, Ui_DialogBase):
 
     def SetTable(self, unetable, modeinfo=False):
         if unetable :
+            old_table= self.une_table
             self.une_table =unetable
             self.modeinfo=modeinfo
             self.DataBasedicoChamps=self.une_table .GetDicoChamps()  #actualise DataBasedicoChamps avec les champs du nouveau client
+            old_table.TransfertWidget(self.une_table )
             self.CopieTable2Widget()
             self.isNouvelleTable=False
             self.BasculeModeEdition(False)
-            
 
+    def VerifieChamps(self, listedeschamps=None):
+        "copie le formulaire (la valeur des widgets) dans unetable et retourne les erreurs"
+        erreur=''
+        for nomchamp in self.DataBasedicoChamps :
+            champ=self.DataBasedicoChamps[nomchamp]
+            err= champ.CopieWidget2Champ()
+            if err :
+                if 'ne peut pas etre NULL' in err : err=u' à renseigner !' #change le msg d'erreur
+                erreur+=nomchamp+err +'\n'
+        return erreur
+
+#    def CopieTable2WidgetNEW(self, efface=False):         
     def CopieTable2Widget(self, efface=False): 
+        for unchamp in self.DataBasedicoChamps.values():  
+            unchamp.CopieChamp2Widget()
+            
+            
+    
+
+    def CopieTable2WidgetOld(self, efface=False): 
+#    def CopieTable2Widget(self, efface=False): 
         self.DesactiveSignaux=True #empeche certains signaux (pas tous) par ex OnIsVeterinaireClicked (qui décoche isClient => indésirable ici)
         id=self.id_une_table
         if efface or not id : #efface tout
@@ -417,6 +440,48 @@ class FormulaireBase(QtGui.QDialog, Ui_DialogBase):
                     
     def DesativeChamp(self, champ):
         pass
+        
+        
+    def accept(self):
+        save = self.edition #en mode edition enregistre le client
+        
+#        if self.derniereAction == 'Annuler' :#propose de sauvegarder si on a appuyé avant sur annuler
+#            msgBox=QMessageBox()
+#            msgBox.setText(u"Vous avez cliqué sur éditer puis annuler")
+#            msgBox.setInformativeText(u"Voulez vous sauver vos changement?")
+#            msgBox.setStandardButtons(QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel)
+#            msgBox.setDefaultButton(QMessageBox.Save)
+#            reponse = msgBox.exec_()
+#            if reponse == QMessageBox.Save :
+#                self.OnButtonEditerClicked(True)  #repasse en mode edition puis sauve
+#                save=True
+#            elif reponse == QMessageBox.Cancel :
+#                save=False
+#                self.CopieTable2Widget() #réinitialise les champs
+#                return
+
+
+        if save : # enregistrer et repasser en mode lecture si pas d'erreur
+            erreur=self.VerifieChamps() #si VerifieChamps ne retourne pas d'erreur...
+            if erreur :
+                AfficheErreur(erreur, fenetre=self)
+            else :
+                
+                idLock = self.une_table.Lock()  #TODO : verifier si modifications sinon n'enregistre rien
+                if idLock > 0 :
+                    erreur = 'Erreur : la table"'+self.NomTable +'"est actuellement éditée par un autre utilisateur No:'+str(idLock)
+                    if AFFICHE_CONSOLE : print erreur
+                    return erreur                
+                else : 
+                    erreur = self.une_table.EnregistreTable()     
+                    if erreur :
+                        if AFFICHE_CONSOLE : print erreur
+                        return erreur                
+                
+                self.BasculeModeEdition(False)
+        else : #en mode lecture ferme le formulaire
+            self.idnouvelletable=self.une_table.Id()
+            QtGui.QDialog.accept(self)
 
 class FormComment(QtGui.QDialog): #TODO: revoir utilité
     def __init__(self,parent=None):

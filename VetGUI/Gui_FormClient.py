@@ -326,10 +326,10 @@ class FormClient(FormulaireBase):
         self.SetTable(client, modeinfo=False)
         self.isNouveauclient=False
         
-    def CopieTable2Widget(self, efface=False):
+    def CopieTable2Widget(self, efface=False):  #TODO: a supprimer
         self.CopieClient2Widget( efface)
         
-    def CopieClient2Widget(self, efface=False):
+    def CopieClient2Widget(self, efface=False): #TODO: a supprimer
         "recopie tous les champs de unclient dans les widgets (ou efface tous les widgets)"
         
         self.DesactiveFramePersonnel()

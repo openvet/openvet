@@ -25,7 +25,8 @@ class Consultation:
     def __init__(self):
         
         unclient=TableClient(DATABASE, 'viewPersonne','Personne')#,  auto=True)
-        unanimal=TableAnimal(DATABASE, 'Animal')#,  auto=True) #TODO: utiliser viewAnimal (ajoute espece en clair, etc...)
+        #unanimal=TableAnimal(DATABASE, 'Animal')#,  auto=True) #TODO: utiliser viewAnimal (ajoute espece en clair, etc...)
+        unanimal=TableAnimal(DATABASE, 'viewAnimal','Animal')
         tablelien=Table(DATABASE, 'ClientAnimalRef ')#,  auto=True)
         uneconsult=Table(DATABASE, 'viewConsultation', 'Consultation')
         table_animal_consultation=TableLiee(unanimal, uneconsult, None, 'Animal_idAnimal')#relation 1:n

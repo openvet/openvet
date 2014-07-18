@@ -279,6 +279,35 @@ class Champ:
     
     def AddWidget(self, w):
         self.ListeWidget.append(w)
+
+    def EffaceListeWidget(self):
+        copieliste=self.ListeWidget
+        self.ListeWidget=[]
+        return copieliste
+    
+    def SetListeWidget(self, listewidget):
+        self.ListeWidget=listewidget
+        
+    def CopieChamp2Widget(self):
+        valeur=self.Value()
+        for widget in self.ListeWidget :
+            try :
+                widget.Set(valeur)
+            except :
+                print u'debug warning champ.CopieChamp2Widget() (widget.Set non défini pour '+self.Nom()+'?) '
+            
+            
+    def CopieWidget2Champ(self):
+        err=''
+        if len(self.ListeWidget) > 1 :
+            print u'warning: Champ.CopieWidget2Champ() plusieurs widgets associés au champ '+self.Nom()+'(vérifier valeurs identiques)'
+        try:
+            valeur=self.ListeWidget[0].Get()
+            err = self.Set(valeur)
+        except:
+            print u'warning: Champ.CopieWidget2Champ() widget.Get associés au champ '+self.Nom()+u' non défini?'
+        
+        return err
         
     def Nom(self):   
         return self.NomChamp
@@ -547,6 +576,14 @@ class Table:
             self.dicoChamps[nomchamp].AddWidget(w)
         except :
             print 'warning exception Table.AssocieWidgetChamp()'
+            
+            
+    def TransfertWidget(self, nouvelletable):
+        for nomchamp in self.dicoChamps :
+            champ=self.dicoChamps[nomchamp]
+            listewidget = champ.EffaceListeWidget()
+            nouvelletable.dicoChamps[nomchamp].SetListeWidget(listewidget)
+            
         
 #    def GetListeWidget(self):
 #        return self.Widget
@@ -1015,6 +1052,8 @@ class TableLiee(Table):
         self.ListeIdEnfant=[]
         self.ListeTableEnfant =[]
         self.EnfantActif=None
+        
+        self.clefprimaire=tableparent.clefprimaire   #important pour la sauvegarde
 
     def New(self): 
         "crée et retourne une nouvelle table liée"
