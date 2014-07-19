@@ -39,6 +39,7 @@ class FormulaireBase(QtGui.QDialog, Ui_DialogBase):
         
         self.dicoWidget={} # dicoWidget['nomchamp'] = widget associé
         self.dicoWidgetIndependant={}  #idem pour widgets non associés directement à un champ de la data base
+        self.dicoWidgetLienParentEnfant={}  # ex Espece->Race ==> lorsque Espece change envoi un signal à Race pour mettre à jour sa liste
         
         #        self.ListeChampIndependant=[]
 
@@ -156,8 +157,16 @@ class FormulaireBase(QtGui.QDialog, Ui_DialogBase):
                 elif nbchamp ==44 :
                     self.formLayout=self.formLayout3
         
-        
+        self.LierWidgets() #ex combo Race est lié combo Espece
         self.InitialiseChamps()
+        
+    def LierWidgets(self):
+        for nom_widget in self.dicoWidgetLienParentEnfant : #  {parent : [enfant1,enfant2]  }
+            widget_parent = self.dicoWidget[nom_widget]
+            liste_nom_widget_enfant = self.dicoWidgetLienParentEnfant[nom_widget]
+            for nom_widget_enfant in liste_nom_widget_enfant :
+                widget_enfant = self.dicoWidget[nom_widget_enfant]
+                widget_parent.AddEnfant( widget_enfant )
         
     def InitialiseChamps(self):
         """
@@ -200,7 +209,7 @@ class FormulaireBase(QtGui.QDialog, Ui_DialogBase):
         
         return( [nomchamp, widget])
 
-    def CreeWidgetEdit(self, nomchamp, typechamp, taille): 
+    def CreeWidgetEdit(self, nomchamp, typechamp, taille):  #widget éditable
        
         if typechamp=='LineEdit' :
 #            unwidget=QLineEdit(self)
@@ -220,9 +229,14 @@ class FormulaireBase(QtGui.QDialog, Ui_DialogBase):
         elif typechamp=='spinBox':
             unwidget=QSpinBox(self)
         elif typechamp=='date' :
-            unwidget=QDateEdit(self)
+            #unwidget=QDateEdit(self)
+            unwidget=MyDateEdit(self)
             unwidget.setDisplayFormat('dd/MM/yyyy')
             unwidget.setCalendarPopup(True)
+        elif typechamp=='myComboEspece' :
+            unwidget = MyComboEspece(self)
+        elif typechamp=='myComboRace' :
+            unwidget = MyComboRace(self)
             
         if taille  : #si taille=0 ne change pas la taille 
             unwidget.setMaximumWidth(taille)
@@ -360,57 +374,12 @@ class FormulaireBase(QtGui.QDialog, Ui_DialogBase):
                 erreur+=nomchamp+err +'\n'
         return erreur
 
-#    def CopieTable2WidgetNEW(self, efface=False):         
+
     def CopieTable2Widget(self, efface=False): 
         for unchamp in self.DataBasedicoChamps.values():  
             unchamp.CopieChamp2Widget()
             
             
-    
-
-    def CopieTable2WidgetOld(self, efface=False): 
-#    def CopieTable2Widget(self, efface=False): 
-        self.DesactiveSignaux=True #empeche certains signaux (pas tous) par ex OnIsVeterinaireClicked (qui décoche isClient => indésirable ici)
-        id=self.id_une_table
-        if efface or not id : #efface tout
-            self.EffaceChamps()
-      
-        else : #copie une_table dans widgets
-            for nomchamp in self.dicoWidget.keys():  #dicoWidget[nomchamp]=widget associé
-                typechamp= self.TypeChamp[nomchamp]
-                if 'ComboBox' in typechamp or 'comboBox' in typechamp :
-                    # +/- ajouter à une liste à traiter séparément
-                    continue   #a faire dans chq classe dérivée 
-                
-                widget=self.dicoWidget[nomchamp]
-                unchamp=self.DataBasedicoChamps[nomchamp]  #unchamp = objet champ du client
-                if 'Edit' in typechamp :
-                    txt=unchamp.Txt()
-                    widget.setText(txt)
-                elif typechamp == 'checkBox' :
-                    if unchamp.isTrue():
-                        widget.setCheckState(Qt.Checked)
-                    else :
-                        widget.setCheckState(Qt.Unchecked)
-
-                elif typechamp ==  'spinBox' :
-                    nb=unchamp.Value()
-                    try :
-                        widget.setValue(nb)
-                    except:
-                        widget.setValue(0)
-                elif typechamp ==  'date' :
-                    date=unchamp.GetDate('QDate')
-                    if date :
-                        widget.setDate(date)
-                        self.DesativeChamp(nomchamp, active=True)
-                    else : 
-                        now=QDate.currentDate()
-                        widget.setDate(now)
-                        self.DesativeChamp(nomchamp)
-
-            
-        self.DesactiveSignaux=False
              
 
     def EffaceChamps(self):

@@ -4,7 +4,7 @@
 import sys
 sys.path.append('..')
 
-import adodb, MySQLdb
+import adodb  #, MySQLdb
 import string
 from string import *
 from types import *
@@ -12,7 +12,7 @@ from types import *
 import config
 from datetime import *
 
-from PyQt4 import QtCore, QtGui  #, Qt
+#from PyQt4 import QtCore, QtGui  #, Qt
 from PyQt4.Qt import *
 
 

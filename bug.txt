@@ -1,7 +1,7 @@
 
-bug champ "NULL" dans formulaire sauvegarde (animal) (mais pas dans database cf 2eme lecture client/animal)
+FAIT 18/7/14 bug champ "NULL" dans formulaire sauvegarde (animal) (mais pas dans database cf 2eme lecture client/animal)
+bug : faire mise à jour nom animal dans la liste dans fenetre openvet lors modification animal
 
-formulaire : enregistre 2 fois (car appuie 2 fois sur ok pour sortir formulaire), ajouter flag modifié dans table?
 
 Fait 16/7/14 correction bug majeur :  table liée : client-animal-consultation Get(Champ) renvoie null pour animal car utilise self.dicoChamp de tableLiée au lieu de self.dicoChamp de la tableparent (type animal)
 

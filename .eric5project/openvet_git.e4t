@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Tasks SYSTEM "Tasks-5.1.dtd">
 <!-- eric5 tasks file for project openvet_git -->
-<!-- Saved: 2014-07-18, 11:31:41 -->
+<!-- Saved: 2014-07-19, 19:21:52 -->
 <Tasks version="5.1">
   <ProjectScanFilter></ProjectScanFilter>
   <Task priority="1" completed="False" type="1">
@@ -74,132 +74,6 @@
     <Resource>
       <Filename>VetGUI/Gui_openvet.py</Filename>
       <Linenumber>164</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO: a revoir (utilité?)</Summary>
-    <Description></Description>
-    <Created>2014-07-16, 10:10:20</Created>
-    <Resource>
-      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
-      <Linenumber>48</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO: supprimer, ne marche pas</Summary>
-    <Description></Description>
-    <Created>2014-07-16, 10:10:20</Created>
-    <Resource>
-      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
-      <Linenumber>140</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO: supprimer, ne marche pas</Summary>
-    <Description></Description>
-    <Created>2014-07-16, 10:10:20</Created>
-    <Resource>
-      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
-      <Linenumber>152</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO: supprimer, ne marche pas</Summary>
-    <Description></Description>
-    <Created>2014-07-16, 10:10:20</Created>
-    <Resource>
-      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
-      <Linenumber>163</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO:   titre onglet = nom client</Summary>
-    <Description></Description>
-    <Created>2014-07-16, 10:10:20</Created>
-    <Resource>
-      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
-      <Linenumber>190</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO: important : ajouter idclient  à la liste de tous les clients (gui_openvet)</Summary>
-    <Description></Description>
-    <Created>2014-07-16, 10:10:20</Created>
-    <Resource>
-      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
-      <Linenumber>275</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO:</Summary>
-    <Description></Description>
-    <Created>2014-07-16, 10:10:20</Created>
-    <Resource>
-      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
-      <Linenumber>287</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO: a faire</Summary>
-    <Description></Description>
-    <Created>2014-07-16, 10:10:20</Created>
-    <Resource>
-      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
-      <Linenumber>358</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO:  +++++++++ ESSAYER SANS toUtf8++++</Summary>
-    <Description></Description>
-    <Created>2014-07-16, 10:10:20</Created>
-    <Resource>
-      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
-      <Linenumber>414</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO:</Summary>
-    <Description></Description>
-    <Created>2014-07-16, 10:10:20</Created>
-    <Resource>
-      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
-      <Linenumber>443</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO:</Summary>
-    <Description></Description>
-    <Created>2014-07-16, 10:10:20</Created>
-    <Resource>
-      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
-      <Linenumber>452</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO: a completer ex barré pour dcd, etc...</Summary>
-    <Description></Description>
-    <Created>2014-07-16, 13:11:47</Created>
-    <Resource>
-      <Filename>VetCore/Tables.py</Filename>
-      <Linenumber>87</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO: a completer ex barré pour dcd, etc...</Summary>
-    <Description></Description>
-    <Created>2014-07-16, 13:11:47</Created>
-    <Resource>
-      <Filename>VetCore/Tables.py</Filename>
-      <Linenumber>104</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO: enlever</Summary>
-    <Description></Description>
-    <Created>2014-07-16, 13:11:47</Created>
-    <Resource>
-      <Filename>VetCore/Tables.py</Filename>
-      <Linenumber>196</Linenumber>
     </Resource>
   </Task>
   <Task priority="1" completed="False" type="1">
@@ -302,72 +176,9 @@
     </Resource>
   </Task>
   <Task priority="1" completed="False" type="1">
-    <Summary>TODO:   BUG++++++++   si création 2eme comboBox le 1er ne s'affiche pas bien (meme si combo differents ex comboville comboclient)</Summary>
-    <Description></Description>
-    <Created>2014-07-16, 15:33:16</Created>
-    <Resource>
-      <Filename>VetGUI/Mywidgets.py</Filename>
-      <Linenumber>13</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO:  IMPORTANT</Summary>
-    <Description></Description>
-    <Created>2014-07-16, 15:33:16</Created>
-    <Resource>
-      <Filename>VetGUI/Mywidgets.py</Filename>
-      <Linenumber>92</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO: a revoir , pour Personne autoriser les minuscules</Summary>
-    <Description></Description>
-    <Created>2014-07-16, 15:33:16</Created>
-    <Resource>
-      <Filename>VetGUI/Mywidgets.py</Filename>
-      <Linenumber>148</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO: ajouter NomChamp pour ListeChampPersonnel</Summary>
-    <Description></Description>
-    <Created>2014-07-16, 16:12:02</Created>
-    <Resource>
-      <Filename>VetGUI/Gui_FormulaireBase.py</Filename>
-      <Linenumber>55</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO: fixer la taille des widgets</Summary>
-    <Description></Description>
-    <Created>2014-07-16, 16:12:02</Created>
-    <Resource>
-      <Filename>VetGUI/Gui_FormulaireBase.py</Filename>
-      <Linenumber>141</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO:  chekbox ville preferees</Summary>
-    <Description></Description>
-    <Created>2014-07-16, 16:12:02</Created>
-    <Resource>
-      <Filename>VetGUI/Gui_FormulaireBase.py</Filename>
-      <Linenumber>243</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO: revoir utilité</Summary>
-    <Description></Description>
-    <Created>2014-07-16, 16:12:02</Created>
-    <Resource>
-      <Filename>VetGUI/Gui_FormulaireBase.py</Filename>
-      <Linenumber>486</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
     <Summary>TODO: DEBUG ++++++++++++++++  semble ok</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:31:38</Created>
+    <Created>2014-07-19, 14:58:02</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>221</Linenumber>
@@ -376,7 +187,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: ajouter h,min,sec</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:31:38</Created>
+    <Created>2014-07-19, 14:58:02</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>390</Linenumber>
@@ -385,7 +196,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: ++++++++++++++  ESSAYER SANS DECODE ++++++++++</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:31:38</Created>
+    <Created>2014-07-19, 14:58:02</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>412</Linenumber>
@@ -394,7 +205,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: DEBUG ++++++++ VERIFIER SI OK ++++changé 30/5/14</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:31:38</Created>
+    <Created>2014-07-19, 14:58:02</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>414</Linenumber>
@@ -403,7 +214,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: verifier type decimal, type date etc....</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:31:38</Created>
+    <Created>2014-07-19, 14:58:02</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>453</Linenumber>
@@ -412,7 +223,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: a revoir si utilité calculer max</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:31:38</Created>
+    <Created>2014-07-19, 14:58:02</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>524</Linenumber>
@@ -421,7 +232,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: voir si supprime fonction</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:31:38</Created>
+    <Created>2014-07-19, 14:58:02</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>555</Linenumber>
@@ -430,7 +241,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO:  revoir si utilie /un widget associé à une table ! (attention référencé ailleurs)</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:31:38</Created>
+    <Created>2014-07-19, 14:58:02</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>565</Linenumber>
@@ -439,7 +250,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: eventuellement creer la Table</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:31:38</Created>
+    <Created>2014-07-19, 14:58:02</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>593</Linenumber>
@@ -448,7 +259,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: ne pas enlever les ' mais voir si on peut remplacer par \'  +/- deplacer dans class Champ?</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:31:38</Created>
+    <Created>2014-07-19, 14:58:02</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>679</Linenumber>
@@ -457,7 +268,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: encours</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:31:38</Created>
+    <Created>2014-07-19, 14:58:02</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>717</Linenumber>
@@ -466,7 +277,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO:  verifie DB.Table.Lock = 0 pour self.clefprimaire (si &gt;0 return = idUserLock) (si = 0 =&gt; DB.TableLock = idUser)</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:31:38</Created>
+    <Created>2014-07-19, 14:58:02</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>840</Linenumber>
@@ -475,7 +286,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: met DB.Table lock=0</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:31:38</Created>
+    <Created>2014-07-19, 14:58:02</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>846</Linenumber>
@@ -484,7 +295,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: VERIFIER TOUS LES TYPES</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:31:38</Created>
+    <Created>2014-07-19, 14:58:02</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>922</Linenumber>
@@ -493,7 +304,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO:  ???  fonction Delete      def Delete(self): #suppression de l'item de la base de donee         sql=&quot;DELETE FROM &quot;+split(self.NomTable)[0]+&quot; WHERE &quot;+split(self.listechamps,&quot;,&quot;)[0]+&quot;=&quot;+str(self.id) #split(nomtable) car nomtable peut etre complexe (ex: Client LEFT OUTER JOIN)</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:31:38</Created>
+    <Created>2014-07-19, 14:58:02</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>1019</Linenumber>
@@ -502,7 +313,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO:  DEBUG******************verifier si enfant-&gt;enfant propage signal</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:31:38</Created>
+    <Created>2014-07-19, 14:58:02</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>1075</Linenumber>
@@ -511,7 +322,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: à tester</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:31:38</Created>
+    <Created>2014-07-19, 14:58:02</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>1170</Linenumber>
@@ -520,7 +331,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO:  A TESTER</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:31:38</Created>
+    <Created>2014-07-19, 14:58:02</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>1185</Linenumber>
@@ -529,7 +340,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO:   #normalement inutile, on change plutot le parent</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:31:38</Created>
+    <Created>2014-07-19, 14:58:02</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>1190</Linenumber>
@@ -538,7 +349,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO:  DEBUG   *****AREVOIR*******utilité?????(+verifier id&lt;&gt;old_id)</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:31:38</Created>
+    <Created>2014-07-19, 14:58:02</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>1197</Linenumber>
@@ -547,7 +358,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: CREE LE LIEN SI TABLE LIEN</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:31:38</Created>
+    <Created>2014-07-19, 14:58:02</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>1265</Linenumber>
@@ -556,7 +367,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: VERIFIER PAS DE DOUBLON ENFANT (verifer sur idenfant) ***************************</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:31:38</Created>
+    <Created>2014-07-19, 14:58:02</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>1292</Linenumber>
@@ -565,7 +376,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: ajouter seulement 1 enfant (si pas doublon)</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:31:38</Created>
+    <Created>2014-07-19, 14:58:02</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>1335</Linenumber>
@@ -574,7 +385,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: ENLEVE LE LIEN</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:31:38</Created>
+    <Created>2014-07-19, 14:58:02</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>1340</Linenumber>
@@ -583,7 +394,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: à revoir , libérer mémoire?</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:31:38</Created>
+    <Created>2014-07-19, 14:58:02</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>1347</Linenumber>
@@ -592,7 +403,7 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO: afaire ou enlever ???</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:31:38</Created>
+    <Created>2014-07-19, 14:58:02</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>1368</Linenumber>
@@ -601,10 +412,208 @@
   <Task priority="1" completed="False" type="1">
     <Summary>TODO:</Summary>
     <Description></Description>
-    <Created>2014-07-18, 11:31:38</Created>
+    <Created>2014-07-19, 14:58:02</Created>
     <Resource>
       <Filename>VetCore/Tables_Base.py</Filename>
       <Linenumber>1381</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: a completer ex barré pour dcd, etc...</Summary>
+    <Description></Description>
+    <Created>2014-07-19, 15:38:21</Created>
+    <Resource>
+      <Filename>VetCore/Tables.py</Filename>
+      <Linenumber>87</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: a completer ex barré pour dcd, etc...</Summary>
+    <Description></Description>
+    <Created>2014-07-19, 15:38:21</Created>
+    <Resource>
+      <Filename>VetCore/Tables.py</Filename>
+      <Linenumber>104</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: enlever</Summary>
+    <Description></Description>
+    <Created>2014-07-19, 15:38:21</Created>
+    <Resource>
+      <Filename>VetCore/Tables.py</Filename>
+      <Linenumber>196</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: a revoir (utilité?)</Summary>
+    <Description></Description>
+    <Created>2014-07-19, 17:57:53</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
+      <Linenumber>48</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: supprimer, ne marche pas</Summary>
+    <Description></Description>
+    <Created>2014-07-19, 17:57:53</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
+      <Linenumber>140</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: supprimer, ne marche pas</Summary>
+    <Description></Description>
+    <Created>2014-07-19, 17:57:53</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
+      <Linenumber>152</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: supprimer, ne marche pas</Summary>
+    <Description></Description>
+    <Created>2014-07-19, 17:57:53</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
+      <Linenumber>163</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO:   titre onglet = nom client</Summary>
+    <Description></Description>
+    <Created>2014-07-19, 17:57:53</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
+      <Linenumber>190</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: important : ajouter idclient  à la liste de tous les clients (gui_openvet)</Summary>
+    <Description></Description>
+    <Created>2014-07-19, 17:57:53</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
+      <Linenumber>275</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO:</Summary>
+    <Description></Description>
+    <Created>2014-07-19, 17:57:53</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
+      <Linenumber>287</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: a faire</Summary>
+    <Description></Description>
+    <Created>2014-07-19, 17:57:53</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
+      <Linenumber>358</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO:  +++++++++ ESSAYER SANS toUtf8++++</Summary>
+    <Description></Description>
+    <Created>2014-07-19, 17:57:53</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
+      <Linenumber>414</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO:</Summary>
+    <Description></Description>
+    <Created>2014-07-19, 17:57:53</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
+      <Linenumber>443</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO:</Summary>
+    <Description></Description>
+    <Created>2014-07-19, 17:57:53</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
+      <Linenumber>452</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO:   BUG++++++++   si création 2eme comboBox le 1er ne s'affiche pas bien (meme si combo differents ex comboville comboclient)</Summary>
+    <Description></Description>
+    <Created>2014-07-19, 19:08:36</Created>
+    <Resource>
+      <Filename>VetGUI/Mywidgets.py</Filename>
+      <Linenumber>13</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: +/- ajouter champ Actif?</Summary>
+    <Description></Description>
+    <Created>2014-07-19, 19:08:36</Created>
+    <Resource>
+      <Filename>VetGUI/Mywidgets.py</Filename>
+      <Linenumber>43</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO:  IMPORTANT</Summary>
+    <Description></Description>
+    <Created>2014-07-19, 19:08:36</Created>
+    <Resource>
+      <Filename>VetGUI/Mywidgets.py</Filename>
+      <Linenumber>174</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: a revoir , pour Personne autoriser les minuscules</Summary>
+    <Description></Description>
+    <Created>2014-07-19, 19:08:36</Created>
+    <Resource>
+      <Filename>VetGUI/Mywidgets.py</Filename>
+      <Linenumber>230</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: ajouter NomChamp pour ListeChampPersonnel</Summary>
+    <Description></Description>
+    <Created>2014-07-19, 19:21:49</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_FormulaireBase.py</Filename>
+      <Linenumber>56</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: fixer la taille des widgets</Summary>
+    <Description></Description>
+    <Created>2014-07-19, 19:21:49</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_FormulaireBase.py</Filename>
+      <Linenumber>142</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO:  chekbox ville preferees</Summary>
+    <Description></Description>
+    <Created>2014-07-19, 19:21:49</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_FormulaireBase.py</Filename>
+      <Linenumber>257</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: revoir utilité</Summary>
+    <Description></Description>
+    <Created>2014-07-19, 19:21:49</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_FormulaireBase.py</Filename>
+      <Linenumber>455</Linenumber>
     </Resource>
   </Task>
 </Tasks>

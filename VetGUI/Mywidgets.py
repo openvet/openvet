@@ -19,9 +19,91 @@ class MyLineEdit(QtGui.QLineEdit):
     def Set(self, valeur):
         self.setText(valeur)
         
-        
     def Get(self):
         return self.text()
+
+class MyDateEdit(QtGui.QDateEdit):
+    def __init__(self,parent=None):
+        super(MyDateEdit,self).__init__(parent)
+
+    def Set(self, valeur):
+        self.setDate(valeur)
+        
+    def Get(self):
+        return self.date()
+
+class MyComboEspece(QtGui.QComboBox):
+    def __init__(self,parent=None):
+        super(MyComboEspece,self).__init__(parent)    
+        self.listeEnfants=[] #Race est lié à espece
+        self.InitialiseListes()
+        self.connect(self, QtCore.SIGNAL("currentIndexChanged ( int )"),self.OnCurrentIndexChanged)
+        
+    def InitialiseListes(self):
+        self.tableEspeces=TableSelectAll('Especes', sql='SELECT idEspeces , Espece FROM Especes') #TODO: +/- ajouter champ Actif?
+        self.listeEspece = self.tableEspeces.GetListe()
+        for espece in self.listeEspece :
+            self.addItem(espece)
+
+    def Set(self, id):
+        index=self.tableEspeces.GetIndex(id)
+        self.setCurrentIndex(index)
+            
+    def Get(self):
+        index=self.currentIndex()
+        id=self.tableEspeces.GetId(index)
+        return id
+        
+    def AddEnfant(self, enfant):
+        self.listeEnfants.append(enfant)
+        
+    def OnCurrentIndexChanged(self, index):
+        if index > -1 :
+            for liste_race in self.listeEnfants :
+                id=self.tableEspeces.GetId(index)
+                liste_race.OnEspeceChanged(id)
+
+class MyComboRace(QtGui.QComboBox):
+    def __init__(self,parent=None):
+        super(MyComboRace,self).__init__(parent)    
+        self.sql='SELECT idRace , Race FROM Race WHERE Actif'
+        self.EspecesActive=-1
+        self.SwaptableRaces={}
+        self.SwaplisteRaces={}
+    def InitialiseListes(self):
+        self.clear()
+        for race in self.listeRaces :
+            self.addItem(race)
+    
+    def ActualiseListe(self):
+        if self.EspecesActive >-1 :
+            try :  #vérifie si la liste a déjà été créée
+                self.tableRaces=self.SwaptableRaces[self.EspecesActive ]
+                self.listeRaces = self.SwaplisteRaces[self.EspecesActive ]
+            except :
+                recherche_sql=self.sql + ' AND Especes_idEspeces = '+str( self.EspecesActive  )+ ' ORDER BY Race'
+                self.tableRaces=TableSelectAll('Race', sql=recherche_sql)
+                self.listeRaces = self.tableRaces.GetListe()
+                self.SwaptableRaces[self.EspecesActive ] = self.tableRaces  #garde en mémoire les listes
+                self.SwaplisteRaces[self.EspecesActive ] = self.listeRaces 
+                
+            self.InitialiseListes()
+                
+                
+    
+    def OnEspeceChanged(self, idespece):
+        if self.EspecesActive <> idespece :
+            self.EspecesActive=idespece
+            self.ActualiseListe()
+
+    def Set(self, id):
+        index=self.tableRaces.GetIndex(id)
+        self.setCurrentIndex(index)
+            
+    def Get(self):
+        index=self.currentIndex()
+        id=self.tableRaces.GetId(index)
+        return id
 
 class MyComboBox(QtGui.QComboBox):
     """ affiche une liste (nb elements max = limitSql) avec motif de recherche sql, et conservation des resultats de  la 
