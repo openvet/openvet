@@ -10,7 +10,7 @@ from PyQt4 import QtCore, QtGui
 from Tables import *
 
 
-#TODO:   BUG++++++++   si création 2eme comboBox le 1er ne s'affiche pas bien (meme si combo differents ex comboville comboclient)
+
 
 
 class MyCheckBox(QtGui.QCheckBox):
@@ -140,7 +140,8 @@ class MyComboRace(QtGui.QComboBox):
         id=self.tableRaces.GetId(index)
         return id
 
-class MyComboBox(QtGui.QComboBox):
+#TODO:   BUG++++++++   si création 2eme comboBox le 1er ne s'affiche pas bien (meme si combo differents ex comboville comboclient)
+class MyComboBox(QtGui.QComboBox): #ancienne version, utilisée pour formClient
     """ affiche une liste (nb elements max = limitSql) avec motif de recherche sql, et conservation des resultats de  la 
     recherche dans listeModel + motif2model (évite une requete sql si la recherche a déjà été faite) A FAIRE"""
     def __init__(self,parent=None, nomTable='', sql='', tableliste='', nomchampid=''):

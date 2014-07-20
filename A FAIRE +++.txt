@@ -1,16 +1,17 @@
 
 
+
 BUG mycomboBox (mycomboville mycomboclient) cf bug.txt
 
 consultation : trier par date
 ascenseur dans onglet consultation  faire  reglage 
-petit bug  lors champs null  enregistre texte 'null' revoir requete
+fait 20/7/14 petit bug  lors champs null  enregistre texte 'null' revoir requete
 
 formulaire nouvelle ville, prevoir autre pays
 
-database : creer variable de classe pour database
+bof database : creer variable de classe pour database
 
-BUG faire mise à jour liste de tous les clients (cf edition client, change nom, ouvre nouvel onglet : la liste garde l'ancien nom)
++++BUG faire mise à jour liste de tous les clients(Animaux) (cf edition client, change nom, ouvre nouvel onglet : la liste garde l'ancien nom)
 
 BUG : edition consult + changer d'animal +  edition+valide consult=> err car consultActive=None
 ==> lors changement animal annuler mode edition
@@ -19,6 +20,7 @@ BUG : edition consult + changer d'animal +  edition+valide consult=> err car con
 FAIT                                empecher deplacement onglet +  (tabconsultation) OK
 
 database :
+DB.Animal interdire Nom = NULL
 ajouter  Unsigned pour les types entier.
 ne pas limiter salaire horaire à 99.99
 retirer int(11) tinyint(1)  inutile car ne change pas la taille des entiers

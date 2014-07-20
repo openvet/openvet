@@ -294,7 +294,7 @@ class Champ:
             try :
                 widget.Set(valeur)
             except :
-                print u'debug warning champ.CopieChamp2Widget() (widget.Set non défini pour '+self.Nom()+'?) '
+                print u'debug warning champ.CopieChamp2Widget() (widget.Set non défini pour '+self.Nom()+'? ou out of index ) '
             
             
     def CopieWidget2Champ(self):

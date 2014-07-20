@@ -382,10 +382,17 @@ class FormulaireBase(QtGui.QDialog, Ui_DialogBase):
 
 
     def CopieTable2Widget(self, efface=False): 
-        for unchamp in self.DataBasedicoChamps.values():  
-            unchamp.CopieChamp2Widget()
-            
-            
+#        for unchamp in self.DataBasedicoChamps.values():  #bug car  ordre aléatoire
+#            unchamp.CopieChamp2Widget()
+        for nomchamp in self.ListeChampAffiches : #important : copie dans l'ordre (ex Espece avant Race car liés)
+            if type(nomchamp)==type([]) : #sous liste
+                for nomchamp2 in nomchamp :
+                    unchamp=self.DataBasedicoChamps[nomchamp2]
+                    unchamp.CopieChamp2Widget()
+            else :
+                unchamp=self.DataBasedicoChamps[nomchamp]
+                unchamp.CopieChamp2Widget()
+        
              
 
     def EffaceChamps(self):
