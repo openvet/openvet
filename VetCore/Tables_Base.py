@@ -340,8 +340,8 @@ class Champ:
                 err, valeur = self.ConvertirEnUnicode(valeur)
             
         if not err : 
-            if not valeur : 
-                valeur='NULL'  #remplace None par null sinon ignoré dans requète sql
+#            if not valeur : 
+#                valeur='NULL'  #remplace None par null sinon ignoré dans requète sql
             self.Valeur=valeur
         return err
         
@@ -757,23 +757,26 @@ class Table:
         sql=' SET '
         try :
             for champ in self.listeChamps :
-                if champ.IsModifiable()  and champ.Value() :
+                value=champ.Value() 
+                if not value :
+                    value='NULL'
+                if champ.IsModifiable() :#  and champ.Value() :
                     
-                    if str( champ.Value() ) == 'NULL':
-                        continue
+#                    if str( champ.Value() ) == 'NULL':
+#                        continue   #ERR empeche effacer un champ
                     if champ.IsNumerique() :
-                        sql+= champ.Nom() + ' = ' + str( champ.Value() )+','
+                        sql+= champ.Nom() + ' = ' + str( value )+','
                         
                     elif champ.IsTexte() :
-                        valeur=champ.Value()  .replace('"', "'") #remplace " par '
+                        valeur=value.replace('"', "'") #remplace " par '
                         sql+= champ.Nom() + ' = "' + valeur  +'",'
                     else :
-                        sql+= champ.Nom() + ' = "' + str( champ.Value() ) +'",'
+                        sql+= champ.Nom() + ' = "' + str( value ) +'",'
             sql=sql[:-1]
         except :
-            msg =  'erreur Table_Base.py RequeteSet() :'+sql+'champ:'+champ.Nom()
-            slq=msg
-            if AFFICHE_CONSOLE :    print msg
+            sql =  'erreur Table_Base.py RequeteSet() :'+sql+'champ:'+champ.Nom()
+            #slq=msg
+            if AFFICHE_CONSOLE :    print sql
         return sql   #remarque renvoie sql ou msg d'erreur
         
     def LastId(self):

@@ -32,6 +32,17 @@ class MyDateEdit(QtGui.QDateEdit):
     def Get(self):
         return self.date()
 
+class MyTextEdit(QtGui.QTextEdit):
+    def __init__(self,parent=None):
+        super(MyTextEdit,self).__init__(parent)
+
+    def Set(self, valeur):
+        self.setText(valeur)
+        
+    def Get(self):
+        return self.toPlainText()        
+        
+        
 class MyComboEspece(QtGui.QComboBox):
     def __init__(self,parent=None):
         super(MyComboEspece,self).__init__(parent)    
@@ -40,7 +51,7 @@ class MyComboEspece(QtGui.QComboBox):
         self.connect(self, QtCore.SIGNAL("currentIndexChanged ( int )"),self.OnCurrentIndexChanged)
         
     def InitialiseListes(self):
-        self.tableEspeces=TableSelectAll('Especes', sql='SELECT idEspeces , Espece FROM Especes') #TODO: +/- ajouter champ Actif?
+        self.tableEspeces=TableSelectAll('Especes', sql='SELECT idEspeces , Espece FROM Especes ORDER BY Espece') #TODO: +/- ajouter champ Actif?
         self.listeEspece = self.tableEspeces.GetListe()
         for espece in self.listeEspece :
             self.addItem(espece)

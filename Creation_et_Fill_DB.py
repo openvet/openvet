@@ -22,6 +22,7 @@ from Tables import *
 DATABASE=config.database
 IDUSER=config.IDUSER
 
+
 def Login():
     global USER,  PWD
      
@@ -43,6 +44,8 @@ def TestConnexionBase():
     db=DataBase(DATABASE, USER, PWD)
     conn = db.Connection()
     return conn
+
+
 
 
 
@@ -164,9 +167,6 @@ def TestChercheEtAfficheTableLiee(AffichageSimple=True):
 
 def CreationDB():
     global USER,  PWD
-    
-
-    
      
     USER =config.user
     PWD=config.password
@@ -224,6 +224,28 @@ def CreationDB():
         print 'fin Création database OK'
 
 
+def FillRaces():
+    global USER,  PWD
+     
+    USER =config.user
+    PWD=config.password    
+    
+    print "Fill races";
+    
+    fin=open('./initialiseDB/races.csv','r')
+    db=DataBase(DATABASE, USER, PWD)
+    for i in fin:
+        w=i.rstrip().split(';')
+        try :
+            sql='INSERT INTO Race ( Race,Especes_idEspeces , Actif ) VALUES ("{0}",{1}, 1)'.format( w[0], w[1])
+            err=db.ExecuteSQL(sql)
+            if type(err) == type('string'):
+                print err
+        except :
+            pass
+    fin.close()
+    print "Fin";
+
 
 def AppliquePatch():
     global USER,  PWD
@@ -275,35 +297,58 @@ def SauveDB():
 
 def RestaureDB():
     global USER,  PWD
-    f='sauvegardeDB.sql'
-    commande='mysql -u '+USER+' -p'+PWD+  ' -D '+config.database +    ' <'+f
-    ExecuteCommande(commande)
+    
+    if os.path.exists('sauvegardeDB.sql'):
+        print 'Restaure DB'
+        f='sauvegardeDB.sql'
+        commande='mysql -u '+USER+' -p'+PWD+  ' -D '+config.database +    ' <'+f
+        ExecuteCommande(commande)
+        print 'fin'
+    else :
+        print 'erreur sauvegardeDB.sql n\'existe pas'
+
+def CreationDataBase():
+    err=Login()
+    if err :
+        CreationDB()
+    
+    err=Login()
+    
+    if not err :
+        print '************ CREATION DE CLIENT / ANIMAUX /  CONSULTS***************'
+        DbPopulate.FillCommunesAndRaces()
+        
+        print '************ CREATION DE RACES ***************'
+        FillRaces()
 
 
 if __name__ == '__main__':
     global USER,  PWD
 
-    err=Login()
+
+    
+# DECOMMENTER POUR SAUVER LA BASE    
     
 #    SauveDB()
-    
-    if os.path.exists('sauvegardeDB.sql'):
-        print 'Restaure DB'
-        RestaureDB()
-        print 'fin'
+
+
+# DECOMMENTER POUR RESTAURER LA BASE
+
+#   RestaureDB()
+
         
-    else :
+# DECOMMENTER POUR CREER LA BASE
+# CreationDataBase()
+
+
         
-        
-        if err :
-            CreationDB()
-        
-        err=Login()
-        
-        if not err :
-            DbPopulate.FillCommunesAndRaces()
-            print '************ CREATION DE CLIENT / ANIMAUX /  CONSULTS***************'
-            TestFillConsult()
-            AppliquePatch()
-            TestChercheEtAfficheTableLiee(AffichageSimple=True)
+            
+# TestFillConsult() #ajoute qq clients
+#TestChercheEtAfficheTableLiee(AffichageSimple=True)
                 
+
+
+#    AppliquePatch()
+
+
+    FillRaces()

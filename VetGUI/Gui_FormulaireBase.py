@@ -237,6 +237,8 @@ class FormulaireBase(QtGui.QDialog, Ui_DialogBase):
             unwidget = MyComboEspece(self)
         elif typechamp=='myComboRace' :
             unwidget = MyComboRace(self)
+        elif typechamp == 'myTextEdit':
+            unwidget=MyTextEdit(self)
             
         if taille  : #si taille=0 ne change pas la taille 
             unwidget.setMaximumWidth(taille)

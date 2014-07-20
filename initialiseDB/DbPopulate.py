@@ -34,6 +34,8 @@ def FillCommunesAndRaces():
 #    FillRace()
 
 def FillRace():
+    counts=[]
+    fin=open(repertoire+'races.csv','r')
     print "Fill races";
     t1=datetime.now()
     for i in fin:
@@ -100,6 +102,7 @@ def main():
     
 if __name__ == "__main__":
     repertoire='./'
-    main()
+    #main()
+    FillRace()
     
 
