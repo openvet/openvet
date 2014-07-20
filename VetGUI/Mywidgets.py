@@ -12,6 +12,30 @@ from Tables import *
 
 #TODO:   BUG++++++++   si création 2eme comboBox le 1er ne s'affiche pas bien (meme si combo differents ex comboville comboclient)
 
+
+class MyCheckBox(QtGui.QCheckBox):
+    def __init__(self,parent=None, tri_state=False):
+        super(MyCheckBox,self).__init__(parent)    
+        if tri_state :
+            self.setTristate()
+        
+    def Set(self, valeur):
+        state=Qt.PartiallyChecked	
+        if valeur==0 :
+            state=Qt.Unchecked	
+        elif valeur>0 :
+            state=Qt.Checked
+        self.setCheckState(state)
+        
+        
+    def Get(self):
+        state=self.checkState()
+        if state==Qt.Checked :
+            return 1
+        if state==Qt.Unchecked	:
+            return 0
+        return 
+
 class MyLineEdit(QtGui.QLineEdit):
     def __init__(self,parent=None):
         super(MyLineEdit,self).__init__(parent)

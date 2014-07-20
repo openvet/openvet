@@ -758,8 +758,8 @@ class Table:
         try :
             for champ in self.listeChamps :
                 value=champ.Value() 
-                if not value :
-                    value='NULL'
+                if not value and value<>0:
+                    value='NULL'  #sauf nb 0
                 if champ.IsModifiable() :#  and champ.Value() :
                     
 #                    if str( champ.Value() ) == 'NULL':

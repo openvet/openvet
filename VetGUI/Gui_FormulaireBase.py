@@ -239,6 +239,10 @@ class FormulaireBase(QtGui.QDialog, Ui_DialogBase):
             unwidget = MyComboRace(self)
         elif typechamp == 'myTextEdit':
             unwidget=MyTextEdit(self)
+        elif typechamp == 'myCheckBox':
+            unwidget=MyCheckBox(self)
+        elif typechamp ==    'myCheckBox3state':
+            unwidget=MyCheckBox(self, tri_state=True)
             
         if taille  : #si taille=0 ne change pas la taille 
             unwidget.setMaximumWidth(taille)

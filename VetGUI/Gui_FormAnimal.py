@@ -44,7 +44,7 @@ class FormAnimal(FormulaireBase):
         
 
         self.NomChamp={'Naissance':'Date de naissance', 'Sterilise':u'Stérilisé', 'Especes_idEspeces':u'Espèces', 'Race_idRace': 'Race', 'Race2_idRace':'X ', 'DesactiverRelances':u'Désactiver les relances'}
-        self.TypeChamp={'Naissance':'date','Sexe':'comboBox', 'Sterilise':'checkBox', 'Commentaires':'myTextEdit','Especes_idEspeces':'myComboEspece', 'Race_idRace':'myComboRace', 'Race2_idRace':'myComboRace','DesactiverRelances':'checkBox'}
+        self.TypeChamp={'Naissance':'date','Sexe':'comboBox', 'Sterilise':'myCheckBox3state', 'Commentaires':'myTextEdit','Especes_idEspeces':'myComboEspece', 'Race_idRace':'myComboRace', 'Race2_idRace':'myComboRace','DesactiverRelances':'myCheckBox'}
         self.TailleMax={'Sexe':30,'Espece':200, 'Race1':200, 'Race2':200, 'Commentaires':300}
 
         self.dicoWidgetLienParentEnfant={'Especes_idEspeces':['Race_idRace', 'Race2_idRace']}#Espece->Race ==> lorsque Espece change envoi un signal à Race pour mettre à jour sa liste
