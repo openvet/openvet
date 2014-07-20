@@ -35,7 +35,13 @@ class FormulaireBase(QtGui.QDialog, Ui_DialogBase):
         QtGui.QDialog.__init__(self, parent)
         self.setupUi(self)
       
+        
         self.une_table = unetable
+        if unetable : 
+            self.isNouvelleTable=False
+        else :
+            self.CreationNouvelleTable()
+        
         
         self.dicoWidget={} # dicoWidget['nomchamp'] = widget associé
         self.dicoWidgetIndependant={}  #idem pour widgets non associés directement à un champ de la data base
@@ -90,6 +96,9 @@ class FormulaireBase(QtGui.QDialog, Ui_DialogBase):
         
 #        self.connect(self.pushButton_editer, QtCore.SIGNAL("clicked(bool)"),  self.OnButtonEditerClicked)
 
+
+    def CreationNouvelleTable(self):
+        pass
         
 
     def AfficheWidgetsEnfants(self, layout, affiche): #affiche ou masque tous les widgets d'un layout  
@@ -243,6 +252,8 @@ class FormulaireBase(QtGui.QDialog, Ui_DialogBase):
             unwidget=MyCheckBox(self)
         elif typechamp ==    'myCheckBox3state':
             unwidget=MyCheckBox(self, tri_state=True)
+        elif typechamp ==    'myComboSexe':
+            unwidget= MyComboSexe(self)
             
         if taille  : #si taille=0 ne change pas la taille 
             unwidget.setMaximumWidth(taille)
@@ -422,7 +433,10 @@ class FormulaireBase(QtGui.QDialog, Ui_DialogBase):
                     
     def DesativeChamp(self, champ):
         pass
-        
+
+    def EnregistreTable(self)  :
+        erreur = self.une_table.EnregistreTable()     
+        return erreur
         
     def accept(self):
         save = self.edition #en mode edition enregistre le client
@@ -455,7 +469,7 @@ class FormulaireBase(QtGui.QDialog, Ui_DialogBase):
                     if AFFICHE_CONSOLE : print erreur
                     return erreur                
                 else : 
-                    erreur = self.une_table.EnregistreTable()     
+                    erreur = self.EnregistreTable()     
                     if erreur :
                         if AFFICHE_CONSOLE : print erreur
                         return erreur                

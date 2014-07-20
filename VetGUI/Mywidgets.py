@@ -67,6 +67,31 @@ class MyTextEdit(QtGui.QTextEdit):
         return self.toPlainText()        
         
         
+class MyComboSexe(QtGui.QComboBox):
+    def __init__(self,parent=None):
+        super(MyComboSexe,self).__init__(parent)    
+        self.listeSexe=['', u'Mâle', 'Femelle']   
+        for sexe in self.listeSexe :
+            self.addItem(sexe)
+            
+    def Set(self, sexe):
+        index =0
+        if sexe == 'M':
+            index=1
+        elif sexe == 'F' :
+            index=2
+        self.setCurrentIndex(index)
+        
+    def Get(self):
+        index=self.currentIndex()
+        sexe=''
+        if index==1 :
+            sexe='M'
+        elif index==2 :
+            sexe='F'            
+        return sexe
+            
+        
 class MyComboEspece(QtGui.QComboBox):
     def __init__(self,parent=None):
         super(MyComboEspece,self).__init__(parent)    

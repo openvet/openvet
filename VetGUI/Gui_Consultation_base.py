@@ -94,8 +94,9 @@ class WindowConsultation(QtGui.QMainWindow, Ui_MainWindowConsultation):
         self.toolButton_editClient.clicked.connect(self.DoClientEdit)
         self.toolButton_addClient.clicked.connect(self.DoNouveauClient)
         self.toolButton_ClientInfo.clicked.connect(self.DoClientInfo)
-        self.toolButton_addAnimal.clicked.connect(self.DoAnimWindowConsultationalEdit)
+        self.toolButton_addAnimal.clicked.connect(self.DoNewAnimal)
         self.toolButton_editAnimal.clicked.connect(self.DoAnimalEdit)
+        
         
         self.comboBox_Animal.activated.connect(self.DoGetConsultations)
         self.comboBox_consultType.currentIndexChanged.connect(self.OnTypeConsultation)
@@ -230,16 +231,15 @@ class WindowConsultation(QtGui.QMainWindow, Ui_MainWindowConsultation):
     def PrintConsultation(self, etiquettes=False, imprimechampvide=False, nbTab=0):
         return self.MyConsult.PrintConsultation(etiquettes, imprimechampvide, nbTab)
 
-    def  DoAnimWindowConsultationalEdit(self):
-        pass
+
         
     def CreeFormClient(self):
         if not self.__class__.Formulaire_Client : #utilise le meme FormClient pour toutes les instances de classes
             self.__class__.Formulaire_Client = FormClient()
         self.formulaireEditClient = self.__class__.Formulaire_Client 
         
-    def CreeFormAnimal(self):
-        if not self.__class__.Formulaire_Animal : #utilise le meme Form Animal pour toutes les instances de classes
+    def CreeFormAnimal(self, nouveau=False):
+        if nouveau or not self.__class__.Formulaire_Animal : #utilise le meme Form Animal pour toutes les instances de classes, en créer un nouveau si nouveau=True
             self.__class__.Formulaire_Animal = FormAnimal()
         self.formulaireEditAnimal = self.__class__.Formulaire_Animal 
         
@@ -250,7 +250,6 @@ class WindowConsultation(QtGui.QMainWindow, Ui_MainWindowConsultation):
             
         self.formulaireEditClient.SetClient(self.MyConsult.GetClientActif())
         if self.formulaireEditClient.exec_():
-            print 'ok edition client' 
             self.ActualiseNomOnglet()  #si nom client change
             self.ActualiseListeClientsDeTousLesOngletsConsultation()
             
@@ -278,14 +277,21 @@ class WindowConsultation(QtGui.QMainWindow, Ui_MainWindowConsultation):
                 
 
     def DoAnimalEdit(self):
-#        self.dataAnimal='Son nom est minou'
         if not self.formulaireEditAnimal :
             self.CreeFormAnimal()
             
         self.formulaireEditAnimal.SetTable(self.MyConsult.GetAnimalActif())
         if self.formulaireEditAnimal.exec_():
             pass #TODO:
-            
+
+    def DoNewAnimal(self):
+        self.CreeFormAnimal(nouveau=True)            #nouveau formulaire, crée nouvel animal
+        self.formulaireEditAnimal.SetIdProprietaire(self.MyConsult.GetIdClientActif())
+        if self.formulaireEditAnimal.exec_():
+            idNewAnimal=self.formulaireEditAnimal.idnouvelletable
+            pass #TODO: ajouter à la liste animaux ou recreer consultations
+
+
 
 
     def GetNomClientActif(self):

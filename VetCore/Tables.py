@@ -4,7 +4,7 @@
 
 from Tables_Base import  *
 
-import time
+from datetime import *
 import config
 import Core
 from PyQt4 import QtCore, QtGui
@@ -89,6 +89,16 @@ class TableAnimal(Table):
         txt+=self.Get('Nom')
         txt+=u' (espèce='+str(self.Get('Especes_idEspeces'))+')'
         return txt
+        
+    def ChangerProprietaire(self):
+        pass  #TODO:
+        
+    def DefinirProprietaire(self, idclient):
+        aujourdhui=date.today()
+        sql='INSERT INTO ClientAnimalRef (Client_idClient,Animal_idAnimal,DebutPropriete) VALUES ({0},{1},"{2}")'.format(idclient, self.Id(), str(aujourdhui))
+        err=self.ExecuteSQL(sql)
+        return err
+        
         
 def NewAnimal():
     return TableAnimal(DATABASE, 'viewAnimal', 'Animal')
