@@ -49,6 +49,9 @@ class Consultation:
     def ActiveClientId(self, id):
         return self.table_client_animal_consultation.ActiveId(id)
         
+    def ActiveClient(self, client): #attention : ne lit pas le client
+        self.table_client_animal_consultation.TableParent=client
+        
     def GetClientActif(self):
         return self.table_client_animal_consultation.TableParent 
         
@@ -80,9 +83,12 @@ class Consultation:
         consult=self.table_client_animal_consultation.TableEnfant.TableEnfant   # client->animal->consultation
         return consult.New()
         
-    def NouveauClient(self):
+    def NouveauClient(self, activeNewClient=False):
         client=self.table_client_animal_consultation.TableParent
-        return client.New()
+        newclient=client.New()
+        if activeNewClient :
+            self.ActiveClient(newclient)
+        return newclient
     
     def RafraichissementListeAnimaux(self, idanimal=None, actualise_ListeId=False): #ajoute idanimal à la liste ou si None recrée complètement
         self.table_client_animal_consultation.RafraichissementListeEnfants( idenfant=idanimal, actualiseListeId=actualise_ListeId)
@@ -276,8 +282,7 @@ class Consultation:
         idclientactif=self.GetIdClientActif()  
         if not idclientactif in self.idClients : #client activé pour la 1ere fois
             self.idClients.append(idclientactif) 
-            #DEBUG++++
-            self.ActiveClientId(idclientactif)
+            #DEBUG++++  #self.ActiveClientId(idclientactif)
             
             self.listeClients.append(self.GetClientActif() )
 #            newClient = TableClient(DATABASE, 'viewPersonne','Personne')#,  auto=True)

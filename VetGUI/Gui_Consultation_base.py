@@ -234,8 +234,8 @@ class WindowConsultation(QtGui.QMainWindow, Ui_MainWindowConsultation):
 
 
         
-    def CreeFormClient(self):
-        if not self.__class__.Formulaire_Client : #utilise le meme FormClient pour toutes les instances de classes
+    def CreeFormClient(self, nouveau=False):
+        if  nouveau or  not self.__class__.Formulaire_Client : #utilise le meme FormClient pour toutes les instances de classes  en créer un nouveau si nouveau=True
             self.__class__.Formulaire_Client = FormClient()
         self.formulaireEditClient = self.__class__.Formulaire_Client 
         
@@ -263,10 +263,11 @@ class WindowConsultation(QtGui.QMainWindow, Ui_MainWindowConsultation):
             pass
             
     def DoNouveauClient(self):
-        if not self.formulaireEditClient : #création du formulaire client s'il n'existe pas 
-            self.CreeFormClient()
-            
-        nouveau_client=self.MyConsult.NouveauClient()
+#        if not self.formulaireEditClient : #création du formulaire client s'il n'existe pas 
+#            self.CreeFormClient()
+        self.CreeFormClient(nouveau=True)
+        ancien_client=self.MyConsult.GetClientActif()
+        nouveau_client=self.MyConsult.NouveauClient(activeNewClient=True)
         self.formulaireEditClient.SetClient(nouveau_client, nouveauclient=True)
         if self.formulaireEditClient.exec_():
 #            print 'ok nouveau client' #self.formulaireEditClient.data
@@ -275,7 +276,8 @@ class WindowConsultation(QtGui.QMainWindow, Ui_MainWindowConsultation):
                 self.ActiveClientId(idclient)  #TODO: important : ajouter idclient  à la liste de tous les clients (gui_openvet)
                 self.ActualiseNomOnglet()  #si nom client change
                 self.ActualiseListeClientsDeTousLesOngletsConsultation()
-                
+        else : 
+                self.MyConsult.ActiveClient(ancien_client) # en cas d'annulation restaure ancien client
 
     def DoAnimalEdit(self):
         if not self.formulaireEditAnimal :
