@@ -83,7 +83,10 @@ class Consultation:
     def NouveauClient(self):
         client=self.table_client_animal_consultation.TableParent
         return client.New()
-            
+    
+    def RafraichissementListeAnimaux(self, idanimal=None, actualise_ListeId=False): #ajoute idanimal à la liste ou si None recrée complètement
+        self.table_client_animal_consultation.RafraichissementListeEnfants( idenfant=idanimal, actualiseListeId=actualise_ListeId)
+    
     def RafraichissementListeConsultations(self, idconsultation=None, actualiseListeId=False):
         """relecture dans la data base de la consultation no idconsultation (ou toutes les consult si None) de l'animal actif"""
         animalactif=self.table_client_animal_consultation.EnfantActif

@@ -7,7 +7,7 @@ BUG mycomboBox (mycomboville mycomboclient) cf bug.txt
 consultation : trier par date
 ascenseur dans onglet consultation  faire  reglage 
 fait 20/7/14 petit bug  lors champs null  enregistre texte 'null' revoir requete
-
+gui_openvet empecher l'onglet ajouter de se déplacer (onglet le + à droite = ajouter)
 formulaire nouvelle ville, prevoir autre pays
 
 bof database : creer variable de classe pour database

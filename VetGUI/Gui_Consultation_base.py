@@ -213,7 +213,8 @@ class WindowConsultation(QtGui.QMainWindow, Ui_MainWindowConsultation):
 #        print 'actifs='
 #        print self.PrintClientsConsultationActifs()
 
-
+    def AjouteAnimalDansListe(self, id_animal):
+        self.MyConsult.RafraichissementListeAnimaux( idanimal=id_animal)
 
 
     def ActualiseListeAnimaux(self):
@@ -289,6 +290,8 @@ class WindowConsultation(QtGui.QMainWindow, Ui_MainWindowConsultation):
         self.formulaireEditAnimal.SetIdProprietaire(self.MyConsult.GetIdClientActif())
         if self.formulaireEditAnimal.exec_():
             idNewAnimal=self.formulaireEditAnimal.idnouvelletable
+            self.AjouteAnimalDansListe(idNewAnimal)
+            self.ActualiseListeAnimaux()
             pass #TODO: ajouter à la liste animaux ou recreer consultations
 
 

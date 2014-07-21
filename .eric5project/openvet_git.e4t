@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Tasks SYSTEM "Tasks-5.1.dtd">
 <!-- eric5 tasks file for project openvet_git -->
-<!-- Saved: 2014-07-20, 19:20:43 -->
+<!-- Saved: 2014-07-21, 11:24:14 -->
 <Tasks version="5.1">
   <ProjectScanFilter></ProjectScanFilter>
   <Task priority="1" completed="False" type="1">
@@ -11,60 +11,6 @@
     <Resource>
       <Filename>config.py</Filename>
       <Linenumber>8</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO: barre de progression</Summary>
-    <Description></Description>
-    <Created>2014-07-16, 08:36:52</Created>
-    <Resource>
-      <Filename>VetGUI/Gui_openvet.py</Filename>
-      <Linenumber>76</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO:  actualiser aussi la liste de tous les clients (ex si modifie nom client, n'apparait pas lors nouvel onglet)</Summary>
-    <Description></Description>
-    <Created>2014-07-16, 08:36:52</Created>
-    <Resource>
-      <Filename>VetGUI/Gui_openvet.py</Filename>
-      <Linenumber>151</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO: a faire detruire page</Summary>
-    <Description></Description>
-    <Created>2014-07-16, 08:36:52</Created>
-    <Resource>
-      <Filename>VetGUI/Gui_openvet.py</Filename>
-      <Linenumber>164</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO: utiliser viewAnimal (ajoute espece en clair, etc...)</Summary>
-    <Description></Description>
-    <Created>2014-07-16, 13:32:15</Created>
-    <Resource>
-      <Filename>VetCore/Core_Consultation.py</Filename>
-      <Linenumber>28</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO: a revoir</Summary>
-    <Description></Description>
-    <Created>2014-07-16, 13:32:15</Created>
-    <Resource>
-      <Filename>VetCore/Core_Consultation.py</Filename>
-      <Linenumber>120</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO: DEBUG A REVOIR decode ou pas</Summary>
-    <Description></Description>
-    <Created>2014-07-16, 13:32:15</Created>
-    <Resource>
-      <Filename>VetCore/Core_Consultation.py</Filename>
-      <Linenumber>165</Linenumber>
     </Resource>
   </Task>
   <Task priority="1" completed="False" type="1">
@@ -491,114 +437,6 @@
     </Resource>
   </Task>
   <Task priority="1" completed="False" type="1">
-    <Summary>TODO: a revoir (utilité?)</Summary>
-    <Description></Description>
-    <Created>2014-07-20, 19:06:04</Created>
-    <Resource>
-      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
-      <Linenumber>48</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO: supprimer, ne marche pas</Summary>
-    <Description></Description>
-    <Created>2014-07-20, 19:06:04</Created>
-    <Resource>
-      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
-      <Linenumber>141</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO: supprimer, ne marche pas</Summary>
-    <Description></Description>
-    <Created>2014-07-20, 19:06:04</Created>
-    <Resource>
-      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
-      <Linenumber>153</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO: supprimer, ne marche pas</Summary>
-    <Description></Description>
-    <Created>2014-07-20, 19:06:04</Created>
-    <Resource>
-      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
-      <Linenumber>164</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO:   titre onglet = nom client</Summary>
-    <Description></Description>
-    <Created>2014-07-20, 19:06:04</Created>
-    <Resource>
-      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
-      <Linenumber>191</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO: important : ajouter idclient  à la liste de tous les clients (gui_openvet)</Summary>
-    <Description></Description>
-    <Created>2014-07-20, 19:06:04</Created>
-    <Resource>
-      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
-      <Linenumber>274</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO:</Summary>
-    <Description></Description>
-    <Created>2014-07-20, 19:06:04</Created>
-    <Resource>
-      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
-      <Linenumber>285</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO: ajouter à la liste animaux ou recreer consultations</Summary>
-    <Description></Description>
-    <Created>2014-07-20, 19:06:04</Created>
-    <Resource>
-      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
-      <Linenumber>292</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO: a faire</Summary>
-    <Description></Description>
-    <Created>2014-07-20, 19:06:04</Created>
-    <Resource>
-      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
-      <Linenumber>364</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO:  +++++++++ ESSAYER SANS toUtf8++++</Summary>
-    <Description></Description>
-    <Created>2014-07-20, 19:06:05</Created>
-    <Resource>
-      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
-      <Linenumber>420</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO:</Summary>
-    <Description></Description>
-    <Created>2014-07-20, 19:06:05</Created>
-    <Resource>
-      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
-      <Linenumber>449</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
-    <Summary>TODO:</Summary>
-    <Description></Description>
-    <Created>2014-07-20, 19:06:05</Created>
-    <Resource>
-      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
-      <Linenumber>458</Linenumber>
-    </Resource>
-  </Task>
-  <Task priority="1" completed="False" type="1">
     <Summary>TODO: ajouter NomChamp pour ListeChampPersonnel</Summary>
     <Description></Description>
     <Created>2014-07-20, 19:16:49</Created>
@@ -641,6 +479,168 @@
     <Resource>
       <Filename>VetGUI/Gui_FormAnimal.py</Filename>
       <Linenumber>78</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: barre de progression</Summary>
+    <Description></Description>
+    <Created>2014-07-21, 10:31:09</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_openvet.py</Filename>
+      <Linenumber>76</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO:  actualiser aussi la liste de tous les clients (ex si modifie nom client, n'apparait pas lors nouvel onglet)</Summary>
+    <Description></Description>
+    <Created>2014-07-21, 10:31:09</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_openvet.py</Filename>
+      <Linenumber>151</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: a faire detruire page</Summary>
+    <Description></Description>
+    <Created>2014-07-21, 10:31:10</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_openvet.py</Filename>
+      <Linenumber>164</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: a revoir (utilité?)</Summary>
+    <Description></Description>
+    <Created>2014-07-21, 11:14:37</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
+      <Linenumber>48</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: supprimer, ne marche pas</Summary>
+    <Description></Description>
+    <Created>2014-07-21, 11:14:37</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
+      <Linenumber>141</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: supprimer, ne marche pas</Summary>
+    <Description></Description>
+    <Created>2014-07-21, 11:14:37</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
+      <Linenumber>153</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: supprimer, ne marche pas</Summary>
+    <Description></Description>
+    <Created>2014-07-21, 11:14:37</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
+      <Linenumber>164</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO:   titre onglet = nom client</Summary>
+    <Description></Description>
+    <Created>2014-07-21, 11:14:37</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
+      <Linenumber>191</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: important : ajouter idclient  à la liste de tous les clients (gui_openvet)</Summary>
+    <Description></Description>
+    <Created>2014-07-21, 11:14:37</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
+      <Linenumber>275</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO:</Summary>
+    <Description></Description>
+    <Created>2014-07-21, 11:14:37</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
+      <Linenumber>286</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: ajouter à la liste animaux ou recreer consultations</Summary>
+    <Description></Description>
+    <Created>2014-07-21, 11:14:37</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
+      <Linenumber>295</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: a faire</Summary>
+    <Description></Description>
+    <Created>2014-07-21, 11:14:37</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
+      <Linenumber>367</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO:  +++++++++ ESSAYER SANS toUtf8++++</Summary>
+    <Description></Description>
+    <Created>2014-07-21, 11:14:37</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
+      <Linenumber>423</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO:</Summary>
+    <Description></Description>
+    <Created>2014-07-21, 11:14:37</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
+      <Linenumber>452</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO:</Summary>
+    <Description></Description>
+    <Created>2014-07-21, 11:14:37</Created>
+    <Resource>
+      <Filename>VetGUI/Gui_Consultation_base.py</Filename>
+      <Linenumber>461</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: utiliser viewAnimal (ajoute espece en clair, etc...)</Summary>
+    <Description></Description>
+    <Created>2014-07-21, 11:24:11</Created>
+    <Resource>
+      <Filename>VetCore/Core_Consultation.py</Filename>
+      <Linenumber>28</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: a revoir</Summary>
+    <Description></Description>
+    <Created>2014-07-21, 11:24:11</Created>
+    <Resource>
+      <Filename>VetCore/Core_Consultation.py</Filename>
+      <Linenumber>123</Linenumber>
+    </Resource>
+  </Task>
+  <Task priority="1" completed="False" type="1">
+    <Summary>TODO: DEBUG A REVOIR decode ou pas</Summary>
+    <Description></Description>
+    <Created>2014-07-21, 11:24:11</Created>
+    <Resource>
+      <Filename>VetCore/Core_Consultation.py</Filename>
+      <Linenumber>168</Linenumber>
     </Resource>
   </Task>
 </Tasks>
