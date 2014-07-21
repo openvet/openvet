@@ -266,10 +266,10 @@ class WindowConsultation(QtGui.QMainWindow, Ui_MainWindowConsultation):
         if not self.formulaireEditClient : #création du formulaire client s'il n'existe pas 
             self.CreeFormClient()
             
-        nouveauclient=self.MyConsult.NouveauClient()
-        self.formulaireEditClient.SetClient(nouveauclient)
+        nouveau_client=self.MyConsult.NouveauClient()
+        self.formulaireEditClient.SetClient(nouveau_client, nouveauclient=True)
         if self.formulaireEditClient.exec_():
-            print 'ok nouveau client' #self.formulaireEditClient.data
+#            print 'ok nouveau client' #self.formulaireEditClient.data
             idclient=self.formulaireEditClient.idnouveauclient
             if idclient :
                 self.ActiveClientId(idclient)  #TODO: important : ajouter idclient  à la liste de tous les clients (gui_openvet)

@@ -4,11 +4,11 @@ import sys
 sys.path.append('../VetCore')
 sys.path.append('..')
 
-from PyQt4 import QtCore, QtGui
+#from PyQt4 import QtCore, QtGui
 #import PyQt4.Qt as qt
 from PyQt4.Qt import *
 
-import config
+#import config
 
 #from ui_Form_animal import Ui_Dialog_animal
 

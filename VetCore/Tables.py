@@ -108,7 +108,8 @@ class TableClient(Table):
         Table. __init__(self, nomBase,nomTable, TableBase, auto, USER, PWD, dataBase)
         
     def New(self): #important pour creer nouveaux enfants dans table liées (sinon crée instance de Table au lieu de TableAnimal)
-        unetable=TableAnimal(self.nomDB,self.NomTable, self.NomTableBase,  dataBase=self.DataBase)
+        #  unetable=TableAnimal  BUG++++++++++  (self.nomDB,self.NomTable, self.NomTableBase,  dataBase=self.DataBase)
+        unetable=TableClient(self.nomDB,self.NomTable, self.NomTableBase,  dataBase=self.DataBase)
         return unetable
         
     def DescriptionHTML(self):#TODO: a completer ex barré pour dcd, etc...

@@ -6,8 +6,8 @@
 from Tables import *
 import time
 import config
-import Core
-from PyQt4 import QtCore, QtGui
+#import Core
+from PyQt4 import QtCore #, QtGui
 
 from gestion_erreurs import * 
 
@@ -58,7 +58,7 @@ class Consultation:
         
     def GetNomClientActif(self):
         try :
-            txt=client=self.table_client_animal_consultation.TableParent.DescriptionHTML()
+            txt=self.table_client_animal_consultation.TableParent.DescriptionHTML()
             return txt
         except :
             pass
@@ -276,6 +276,8 @@ class Consultation:
         idclientactif=self.GetIdClientActif()  
         if not idclientactif in self.idClients : #client activé pour la 1ere fois
             self.idClients.append(idclientactif) 
+            #DEBUG++++
+            self.ActiveClientId(idclientactif)
             
             self.listeClients.append(self.GetClientActif() )
 #            newClient = TableClient(DATABASE, 'viewPersonne','Personne')#,  auto=True)

@@ -322,9 +322,9 @@ class FormClient(FormulaireBase):
 #        self.BasculeModeEdition(False)
 #        
         
-    def SetClient(self, client, modeinfo=False): #TODO remplacer tt setclient par settable
+    def SetClient(self, client, modeinfo=False, nouveauclient=False): #TODO remplacer tt setclient par settable
         self.SetTable(client, modeinfo=False)
-        self.isNouveauclient=False
+        self.isNouveauclient=nouveauclient
         
     def CopieTable2Widget(self, efface=False):  #TODO: a supprimer
         self.CopieClient2Widget( efface)
