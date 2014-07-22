@@ -1,4 +1,6 @@
 *.bak
+*.e4t
+eric5project/openvet_git.e4q
 *.e4p
 
 *.py[cod~]

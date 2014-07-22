@@ -65,3 +65,6 @@ PAYS=33 #33=France
 
 MASQUE_CIP='99 000'  #2 chiffres un espace 3 chiffres  (9=obligatoire, 0= facultatif)
 MASQUE_CIP_REG='\d{2}\s{0,1}\d{0,3}'  #autorise 2 chiffres ou + 
+
+TYPE_CONSULTATION_DEFAUT=u'Motivée'   #nouveau formulaire consultation vide
+VETO_CONSULTATION_DEFAUT='POINT Yvon'               #nouveau formulaire consultation vide 

@@ -1,3 +1,13 @@
+rafraichir liste consultants lors nouveau consultant
+FAIT21/7 consultation effacer qdchange animal (pas seult browsr)
+
++++ gerer bouton animal info
+FAIT22/7  nouvel animal : cliquer ds consult pour creation nvel cx
+
+FAIT+/- (recrée completement la liste) trier listeclient lors creation nw client (pb pas de solution simple pour trier un combo!!!)
+==> voir si rapide avec bcp de clients
+==> Faire un autre FormOuvreClient +++
+
 arevoir: si un client est ouvert ds 2 onglets + creation d'1 animal :mise à jour liste animaux uniquement ds l'onglet courant
 
 Formulaires : formater les champs (avant sauver ou en sortie de widget?ou dans classe champ surclasser Verifie?) ex Animal. Nom verifier non NULL + mettre en majuscules

@@ -54,6 +54,23 @@ class WindowConsultation(QtGui.QMainWindow, Ui_MainWindowConsultation):
         self.mainwindows=parent
         
         self.MyConsult=Consultation()
+   
+    #efface textBrowser_consultations
+        old_browser=self.textBrowser_consultations
+#        parentWidget=old_browser.parentWidget()
+#        old_browser.hide()
+        self.horizontalLayout.removeWidget(old_browser)
+        del(old_browser)
+    #et remplace par MyTextBrowser  (cf copie propriétés de ui_form_consultation_base.py)
+        newBrowser = MyTextBrowser(self.verticalLayoutWidget)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.textBrowser_consultations.sizePolicy().hasHeightForWidth())
+        newBrowser .setSizePolicy(sizePolicy)
+        newBrowser .setMaximumSize(QtCore.QSize(10000, 15000))
+        self.horizontalLayout.addWidget(newBrowser )        
+        self.textBrowser_consultations=newBrowser 
         
         #self.ThreadPrepareFormulaireClient() #en tache de fond  marche pas pb creation Qwidget dans thread =pb connect signal
         
@@ -94,21 +111,23 @@ class WindowConsultation(QtGui.QMainWindow, Ui_MainWindowConsultation):
         self.toolButton_editClient.clicked.connect(self.DoClientEdit)
         self.toolButton_addClient.clicked.connect(self.DoNouveauClient)
         self.toolButton_ClientInfo.clicked.connect(self.DoClientInfo)
+        
         self.toolButton_addAnimal.clicked.connect(self.DoNewAnimal)
         self.toolButton_editAnimal.clicked.connect(self.DoAnimalEdit)
         
-        
-        self.comboBox_Animal.activated.connect(self.DoGetConsultations)
         self.comboBox_consultType.currentIndexChanged.connect(self.OnTypeConsultation)
-        self.connect(self.textBrowser_consultations, QtCore.SIGNAL("anchorClicked(QUrl)"),self.OnConsultationClicked)
+        self.connect(self.textBrowser_consultations, QtCore.SIGNAL("anchorClicked(QUrl)"),self.OnConsultationURLClicked)
+        self.connect(self.textBrowser_consultations, QtCore.SIGNAL("MyTextBrowserClicked()"),self.OnConsultationClicked)        
         self.toolButton_comment.clicked.connect(self.DoEditCommentaire)
         self.pushButton_valider.clicked.connect(self.DoEditConsultation)
         self.pushButton_Nouveau.clicked.connect(self.OnNewConsultation)
         self.actionQuitter.triggered.connect(self.Mycloseapp)
         self.comboBox_client.currentIndexChanged.connect(self.OnClientChanged)
         self.comboBox_Animal.currentIndexChanged.connect(self.OnAnimalChanged)
-
+        self.comboBox_Animal.activated.connect(self.DoGetConsultations)
+        
         self.desactiveSignalClientChanged=False
+        
         
         if config.MASQUE_WIDGET_NON_DEV :
             self.DesactiveLesWidgetsNonImplementes()
@@ -276,6 +295,8 @@ class WindowConsultation(QtGui.QMainWindow, Ui_MainWindowConsultation):
                 self.ActiveClientId(idclient)  #TODO: important : ajouter idclient  à la liste de tous les clients (gui_openvet)
                 self.ActualiseNomOnglet()  #si nom client change
                 self.ActualiseListeClientsDeTousLesOngletsConsultation()
+                if self.mainwindows :
+                    self.mainwindows.RecreeListeClient()
         else : 
                 self.MyConsult.ActiveClient(ancien_client) # en cas d'annulation restaure ancien client
 
@@ -306,11 +327,19 @@ class WindowConsultation(QtGui.QMainWindow, Ui_MainWindowConsultation):
 
 
     def DoGetConsultations(self):
-
         self.textBrowser_consultations.setText(self.MyConsult.GetConsultationsHTML())
+        self.EffaceFormConsultation()
+        self.frame_edit_consult.setVisible(False)
 #        self.splitter.resize(1021,820)
 
-    def OnConsultationClicked(self,link):
+    def OnConsultationClicked(self):
+        if self.MyConsult.GetAnimalActif() :
+            self.frame_edit_consult.setVisible(True)  #edit_consult visible uniquement s'il y a un animal
+        else :
+            AfficheErreur('Veuillez ajouter un animal avant de créer une consultation', fenetre=self)
+            
+    def OnConsultationURLClicked(self,link):
+        self.textBrowser_consultations.signal_url_clicked=True
         self.frame_edit_consult.setVisible(True)
         self.NewConsultation=False
         idConsultation=int(link.toString().toAscii()[2:]) 
@@ -336,7 +365,7 @@ class WindowConsultation(QtGui.QMainWindow, Ui_MainWindowConsultation):
 
         date=self.MyConsult.GetDateConsultation()
         self.dateEdit_consult.setDate(QtCore.QDate(QtCore.QDate(int(date[6:]),int(date[3:5]),int(date[:2]))))
-        self.comboBox_veterinaire.setCurrentIndex(self.comboBox_veterinaire.findText(QtCore.QString(consultationActive.Get('Consultant'))))
+        self.comboBox_veterinaire.setCurrentIndex(self.comboBox_veterinaire.findText(QtCore.QString(consultationActive.Get('Consultant')))) #TODO attention si veto n'est + consultant=> ne retrouve plus ds la liste
         self.comboBox_consultType.setCurrentIndex(self.comboBox_consultType.findText(QtCore.QString(consultationActive.Get('TypeConsultation') )))
         referant=consultationActive.Get('Referant')
         if referant :
@@ -348,6 +377,17 @@ class WindowConsultation(QtGui.QMainWindow, Ui_MainWindowConsultation):
             self.toolButton_comment.setToolTip(QtCore.QString(commentaires))
 #        self.splitter.resize(1021,470)
 
+    def EffaceFormConsultation(self): #TODO: completer? +/- (efface referant...)
+        typeDefaut=config.TYPE_CONSULTATION_DEFAUT
+        vetodefaut=config.VETO_CONSULTATION_DEFAUT
+        self.comboBox_veterinaire.setCurrentIndex(self.comboBox_veterinaire.findText(vetodefaut))
+        self.comboBox_consultType.setCurrentIndex(self.comboBox_consultType.findText(QtCore.QString(typeDefaut)))
+        self.dateEdit_consult.setDate(QDate.currentDate())
+        self.textEdit_consultObs.setText('')
+        self.textEdit_consultTrait.setText('')
+        self.toolButton_comment.setToolTip('')
+        
+        
     def OnTypeConsultation(self):
         if self.comboBox_consultType.currentText()==QtCore.QString("Référée".decode('utf8')):
             self.label_Referant.setEnabled(True)

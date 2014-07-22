@@ -1,3 +1,7 @@
+
+si enleve unconsultant (decoche ds formClient) alors pb si a deja consulté car n'apparait plus ds liste consultant de FormConsultation
+si ajoute un nv veto consultant: rafraichir la liste dans FormConsultation
+
 FAIT20/7/14  bug: 1ere lecture FormAnimal : race2 est vide car set appelé avant espece.set (donc combo race2 vide car avant signal OnEspeceChange) (pour race1 ok)==> revoir ordre dans table2widget
 
 FAIT 18/7/14 bug champ "NULL" dans formulaire sauvegarde (animal) (mais pas dans database cf 2eme lecture client/animal)

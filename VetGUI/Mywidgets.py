@@ -363,8 +363,16 @@ class MyTableWidget(QtGui.QTableWidget):
 			QtGui.QTableWidget.keyPressEvent(self,event)
 	#TODO menu right-click
 
+class MyTextBrowser(QtGui.QTextBrowser):
+    def __init__(self,parent=None):
+        super(MyTextBrowser,self).__init__(parent)
+        self.signal_url_clicked=False
 
-
+    def mousePressEvent(self,  e):
+#        print e
+        self.emit(SIGNAL("MyTextBrowserClicked()"))
+        super(MyTextBrowser,self).mousePressEvent( e)
+        print self.signal_url_clicked
 
 if __name__ == '__main__':
     

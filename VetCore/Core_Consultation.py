@@ -38,7 +38,6 @@ class Consultation:
         self.Date=time.strftime("%d/%m/%Y")
         self.DBase=self.table_client_animal_consultation.DataBase
         self.idAnimaux= []
-
         
     def PrintConsultation(self, etiquettes=False, imprimechampvide=False, nbTab=0):
         return self.table_client_animal_consultation.PrintParentEnfant(etiquettes, imprimechampvide, nbTab)
@@ -210,15 +209,17 @@ class Consultation:
             self.idConsultants.append(i[0])
         return clst
         
-    def GetClients(self, filtre = 'isClient'):# ex  filtre='isClient AND IsVeterinaire AND  not isValide'
+    def GetClients(self, filtre = 'isClient', trie='Nom'):# ex  filtre='isClient AND IsVeterinaire AND  not isValide'
 
         sql="""SELECT idPersonne, 
-        CONCAT (viewPersonne.Nom," ",viewPersonne.Prenom," (",Commune,")") ,
+        CONCAT (viewPersonne.Nom," ",viewPersonne.Prenom," (",Commune,")") AS Nom ,
         (SELECT GROUP_CONCAT(Nom) FROM Animal LEFT JOIN ClientAnimalRef ON Animal.idAnimal=ClientAnimalRef.Animal_idAnimal 
         WHERE Client_idClient=idPersonne) FROM viewPersonne 
         """
         if filtre :
             sql=sql+'WHERE '+filtre
+        if trie :
+            sql=sql+' ORDER BY '+trie
 
         res=self.DBase.RechercheSQL_liste(sql)  #CONCAT nom,prenom,liste animaux
 

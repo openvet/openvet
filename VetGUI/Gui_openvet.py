@@ -63,7 +63,10 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         
         self.menubar.hide()
         
-        
+    def RecreeListeClient(self):
+            listeclient=self.UneConsult.GetClients(filtre='', trie='Nom') #TODO: barre de progression 
+            self.DialOuvrir.comboBox_ListeClient.clear()
+            self.DialOuvrir.comboBox_ListeClient.addItems(listeclient)
         
         
     def InitialiseListeClient(self): 
@@ -73,8 +76,9 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
         
         if not self.DialOuvrir : #prepare Dialogue Ouvrir Client
             self.DialOuvrir= FormOuvreClient(self)
-            listeclient=self.UneConsult.GetClients(filtre='') #TODO: barre de progression 
+            listeclient=self.UneConsult.GetClients(filtre='', trie='Nom') #TODO: barre de progression 
             self.DialOuvrir.comboBox_ListeClient.addItems(listeclient)
+            self.DialOuvrir.comboBox_ListeClient.setEditable (True)
             
         index_ongletAjouter=0
         tb=self.tabWidgetClient.tabBar()
@@ -120,7 +124,7 @@ class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
 #                if ok :
         if idclient:
             page=WindowConsultation(parent=self, formulaireclient=self.formulaireclient)
-            err = page.ActiveClientId(idclient)
+            page.ActiveClientId(idclient) 
             nomclient=page.GetNomClientActif()
             self.tabWidgetClient.insertTab(index, page, nomclient)
             self.tabWidgetClient.setCurrentIndex(index)
