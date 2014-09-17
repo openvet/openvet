@@ -1,4 +1,4 @@
--test git hub 
+-test git hub 2
 -Ajouter IsActif dans les tables de paramètres,pathologie,unité,consultant... Lorsque une donnée est effacée mais
 qu'elle est en relation avec une autre déjà existante, elle sera cochée incative. Elle est toujours disponible 
 pour l'intégrité relationelle, mais n'apparait plus dans les choix(ex combobox). Traiter erreur Mysql
