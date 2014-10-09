@@ -1,0 +1,429 @@
+    1  cd Téléchargements/
+    2  ls
+    3  sha1sum grub4dos-0.4.5c-2013-03-03.7z 
+    4  SHA1 Checksum: 3f309141a0773aa689187e1e7e6ab56830f31ee3 > sha1sum_grub4dos
+    5  echo "SHA1 Checksum: 3f309141a0773aa689187e1e7e6ab56830f31ee3" > sha1sum_grub4dos
+    6  ls
+    7  nano sha1sum_grub4dos 
+    8  cd ..
+    9  ls
+   10  cd Bureau/grub4dos-0.4.5c/
+   11  sudo ./bootlace.com --time-out=0 /dev/sdd
+   12  cd ~/Téléchargements/
+   13  md5sum manjaro-kde-0.8.10-x86_64.iso 
+   14  sha1sum manjaro-kde-0.8.10-x86_64.iso 
+   15  sudo apt-get install grub-customizer
+   16  sudo dd if=/dev/sdc of=~/mbr.img bs=512 count=1
+   17  chown yvon mbr.img 
+   18  sudo chown yvon mbr.img 
+   19  partimage
+   20  sudo partimage
+   21  cd "/media/yvon/Doc_Linux_WD_1To/sauvegarde/windows_aout14_ssd_pcYvon"
+   22  ls
+   23  ls -l
+   24  ls win*
+   25  ls win*|chmod 644
+   26  ls win* > chmod 644
+   27  chmod 644 < ls win*
+   28  chmod 644 win*
+   29  sudo chmod 644 win*
+   30  sudo apt-get install apturl
+   31  xdg-mime default apturl.desktop x-scheme-handler/apt
+   32  ffmpeg
+   33  sudo apt-get ffmpeg
+   34  sudo apt-get install ffmpeg
+   35  ffmpeg
+   36  sudo nano /etc/apt/sources.list
+   37  sudo apt-get update
+   38  sudo apt-get install ffmpeg
+   39  sudo apt-get update
+   40  sudo nano /etc/apt/sources.list
+   41  sudo apt-get update
+   42  ffmpegthumbnailer 
+   43  ffmpeg
+   44  sudo apt-get install ffmpeg
+   45  avconv
+   46  man avconv 
+   47  sudo apt-get install libswscale-dev libavformat-dev
+   48  mkdir tmp
+   49  cd tmp/
+   50  ls
+   51  cd..
+   52  ls
+   53  cd ..
+   54  ls
+   55  cd tmp/2ManDVD/
+   56  ls
+   57  /usr/bin/qmake-qt4 2ManDVD.pro && make && sudo make install
+   58  sudo apt-get install build-essential fakeroot checkinstall libqt4-opengl-dev libqt4-dev mjpegtools netpbm mkisofs ffmpegthumbnailer sox libsox-fmt-all mplayer mencoder dvdauthor xine-ui g++ exif libavcodec-dev libswscale-dev libavformat-dev libsdl1.2-dev
+   59  /usr/bin/qmake-qt4 2ManDVD.pro 
+   60  ls
+   61  /usr/bin/qmake-qt4 2ManDVD.pro && make && sudo make install
+   62  cd /etc/apt/sources.list.d/
+   63  ls
+   64  history
+   65  sudo apt-get update
+   66  sudo apt-get install 2mandvd
+   67  cd ~/tmp/
+   68  wget -q -O - http://archive.getdeb.net/getdeb-archive.key | sudo apt-key add -
+   69  ls
+   70  sudo sh -c 'echo "deb http://archive.getdeb.net/ubuntu raring-getdeb apps" >> /etc/apt/sources.list.d/getdeb.list'
+   71  sudo apt-get update
+   72  sudo apt-get install 2mandvd
+   73  sudo apt-get install mjpegtools netpbm mkisofs ffmpegthumbnailer ffmpeg sox libsox-fmt-all mplayer mencoder dvdauthor xine-ui g++ exif
+   74  sudo apt-get install mjpegtools netpbm mkisofs ffmpegthumbnailer  sox libsox-fmt-all mplayer mencoder dvdauthor xine-ui g++ exif
+   75  cd/media/yvon/Doc_Linux_WD_1To/images linux iso
+   76  cd/media/yvon/Doc_Linux_WD_1To/"images linux iso"
+   77  cd /media/yvon/Doc_Linux_WD_1To/"images linux iso"
+   78  md5sum manjaro-xfce-0.9.0-dev-x86_64.iso 
+   79  lshw
+   80  sudo lshw
+   81  5~~~~~~~
+   82  lshw --help
+   83  man lshw
+   84  sudo lshw -X
+   85  sudo apt-get install lshw-gtk
+   86  sudo lshw -X
+   87  gconftool-2 --type bool --set /apps/rhythmbox/plugins/status-icon/window-visible true
+   88  2~
+   89  gconftool-2 --type bool --set /apps/rhythmbox/plugins/status-icon/window-visible true
+   90  winff&
+   91  cd /
+   92  ls
+   93  cd mnt/
+   94  ls
+   95  cd /media/yvon/Doc_Linux_WD_1To/thailande/
+   96  cd FINAL/
+   97  ls
+   98  avconv -i Thai2014_mi-long.m2t -threads 7 -c:v mpeg2video -f dvd -s 720x576 -r 25 -pix_fmt yuv420p -g 15 -b:v 4830k -maxrate 9600000 -minrate 0 -bufsize 1835008 -packetsize 2048 -pass 1 -an -y /dev/null && avconv -i Thai2014_mi-long.m2t -threads 7 -c:v mpeg2video -c:a ac3 -f dvd -s 720x576 -r 25 -pix_fmt yuv420p -g 15 -b:v 4830k -maxrate 9600000 -minrate 0 -bufsize 1835008 -packetsize 2048 -muxrate 10080000 -b:a 192000 -ar 48000 -pass 2 thailande2014_V2_BR4830.vob
+   99  ls
+  100  ls -l
+  101  cd vob/
+  102  avconv -i thailande2014_V2_BR4830_MUET.vob -i thailande2014_V2_AUDIO1.ac3 -i extraction_audio_AC3_96kb.ac3  -c:v copy -map 0:0 -map 1:0 -map 2:0 -c:a copy   -f dvd thai2014_v2_2piste_VBR4830.vob
+  103  avconv -i thailande2014_V2_BR4830_MUET.vob -i thailande2014_V2_AUDIO1.ac3 -i extraction_audio_AC3_96kb.ac3  -c copy -f dvd thai2014_v2_2piste_VBR4830.vob
+  104  wget -q http://download.tuxfamily.org/ekdforum/ekd/cle-ekd.key.asc -O - | sudo apt-key add -
+  105  sudo apt-get update
+  106  avconv -i Thai2014_mi-long.m2t -threads7 -target pal-dv -aspect 16:9 test_thailande2014.vob -t "00:00:15" -ss "00:00:35"  
+  107  avconv -i Thai2014_mi-long.m2t -threads 7 -target pal-dv -aspect 16:9 test_thailande2014.vob -t "00:00:15" -ss "00:00:35"  
+  108  cd ..
+  109  avconv -i Thai2014_mi-long.m2t -threads7 -target pal-dv -aspect 16:9 test_thailande2014.vob -t "00:00:15" -ss "00:00:35"  
+  110  avconv -i Thai2014_mi-long.m2t -threads 7 -target pal-dv -aspect 16:9 test_thailande2014.vob -t "00:00:15" -ss "00:00:35"
+  111  avconv -i Thai2014_mi-long.m2t -threads 7 -target pal-dv -aspect 16:9 test_thailande2014.vob -t 00:00:15 
+  112  avconv -i Thai2014_mi-long.m2t -t 00:00:15 -threads 7 -target pal-dv -aspect 16:9 test_thailande2014.vob 
+  113  avconv -i Thai2014_mi-long.m2t -t 00:00:15 -threads 7 -target pal-dv -aspect 16:9 test_thailande2014.avi
+  114  ekd
+  115  winff
+  116  avconv -i Thai2014_mi-long.m2t -t 00:00:15  -threads 7 -target pal-dv -c:v mpeg2video -f dvd -aspect 16:9 test_thailande2014.avi 
+  117  avconv -i Thai2014_mi-long.m2t -t 00:00:15  -threads 7 -target pal-dv -c:v mpeg2video -f dvd b:v 4830k -maxrate 9000000 -minrate 0 -aspect 16:9 test_thailande2014.avi 
+  118  avconv -i Thai2014_mi-long.m2t -t 00:00:15  -threads 7 -target pal-dv -c:v mpeg2video -f dvd -b:v 4830k -maxrate 9000000 -minrate 0 -aspect 16:9 test_thailande2014.avi 
+  119  avconv -i Thai2014_mi-long.m2t -t 00:00:15  -threads 7 -target pal-dv -c:v mpeg2video -f dvd -b:v 4830k  -aspect 16:9 test_thailande2014.avi 
+  120  avconv -i Thai2014_mi-long.m2t -t 00:00:15  -threads 7 -target pal-dv -c:v mpeg2video -f dvd -b:v 4830k -maxrate 9000000 -minrate 0 -aspect 16:9 test_thailande2014.avi 
+  121  avconv -i Thai2014_mi-long.m2t -t 00:00:15  -threads 7 -target pal-dv -c:v mpeg2video -f dvd -b:v 4830k -maxrate 9000000  -aspect 16:9 test_thailande2014.avi 
+  122  avconv -i Thai2014_mi-long.m2t -t 00:00:15  -threads 7 -target pal-dv -c:v mpeg2video -f dvd -b:v 4830k -maxrate 9600000  -aspect 16:9 test_thailande2014.avi 
+  123  avconv -i Thai2014_mi-long.m2t -t 00:00:15  -threads 7 -target pal-dv -c:v mpeg2video -f dvd -b:v 4830k   -aspect 16:9 test_thailande2014.avi 
+  124  avconv -ss 00:01:00  -y -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long.m2t" -f dvd -vcodec mpeg2video -r 25.00 -filter:v scale=352:576 -aspect 16:9 -b:v 4000k -mbd rd -trellis 1 -flags +mv0 -cmp 2 -subcmp 2 -acodec mp2 -b:a 192k -ar 48000 -ac 2 -t 00:00:30  "/home/yvon/tmp_9795867.mpg"
+  125  ls /home/yvon/
+  126  ls /home/yvon/ -l
+  127  avconv -ss 00:01:00  -y -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long.m2t" -f dvd -vcodec mpeg2video -r 25.00 -filter:v scale=352:576 -aspect 16:9 -b:v 4000k -maxrate 9800k -mbd rd -trellis 1 -flags +mv0 -cmp 2 -subcmp 2 -acodec mp2 -b:a 192k -ar 48000 -ac 2 -t 00:00:10  "/home/yvon/tmp_9795.mpg"
+  128  avconv -ss 00:01:00  -y -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long.m2t" -f dvd -vcodec mpeg2video -r 25.00 -filter:v scale=352:576 -aspect 16:9 -b:v 4000k -mbd rd -trellis 1 -flags +mv0 -cmp 2 -subcmp 2 -acodec mp2 -b:a 192k -ar 48000 -ac 2 -t 00:00:10   -maxrate 9800k -minrate 0 -bufsize 1835008 "/home/yvon/tmp_9795867.mpg"
+  129  avconv -ss 00:01:00  -y -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long.m2t" -thread 7 -f dvd -vcodec mpeg2video -r 25.00 -filter:v scale=352:576 -aspect 16:9 -b:v 4700k -mbd rd -trellis 1 -flags +mv0 -cmp 2 -subcmp 2 -acodec mp2 -b:a 192k -ar 48000 -ac 2 -t 00:00:10   -maxrate 9800k -minrate 0 -bufsize 1835008 "/home/yvon/tmp_9795867.mpg"
+  130  avconv -ss 00:01:00  -y -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long.m2t" -threads 7 -f dvd -vcodec mpeg2video -r 25.00 -filter:v scale=352:576 -aspect 16:9 -b:v 4700k -mbd rd -trellis 1 -flags +mv0 -cmp 2 -subcmp 2 -acodec mp2 -b:a 192k -ar 48000 -ac 2 -t 00:00:10   -maxrate 9800k -minrate 0 -bufsize 1835008 "/home/yvon/tmp_9795867.mpg"
+  131  avconv -i "/home/yvon/tmp_9795867.mpg" -v copy "/home/yvon/tmp_9795867MUET.mpg"
+  132  avconv -i "/home/yvon/tmp_9795867.mpg" -c copy "/home/yvon/tmp_9795867MUET.mpg"
+  133  avconv -i "/home/yvon/tmp_9795867.mpg"-an -c copy "/home/yvon/tmp_9795867MUET.mpg"
+  134  avconv -i "/home/yvon/tmp_9795867.mpg" -an -c copy "/home/yvon/tmp_9795867MUET.mpg"
+  135  avconv -i "/home/yvon/tmp_9795867.mpg" -vn -c copy "/home/yvon/audio.mp3"
+  136  avconv -i "/home/yvon/tmp_9795867.mpg" -vn -c copy "/home/yvon/audio.avi"
+  137  avconv -i "/home/yvon/tmp_9795867.mpg" -vn -ac ac3 "/home/yvon/audio.ac3"
+  138  avconv -i "/home/yvon/tmp_9795867.mpg" -vn -codec ac3 "/home/yvon/audio.ac3"
+  139  avconv -i "/home/yvon/tmp_9795867MUET.mpg" -i "/home/yvon/audio.avi" -i "/home/yvon/audio.ac3" -c copy "/home/yvon/tmp_9795867_2pistes.mpg"
+  140  avconv -i "/home/yvon/tmp_9795867MUET.mpg" -i "/home/yvon/audio.avi" -i "/home/yvon/audio.ac3" -map0:0 -map1:0 -map2:0 -c copy "/home/yvon/tmp_9795867_2pistes.mpg"
+  141  avconv -i "/home/yvon/tmp_9795867MUET.mpg" -i "/home/yvon/audio.avi" -i "/home/yvon/audio.ac3" -map 0:0 -map 1:0 -map 2:0 -c copy "/home/yvon/tmp_9795867_2pistes.mpg"
+  142  avconv -i "/home/yvon/tmp_9795867MUET.mpg" -i "/home/yvon/audio.ac3" -i "/home/yvon/audio.ac3" -map 0:0 -map 1:0 -map 2:0 -c copy "/home/yvon/tmp_9795867_2pistes.mpg"
+  143  avconv -i "/home/yvon/tmp_9795867MUET.mpg" -i "/home/yvon/audio.avi" -c copy "/home/yvon/tmp_9795867_1piste.mpg"
+  144  avconv -i "/home/yvon/tmp_9795867MUET.mpg" -i "/home/yvon/audio.avi"  -f dvd -c copy "/home/yvon/tmp_9795867_1piste.mpg"
+  145  avconv -i "/home/yvon/tmp_9795867MUET.mpg" -i "/home/yvon/audio.ac3" -i "/home/yvon/audio.ac3" -map 0:0 -map 1:0 -map 2:0 -c copy  -f dvd "/home/yvon/tmp_9795867_2pistes.mpg"
+  146  avconv -i "/home/yvon/tmp_9795867MUET.mpg" -i "/home/yvon/audio.mp3" -i "/home/yvon/audio.ac3" -map 0:0 -map 1:0 -map 2:0 -c copy  -f dvd "/home/yvon/tmp_9795867_2pistes.mpg"
+  147  avconv -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long.m2t"  -f null  -threads 7 -vcodec mpeg2video -r 25.00 -filter:v scale=352:576 -aspect 16:9 -b:v 4500 -mbd rd -trellis 1 -flags +mv0 -cmp 2 -subcmp 2 -acodec mp2 -b:a 192k -ar 48000 -ac 2 -an -maxrate 9800k -minrate 0 -bufsize 1835008 -passlogfile "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long.log" -pass 1  -y /dev/null && avconv -y -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long.m2t" -f dvd  -threads 7 -vcodec mpeg2video -r 25.00 -filter:v scale=352:576 -aspect 16:9 -b:v 4000k -mbd rd -trellis 1 -flags +mv0 -cmp 2 -subcmp 2 -acodec mp2 -b:a 192k -ar 48000 -ac 2 -maxrate 9800k -minrate 0 -bufsize 1835008 -passlogfile "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long.log" -pass 2  "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long_bitrateV4500.mpg"
+  148  ls
+  149  avconv -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long_bitrateV4500.mpg" -an -c copy "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long_bitrateV4500_MUET.mpg"
+  150  avconv -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long_bitrateV4500_MUET.mpg" -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/vob/thailande2014_V2_AUDIO1.ac3" -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/vob/extraction_audio_AC3_96kb.ac3" -map 0:0 -map 1:0 -map 2:0 -c copy  -f dvd "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long_bitrateV4500_2pistes.mpg"
+  151  echo $$
+  152  systemctl list-units
+  153  sudo systemctl list-units
+  154  ps aux
+  155  man ps
+  156  ps aux
+  157  ps -aux
+  158  avconv -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long.m2t"  -f null  -threads 7 -vcodec mpeg2video -r 25.00  -aspect 16:9 -b:v 4500 -mbd rd -trellis 1 -flags +mv0 -cmp 2 -subcmp 2 -acodec mp2 -b:a 192k -ar 48000 -ac 2 -an -t 00:00:10 -maxrate 9800k -minrate 0 -bufsize 1835008 -passlogfile "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long.log" -pass 1  -y /dev/null && avconv -y -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long.m2t" -f dvd  -threads 7 -vcodec mpeg2video -r 25.00  -aspect 16:9 -b:v 4000k -mbd rd -trellis 1 -flags +mv0 -cmp 2 -subcmp 2 -acodec mp2 -b:a 192k -ar 48000 -ac 2 -t 00:00:10 -maxrate 9800k -minrate 0 -bufsize 1835008 -passlogfile "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long.log" -pass 2  "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long_bitrateV4500.mpg"
+  159  avconv -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long.m2t"  -f null  -threads 7 -vcodec mpeg2video -r 25.00  -filter:v scale=720:576 -aspect 16:9 -b:v 4500 -mbd rd -trellis 1 -flags +mv0 -cmp 2 -subcmp 2 -acodec mp2 -b:a 192k -ar 48000 -ac 2 -an -t 00:00:10 -maxrate 9800k -minrate 0 -bufsize 1835008 -passlogfile "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long.log" -pass 1  -y /dev/null && avconv -y -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long.m2t" -f dvd  -threads 7 -vcodec mpeg2video -r 25.00 -filter:v scale=720:576 -aspect 16:9 -b:v 4000k -mbd rd -trellis 1 -flags +mv0 -cmp 2 -subcmp 2 -acodec mp2 -b:a 192k -ar 48000 -ac 2 -t 00:00:10 -maxrate 9800k -minrate 0 -bufsize 1835008 -passlogfile "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long.log" -pass 2  "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long_bitrateV4500.mpg"
+  160  avconv -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long.m2t"  -f null  -threads 7 -vcodec mpeg2video -r 25.00  -filter:v scale=720:576 -aspect 16:9 -b:v 4500 -mbd rd -trellis 1 -flags +mv0 -cmp 2 -subcmp 2 -acodec mp2 -b:a 192k -ar 48000 -ac 2 -an -maxrate 9800k -minrate 0 -bufsize 1835008 -passlogfile "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long.log" -pass 1  -y /dev/null && avconv -y -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long.m2t" -f dvd  -threads 7 -vcodec mpeg2video -r 25.00 -filter:v scale=720:576 -aspect 16:9 -b:v 4000k -mbd rd -trellis 1 -flags +mv0 -cmp 2 -subcmp 2 -acodec mp2 -b:a 192k -ar 48000 -ac 2  -maxrate 9800k -minrate 0 -bufsize 1835008 -passlogfile "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long.log" -pass 2  "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long_bitrateV4500.mpg"
+  161  cd Bureau/
+  162  l
+  163  cd qdvdauthor-2.3.1/
+  164  ls
+  165  configure -c
+  166  ./configure -c
+  167  qmake
+  168  which qmake
+  169  ./configure -c
+  170  configure -n
+  171  ./configure -n
+  172  ls
+  173  ./configure
+  174  ./configure -c
+  175  ./configure -n
+  176  which qmake
+  177  mman ls
+  178  man ls
+  179  man ln
+  180  which qmake
+  181  ln -s /usr/bin/qmake /bin/qmake
+  182  sudo ln -s /usr/bin/qmake /bin/qmake
+  183  ./configure -c
+  184  ./configure -n
+  185  avconv -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long_bitrateV4500.mpg" -an -c copy "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long_bitrateV4500_MUET.mpg"
+  186  avconv -threads 7 -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long_bitrateV4500_MUET.mpg" -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/vob/thailande2014_V2_AUDIO1.ac3" -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/vob/extraction_audio_AC3_96kb.ac3" -map 0:0 -map 1:0 -map 2:0 -c copy  -f dvd "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long_bitrateV4500_2pistes.mpg"
+  187  avconv -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long.m2t"  -f null  -threads 7 -vcodec mpeg2video -r 25.00  -filter:v scale=720:576 -aspect 16:9 -b:v 4500 -mbd rd -trellis 1 -flags +mv0 -cmp 2 -subcmp 2 -acodec mp2 -b:a 192k -ar 48000 -ac 2 -an -maxrate 9800k -minrate 0 -bufsize 1835008 -passlogfile "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long.log" -pass 1  -y /dev/null && avconv -y -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long.m2t" -f dvd  -threads 7 -vcodec mpeg2video -r 25.00 -filter:v scale=720:576 -aspect 16:9 -b:v 4500k -mbd rd -trellis 1 -flags +mv0 -cmp 2 -subcmp 2 -acodec mp2 -b:a 192k -ar 48000 -ac 2  -maxrate 9800k -minrate 0 -bufsize 1835008 -passlogfile "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long.log" -pass 2  "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long_bitrateV4500.mpg"
+  188  avconv -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long.m2t"  -f null  -threads 7 -vcodec mpeg2video -r 25.00  -filter:v scale=720:576 -aspect 16:9 -b:v 4500k -mbd rd -trellis 1 -flags +mv0 -cmp 2 -subcmp 2 -acodec mp2 -b:a 192k -ar 48000 -ac 2 -an -maxrate 9800k -minrate 4400k -bufsize 1835008 -passlogfile "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long.log" -pass 1  -y /dev/null && avconv -y -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long.m2t" -f dvd  -threads 7 -vcodec mpeg2video -r 25.00 -filter:v scale=720:576 -aspect 16:9 -b:v 4500k -mbd rd -trellis 1 -flags +mv0 -cmp 2 -subcmp 2 -acodec mp2 -b:a 192k -ar 48000 -ac 2  -maxrate 9800k -minrate 4400k -bufsize 1835008 -passlogfile "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long.log" -pass 2  "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long_bitrateV4500.mpg"
+  189  avconv -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long.m2t"  -f null  -threads 7 -vcodec mpeg2video -r 25.00  -filter:v scale=720:576 -aspect 16:9 -b:v 4500k -mbd rd -trellis 1 -flags +mv0 -cmp 2 -subcmp 2 -acodec mp2 -b:a 192k -ar 48000 -ac 2 -an -maxrate 9800k -minrate 0 -bufsize 1835008 -passlogfile "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long.log" -pass 1  -y /dev/null && avconv -y -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long.m2t" -f dvd  -threads 7 -vcodec mpeg2video -r 25.00 -filter:v scale=720:576 -aspect 16:9 -b:v 4500k -mbd rd -trellis 1 -flags +mv0 -cmp 2 -subcmp 2 -acodec mp2 -b:a 192k -ar 48000 -ac 2  -maxrate 9800k -minrate 0 -bufsize 1835008 -passlogfile "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long.log" -pass 2  "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long_bitrateV4500.mpg"
+  190  man apt-get
+  191  man libav
+  192  man ffmepg
+  193  libav --help
+  194  avconv
+  195  man avconv
+  196  avconv -formats
+  197  ffprobe
+  198  fprobe
+  199  history
+  200  cd "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL"
+  201  ls
+  202  ffmpeg -i Thai2014_mi-long_bitrateV4000.mpg -f ffmetadata metadata.txt
+  203   -f ffmetadata metadata.txt
+  204  ls
+  205  nano metadata.txt 
+  206  cd "/media/yvon/Doc_Linux_WD_1To/DVD Thai2014/thai2004_2pistesTmp/dvd-out/VIDEO_TS"
+  207  ffmpeg -i VTS_01_0.VOB -f ffmetadata metadata.txt
+  208  avconv -i VTS_01_0.VOB -f ffmetadata metadata.txt
+  209  avconv -i VTS_01_3.VOB -f ffmetadata metadata.txt
+  210  cd ..
+  211  ls
+  212  cd tmp/
+  213  ls
+  214  nano DVDAuthor.xml 
+  215  dvdauthor -o dvd -x DVDAuthor.xml
+  216  nano DVDAuthor.xml 
+  217  dvdauthor -o dvd -x DVDAuthor.xml
+  218  nano DVDAuthor.xml 
+  219  dvdauthor -o dvd -x DVDAuthor.xml
+  220  ls
+  221  xine dvd
+  222  nano README 
+  223  scons xine
+  224  dvdauthor -o dvd -x DVDAuthor.xml
+  225  xine
+  226  vlc
+  227  ls
+  228  nano README 
+  229  scons xine
+  230  nano DVDAuthor.xml 
+  231  dvdauthor -o dvd -x DVDAuthor.xml
+  232  nano DVDAuthor.xml 
+  233  scons xine
+  234  cls
+  235  clear
+  236  man scons
+  237  nano DVDAuthor.xml 
+  238  xine "dvd://media/yvon/Doc_Linux_WD_1To/DVD Thai2014/thai2004_2pistesTmp/dvd-out"
+  239  cd /
+  240  cd /media/yvon/Doc_Linux_WD_1To/thailande/FINAL
+  241  ffmpeg -i Thai2014_mi-long_bitrateV4500.vob    -c:v copy   -an   Thai2014_mi-long_bitrateV4500_muet.vob
+  242  avconv -i Thai2014_mi-long_bitrateV4500.vob    -c:v copy   -an   Thai2014_mi-long_bitrateV4500_muet.vob
+  243  ls
+  244  avconv -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long_bitrateV4500.mpg" -an -c copy "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long_bitrateV4500_MUET.mpg"
+  245  avconv -threads 7 -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long_bitrateV4500_MUET.mpg" -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/vob/thailande2014_V2_AUDIO1.ac3" -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/vob/extraction_audio_AC3_96kb.ac3" -map 0:0 -map 1:0 -map 2:0 -c copy  -f dvd "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long_bitrateV4500_2pistes.mpg"
+  246  ls
+  247  cd /media/yvon/Doc_Linux_WD_1To/DVD Thai2014/thai2014_final_2pistes
+  248  ls
+  249  cd "/media/yvon/Doc_Linux_WD_1To/DVD Thai2014/thai2014_final_2pistes"
+  250  ls
+  251  scons xine
+  252  history
+  253  sudo mc
+  254  avconv -threads 7 -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long_bitrateV4500_2pistesMUET  AVIDEMUXCOPIE.mpg" -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/vob/thailande2014_V2_AUDIO1.ac3" -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/vob/extraction_audio_AC3_96kb.ac3" -map 0:0 -map 1:0 -map 2:0 -c copy  -f dvd "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long_bitrateV4500_2pistes.avi"
+  255  avconv -threads 7 -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long_bitrateV4500_2pistesMUET  AVIDEMUXCOPIE.avi" -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/vob/thailande2014_V2_AUDIO1.ac3" -i "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/vob/extraction_audio_AC3_96kb.ac3" -map 0:0 -map 1:0 -map 2:0 -c copy  -f dvd "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL/Thai2014_mi-long_bitrateV4500_2pistes.avi"
+  256  ls
+  257  cd "/media/yvon/Doc_Linux_WD_1To/thailande/FINAL"
+  258  ls
+  259  avconv -i Thai2014_mi-long_bitrateV4500_2pistes.avi
+  260  avconv -i Thai2014_mi-long_bitrateV4500_2pistes.mpg
+  261  avconv -i Thai2014_mi-long_bitrateV4500_2pistes.avi
+  262  mencoder 
+  263  man mencoder 
+  264  mplex
+  265  man mplex
+  266  ls
+  267  cd vob/
+  268  mplex -f 8 -o videoThai2pistes.avi thailande2014_V2_muet.vob thailande2014_V2_AUDIO1.ac3 extraction_audio_AC3_96kb.ac3
+  269  man mplex
+  270  mplex -f 8 -o videoThai2pistes.avi "Thai2014_mi-long_bitrateV4500_2pistes PB DEMI RESOLUTION.mpg" thailande2014_V2_AUDIO1.ac3 extraction_audio_AC3_96kb.ac3
+  271  mplex -f 8 -o videoThai2pistes.avi thailande2014_V2_AUDIO1.ac3 extraction_audio_AC3_96kb.ac3
+  272  cd ..
+  273  mplex -f 8 -o videoTEST.avi Thai2014_mi-long_bitrateV4500_MUET.mpg  extraction_audio_AC3_96kb.ac3
+  274  mplex -f 8 -o videoTEST.avi Thai2014_mi-long_bitrateV4500_MUET.mpg  vob/extraction_audio_AC3_96kb.ac3
+  275  man mplex
+  276  cd vob/
+  277  avconv -i Thai2014_mi-long_bitrateV4500_muet.vob -i thailande2014_V2_AUDIO1.ac3 -i extraction_audio_AC3_96kb.ac3  -c copy -f dvd thai2014_v2_2piste_VBR4500.mpg
+  278  avconv -i thailande2014_V2_muet.vob thailande2014_V2_muet.mpg
+  279  avconv -i thailande2014_V2_muet.vob -c copy thailande2014_V2_muet.
+  280  avconv -i thailande2014_V2_muet.mpg -i thailande2014_V2_AUDIO1.ac3 -i extraction_audio_AC3_96kb.ac3  -c copy -f dvd thai2014_v2_2piste_VBR4500.mpg
+  281  avconv -i thailande2014_V2_muet.mpg -i thailande2014_V2_AUDIO1.ac3 -i extraction_audio_AC3_96kb.ac3  -c copy -f dvd thai2014_v2_2piste_VBR4500.avi
+  282  avconv -i thailande2014_V2_muet.mpg -i thailande2014_V2_AUDIO1.ac3 -i extraction_audio_AC3_96kb.ac3  -c copy -map 0:0 -map 1:0 -map 2:0 -f dvd thai2014_v2_2piste_VBR4500.mpg
+  283  cd Documents/
+  284  mkdir Openvet
+  285  cd Openvet/
+  286  ls
+  287  git clone https://github.com/openvet/openvet
+  288  sudo apt-get install git
+  289  git clone https://github.com/openvet/openvet
+  290  ls
+  291  cd openvet/
+  292  ls
+  293  branch
+  294  git branch
+  295  git clone https://github.com/openvet/openvet/tree/Fran%C3%A7ois
+  296  git clone https://github.com/openvet/openvet/tree/Yvon
+  297  ls
+  298  git branch Yvon
+  299  ls
+  300  git branch 
+  301  git fetch Yvon
+  302  git checkout Yvon
+  303  git branch
+  304  git pull
+  305  git branch --set-upstream-to=origin/Yvon Yvon
+  306  git branch
+  307  ls
+  308  git branch François
+  309  l
+  310  git branch 
+  311  git chekout François
+  312  git checkout François
+  313  git branch --set-upstream-to=origin/François François
+  314  ls
+  315  git status
+  316  git log
+  317  git branch --set-upstream-to=origin/François Françoisls
+  318  ls
+  319  cd ..
+  320  ls
+  321  del openvet/
+  322  rm openvet/
+  323  rm -R  openvet/
+  324  ls
+  325  rm -R  openvet/
+  326  ls
+  327  history
+  328  git clone https://github.com/openvet/openvet
+  329  cd openvet/
+  330  ls
+  331  git branch
+  332  git checkout --track https://github.com/openvet/openvet/tree/Fran%C3%A7ois
+  333  git checkout --track https://github.com/openvet/openvet/tree/François
+  334  git checkout -b François https://github.com/openvet/openvet/tree/Fran%C3%A7ois
+  335  git branch François
+  336  git checkout --track https://github.com/openvet/openvet/tree/François
+  337  git checkout François
+  338  git checkout --track https://github.com/openvet/openvet/tree/François
+  339  git branch
+  340  history
+  341  git branch --set-upstream-to=origin/François François
+  342  ls
+  343  nano Task.txt 
+  344  git status
+  345  git add
+  346  git add .
+  347  ls
+  348  git commit
+  349  git config --global user.email Yvon.Point@wanadoo.fr
+  350  git config --global user.name Yvon
+  351  git commit
+  352  git status
+  353  git push
+  354  man git branch
+  355  git branch -r
+  356  git branch 
+  357  man git checkout
+  358  git checkout -t https://github.com/openvet/openvet/tree/Yvon
+  359  git checkout -b françois https://github.com/openvet/openvet/tree/Yvon
+  360  git checkout -b François https://github.com/openvet/openvet/tree/Yvon
+  361  git checkout -b Yvon origin/Yvon
+  362  ls
+  363  git checkout -b François origin/François
+  364  cd ..
+  365  ls
+  366  rm -R openvet/
+  367  y
+  368  ls
+  369  mkdir openvet
+  370  git clone https://github.com/openvet/openvet
+  371  git branch -r
+  372  cd openvet/
+  373  git branch -r
+  374  git 
+  375  nano Task.txt 
+  376  git checkout -b François origin/François
+  377  ls
+  378  nano Task.txt 
+  379  git branch -r
+  380  nano Task.txt 
+  381  git add
+  382  git add .
+  383  git commit
+  384  git push
+  385  cd /home/yvon/Bureau/
+  386  history > history.txt
+  387  history | less 5
+  388  history | less 
+  389  history | more
+  390  cd ..
+  391  ls
+  392  cd yvon/Bureau/
+  393  history > history.txt
+  394  wine
+  395  cd Bureau/
+  396  ls
+  397  cd DVDStyler-2.8/
+  398  ls
+  399  ./configure
+  400  flex
+  401  sudo apt-get install flex
+  402  ./configure
+  403  wx-config --libs
+  404  sudo apt-get install wxGTK
+  405  ./configure
+  406  make
+  407  make install
+  408  sudo make install
+  409  history
+  410  history > history.txt
+  411  ls
+  412  cd tmp
+  413  ls
+  414  mkdir programmation
+  415  cd programmation/
+  416  git clone https://github.com/openvet/openvet
+  417  ls
+  418  cd openvet/
+  419  ls
+  420  git branch
+  421  git branch -r
+  422  git checkout -b François origin/François
+  423  git branch 
+  424  nano Task.txt 
+  425  git add .
+  426  git commit
+  427  git push
+  428  git config --global push.default simple
+  429  history > history.txt
