@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1024</width>
-    <height>521</height>
+    <height>520</height>
    </rect>
   </property>
   <property name="currentIndex">
@@ -230,6 +230,9 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
          </item>
          <item>
           <widget class="QToolButton" name="toolButton_Veterinaire">
+           <property name="toolTip">
+            <string>Editer la liste des vétérinaires</string>
+           </property>
            <property name="text">
             <string>...</string>
            </property>
@@ -285,6 +288,9 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
          </item>
          <item>
           <widget class="QToolButton" name="toolButton_TypeConsultation">
+           <property name="toolTip">
+            <string>Editer les types de consultation</string>
+           </property>
            <property name="text">
             <string>...</string>
            </property>
@@ -353,12 +359,12 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
               <widget class="QLabel" name="label_17">
                <property name="maximumSize">
                 <size>
-                 <width>160</width>
+                 <width>90</width>
                  <height>27</height>
                 </size>
                </property>
                <property name="text">
-                <string>Domaine Pathologique :</string>
+                <string>Discipline :</string>
                </property>
               </widget>
              </item>
@@ -366,13 +372,13 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
               <widget class="MyComboBox" name="comboBox_PathologieDomaine">
                <property name="minimumSize">
                 <size>
-                 <width>191</width>
+                 <width>200</width>
                  <height>27</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>200</width>
+                 <width>230</width>
                  <height>27</height>
                 </size>
                </property>
@@ -381,6 +387,23 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
                </property>
                <property name="styleSheet">
                 <string notr="true">selection-background-color: rgb(255, 255, 127);</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="toolButton_EditDomaine">
+               <property name="text">
+                <string>...</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resources.qrc">
+                 <normaloff>:/newPrefix/images/edit1.png</normaloff>:/newPrefix/images/edit1.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
                </property>
               </widget>
              </item>
@@ -418,13 +441,53 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
                 </size>
                </property>
                <property name="toolTip">
-                <string>Choisir une Pathologie Dominante pour cette Consultation</string>
+                <string>Pressez Enrée pour valider la sélection</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">selection-background-color: rgb(255, 255, 127);</string>
                </property>
                <property name="editable">
                 <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="toolButton_EditPathologie">
+               <property name="toolTip">
+                <string>Editer les pathologies</string>
+               </property>
+               <property name="text">
+                <string>...</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resources.qrc">
+                 <normaloff>:/newPrefix/images/edit1.png</normaloff>:/newPrefix/images/edit1.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="toolButton_ScanPathologie">
+               <property name="toolTip">
+                <string>Rechercher une pathologie</string>
+               </property>
+               <property name="text">
+                <string>...</string>
+               </property>
+               <property name="icon">
+                <iconset resource="resources.qrc">
+                 <normaloff>:/newPrefix/images/loupe2.png</normaloff>:/newPrefix/images/loupe2.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
                </property>
               </widget>
              </item>
@@ -474,6 +537,9 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
                  <height>27</height>
                 </size>
                </property>
+               <property name="toolTip">
+                <string>Ajouter un commentaire</string>
+               </property>
                <property name="text">
                 <string>...</string>
                </property>
@@ -490,6 +556,28 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
               </widget>
              </item>
             </layout>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_Pathologies">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>27</height>
+              </size>
+             </property>
+             <property name="toolTip">
+              <string>Pathologies selectionnées</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="textFormat">
+              <enum>Qt::RichText</enum>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
            </item>
            <item>
             <layout class="QFormLayout" name="formLayout">
@@ -579,32 +667,6 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
          <item>
           <layout class="QVBoxLayout" name="verticalLayout">
            <item>
-            <widget class="QPushButton" name="pushButton_valider">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>27</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Enregistrer cette consultation</string>
-             </property>
-             <property name="text">
-              <string>Valider</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="pushButton_Nouveau">
-             <property name="toolTip">
-              <string>Nouvelle Consultation</string>
-             </property>
-             <property name="text">
-              <string>Nouveau</string>
-             </property>
-            </widget>
-           </item>
-           <item>
             <widget class="QPushButton" name="pushButton_Hospit">
              <property name="toolTip">
               <string>Imprimer la fiche d'hospitalisation</string>
@@ -621,6 +683,42 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
              </property>
              <property name="text">
               <string>Facturation</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_Supprimer">
+             <property name="toolTip">
+              <string>Supprimer cette consultation</string>
+             </property>
+             <property name="text">
+              <string>Supprimer</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_Nouveau">
+             <property name="toolTip">
+              <string>Ajouter une nouvelle consultation</string>
+             </property>
+             <property name="text">
+              <string>Nouveau</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_valider">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>27</height>
+              </size>
+             </property>
+             <property name="toolTip">
+              <string>Enregistrer cette consultation</string>
+             </property>
+             <property name="text">
+              <string>Valider</string>
              </property>
             </widget>
            </item>
@@ -1205,7 +1303,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="comboBox_model">
+        <widget class="MyComboBox" name="comboBox_model">
          <property name="minimumSize">
           <size>
            <width>180</width>
@@ -1217,6 +1315,9 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
            <width>9999</width>
            <height>27</height>
           </size>
+         </property>
+         <property name="toolTip">
+          <string>Presser Entrée pour Valider le choix</string>
          </property>
         </widget>
        </item>
@@ -1430,29 +1531,6 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgb
       </widget>
      </item>
     </layout>
-   </widget>
-   <widget class="QToolButton" name="toolButton_EditAnalyse">
-    <property name="geometry">
-     <rect>
-      <x>90</x>
-      <y>400</y>
-      <width>26</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>...</string>
-    </property>
-    <property name="icon">
-     <iconset resource="resources.qrc">
-      <normaloff>:/newPrefix/images/edit1.png</normaloff>:/newPrefix/images/edit1.png</iconset>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>20</width>
-      <height>20</height>
-     </size>
-    </property>
    </widget>
   </widget>
   <widget class="QWidget" name="tab_ordonnance">

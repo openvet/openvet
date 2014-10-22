@@ -6,6 +6,7 @@ from PyQt4 import QtCore, QtGui
 sys.path.append('../VetCore')
 #import Core_Consultation
 #import Core_Pathologie
+from MyGenerics import *
 from ui_Form_pathologie import Ui_DialogPathologie
 from Gui_Critere import FormCritere
 import time
@@ -33,7 +34,8 @@ class FormPathologie(QtGui.QDialog, Ui_DialogPathologie):   #On click button_P
         for i in range(12):
             self.tableWidget_Criteres.setRowHeight(i,24)   
         #fill comboboxes
-        self.comboBox_PathologieDomaine.Fill(self.MyPathologie.GetDomaines())
+        self.comboBox_PathologieDomaine.setModel(MyComboModel('GetDomaines()'))
+
         #if len(self.MyConsult.ConsultationPathologies):
 #         id=self.comboBox_PathologiePathologie.findData(QtCore.QVariant(self.MyConsult.ConsultationPathologies[0].Pathologie_idPathologie),5)
 #         self.comboBox_PathologiePathologie.setCurrentIndex(id)
@@ -64,7 +66,9 @@ class FormPathologie(QtGui.QDialog, Ui_DialogPathologie):   #On click button_P
     def OnPathologieDomaine(self):
         idPathologieDomaine=self.comboBox_PathologieDomaine.GetData()
         if not idPathologieDomaine is None:
-            self.comboBox_PathologiePathologie.Fill(self.MyPathologie.GetPathologies(idPathologieDomaine))
+            self.comboBox_PathologiePathologie.setModel(MyComboModel('SelectPathologies(%i,%i)'%(self.MyPathologie.idEspece,idPathologieDomaine)))
+#            self.comboBox_PathologiePathologie.Fill(self.MyPathologie.GetPathologies(idPathologieDomaine))
+                
         
     def OnPathologie(self):
         txt=self.comboBox_PathologiePathologie.currentText()

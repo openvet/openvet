@@ -1,0 +1,29 @@
+cd /Programmes/Kiwi/Data/médicaments
+
+curl -o médicament.html http://www.ircp.anmv.anses.fr/Spc.asp?Product_Identifier=HYPERCARD
+
+html2text -o médicament.txt médicament.html
+
+#Get List médicaments vétérinaires
+curl -o médicament.html http://www.ircp.anmv.anses.fr/api2.asp?letter=A
+curl -o médicament#1.html http://www.ircp.anmv.anses.fr/api2.asp?letter=[A-Z]
+
+#Get RCP médicament vétérinaire
+curl -o médicament.html http://www.ircp.anmv.anses.fr/Spc.asp?Product_Identifier=ABCEDYL
+
+#Get Propriétés médicaments
+#list
+curl http://www.cbip-vet.be/fr/frcomment.php -o prop.html
+#famille thérapeutique
+curl http://www.cbip-vet.be/fr/texts/FAMOOOL1EL2o.php -o prop.html
+
+#Get list spécialités humaines->ref
+http://base-donnees-publique.medicaments.gouv.fr/telechargement.php?fichier=CIS_bdpm.txt
+#Get composition spécialités humaines
+http://base-donnees-publique.medicaments.gouv.fr/telechargement.php?fichier=CIS_COMPO_bdpm.txt
+#Get presentation spécialités humaines
+http://base-donnees-publique.medicaments.gouv.fr/telechargement.php?fichier=CIS_CIP_bdpm.txt
+#GetRCP spécialité humaine ref=64103828
+curl "http://base-donnees-publique.medicaments.gouv.fr/affichageDoc.php?specid=64103828&typedoc=R" -o file.html
+curl http://base-donnees-publique.medicaments.gouv.fr/extrait.php?specid=60329242 -o file.html
+

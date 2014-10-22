@@ -1,13 +1,36 @@
 -Ajouter IsActif dans les tables de paramètres,pathologie,unité,consultant... Lorsque une donnée est effacée mais
 qu'elle est en relation avec une autre déjà existante, elle sera cochée incative. Elle est toujours disponible 
 pour l'intégrité relationelle, mais n'apparait plus dans les choix(ex combobox). Traiter erreur Mysql
--revoir icones affichées en consultation
--erreur Paramètre avec valeur non numérique dans tableview_Paramètre
+-ajouter main layout pour consultation tabWiget_medical+
 -redimentionner tableview_Paramètre
+
 -Visualisation PDF et html avec viewer externe : Evince ou Acrobate reader et mozilla
 -Compléter éditeur d'image FormAnalyse dans Gui_Analyse.py
 -Importer fichiers Dicom (OpenDicom, Aeskulap,...?)
 -Importer des vidéos
 -Rechercher doublon d'etiquette dans tout le répertoire avant insertion nouveau document? Non systématique, mais à la demande de l'utilisateur
--Enregistrement validé avec ToolTips.showText(QCursor.pos(),text)
--Dériver la classe Request de QSqlQuery
+
+
+Modifications base de données
+
+Table		Modification			Commentaire
+Personne	Actif->isActif			homogénéisation avec autres tables
+		Ajouter isDeleted		homogénéisation avec autres tables
+
+
+Dans DBase add et update use Execute intead of exec_ et revoir gestion des erreurs
+Generiquer CommentForm pour d'autres besoins dans my Generics
+heure pour consultation?
+
+Recupérer les erreurs de Request()
+
+Modèles d'examens à refaire
+
+Analyses
+	-Delete Analyse => cascade Resultatanalyse on soft delete=>cascade update?
+			=> Géré dans MyModel donc dériver Analyse de MyModel
+	-Save Analyse	=>Deriver MyModel
+	-Dériver Document de MyComboModel avec Qt.DecorationRole
+	-ResetAnalyses() on consultation changed
+	-Bug ModelViewParameters.SetData réagit parfois à datachanged et non pas à press enter
+

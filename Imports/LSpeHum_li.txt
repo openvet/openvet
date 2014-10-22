@@ -1,0 +1,6 @@
+60028495	DOLIRHUMEPRO PARACETAMOL, PSEUDOEPHEDRINE ET DOXYLAMINE, comprimé	comprimé et  comprimé	orale	Autorisation active	Procédure nationale	Commercialisée	15/12/2005			 SANOFI AVENTIS FRANCE	Non
+on
+60028050	GABAPENTINE RANBAXY 400 mg, gélule	gélule	orale	Autorisation active	Procédure nationale	Commercialisée	21/11/2007			 RANBAXY PHARMACIE GENERIQUES	Non
+60028552	TRACRIUM 25 mg/2,5 ml (1 POUR CENT), solution injectable en ampoule	solution injectable	intraveineuse	Autorisation active	Procédure nationale	Commercialisée	21/05/1986			 GLAXOSMITHKLINE	Non
+60028680	CALCAREA IODATA WELEDA, degré de dilution compris entre 3CH et 30CH ou entre 5DH et 60DH	granules et  poudre et  solution en gouttes en gouttes	orale;sublinguale	Autorisation active	Enreg homéo (Proc. Nat.)	Commercialisée	14/02/2011			 WELEDA	Non
+

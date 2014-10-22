@@ -5,20 +5,21 @@ from PyQt4 import QtCore, QtGui,QtSql
 #from PySide import QtCore, QtGui
 import config
 from ui_Form_openvet import Ui_MainWindow
-from ui_Form_consultation import Ui_tabWidget_medical
 from ui_Form_client import Ui_Dialog_client
 from ui_Form_animal import Ui_Dialog_animal
-from Gui_Consultation import TabConsultation
+from Gui_Medical import TabMedical
 
 class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
     def __init__(self, db,parent=None):
         QtGui.QMainWindow.__init__(self, parent)
         self.setupUi(self)
         self.db=db
-        self.editConsultation = TabConsultation(self)
+        self.editConsultation = TabMedical(db,self)
         self.editConsultation.setGeometry(QtCore.QRect(0, 180, 1024, 521))
         #En attendant la connection avec la gestion client
-        self.editConsultation.OnSelectAnimal()
+        self.editConsultation.setVisible(False)
+        self.editConsultation.OnSelectAnimal(idEspece=1,idAnimal=1)
+        
         #Connect actions
         self.actionQuitter.triggered.connect(self.Mycloseapp)
 

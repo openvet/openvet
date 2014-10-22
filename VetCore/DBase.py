@@ -2,6 +2,7 @@
 import sys
 from PyQt4.QtCore import *
 from PyQt4.QtSql import *
+import MyGenerics
 
 class DBase:
     def __init__(self):
@@ -21,12 +22,14 @@ class DBase:
         else:
             self.errConnection=False
     
-class Request():
-    def __init__(self,table=None):
+class Request(QSqlQuery):
+    def __init__(self,table=None,parentwidget=None):
+        QSqlQuery.__init__(self)#self.Base use .driver pour transactions
         self.res=None
         self.Table=table
         self.Fields=None
         self.lastID=None
+        self.ParentWidget=parentwidget
         if not table is None:
             self.GetFields()
             self.FieldsName=[i.Name for i in self.Fields]
@@ -34,102 +37,143 @@ class Request():
     def SetTable(self,table):
         self.Table=table
         
+    def SetGui(self,parentwidget):
+        self.ParentWidget=parentwidget
+        
+    def Execute(self,request):
+        self.exec_(request)
+        if self.lastError().isValid():
+            MyGenerics.MyError(self.ParentWidget,self.lastError().text())
+            return False
+        return True
+        
     def GetInt(self,request,index):
         self.res=None
-        query=QSqlQuery()
-        query.exec_(request)
-        query.next()
-        if query.value(index).toInt()[1]:
-            self.res=query.value(index).toInt()[0]
-        del query
+        if self.Execute(request):
+            self.next()
+            if self.value(index).toInt()[1]:
+                self.res=self.value(index).toInt()[0]
         return self.res  
     
     def GetInts(self,request,index):
         self.res=[]
-        query=QSqlQuery()
-        query.exec_(request)
-        while query.next():
-            if query.value(index).toInt()[1]:
-                self.res.append(query.value(index).toInt()[0])
-        if len(self.res)==0:
-            self.res=None
-        del query
+        if self.Execute(request):
+            while self.next():
+                if self.value(index).toInt()[1]:
+                    self.res.append(self.value(index).toInt()[0])
         return self.res
 
-    def GetString(self,request,index):
-        self.res=None
-        query=QSqlQuery()
-        query.exec_(request)
-        query.next()
-        self.res=QString(query.value(index))
-        del query
+    def GetString(self,request,index=0):
+        self.res=""
+        if self.Execute(request):
+            self.next()
+            if self.isValid():
+                self.res=self.value(index).toString()
         return self.res  
     
     def GetStrings(self,request,index):
         self.res=[]
-        query=QSqlQuery()
-        query.exec_(request)
-        while query.next():
-            self.res.append(query.value(index).toString())
+        self.exec_(request)
+        while self.next():
+            self.res.append(self.value(index).toString())
         if len(self.res)==0:
             self.res=None
-        del query
         return self.res
     
     def GetStringList(self,request,index): 
         self.res=QStringList()
-        query=QSqlQuery()
-        query.exec_(request)
-        while query.next():
-            self.res<<query.value(index).toString()
+        self.exec_(request)
+        while self.next():
+            self.res<<self.value(index).toString()
         if len(self.res)==0:
             self.res=None
-        del query
         return self.res
          
     def GetidStrings(self,request,index):
         self.res=[]
-        query=QSqlQuery()
-        query.exec_(request)
-        while query.next():
-            self.res.append([query.value(index[0]).toInt()[0],query.value(index[1]).toString()])
-        del query
+        self.exec_(request)
+        while self.next():
+            self.res.append([self.value(index[0]).toInt()[0],self.value(index[1]).toString()])
+        return self.res
+    
+    def GetLineTable(self,id):
+        self.res=[]
+        if self.Execute("SELECT * FROM %s WHERE id%s=%i"%(self.Table,self.Table,id)):
+            self.next()
+            if self.isValid():
+                for i in range(self.record().count()):
+                    self.res.append(self.value(i))                          
+        return self.res
+    
+    def GetLineModel(self,request):
+        self.res=[]
+        if self.Execute(request):
+            self.next()
+            if self.isValid():
+                for i in range(self.record().count()):
+                    self.res.append(self.value(i))                          
+        return self.res
+    
+    def GetComboList(self,request,firstField=None):
+        #QVariant(Id),QString(Libele),QString(Remarque),QVariant(CodeColor),QVariant(isDeleted),QVariant(UserProperty1),QVariant(UserProperty2,...)
+        if firstField is None:
+            self.res=[]
+        else:
+            self.res=[[QVariant(0),QString(firstField),QString(''),QVariant(0)]]
+        self.exec_(request)
+        while self.next():
+            tmp=[]
+            for i in range(self.record().count()):
+                tmp.append(self.value(i))
+            if self.record().count()<5:
+                tmp.extend([QVariant(0)]*(5-self.record().count()))
+            tmp[1]=tmp[1].toString()
+            tmp[2]=tmp[2].toString()
+            self.res.append(tmp)
+        return self.res
+
+    def GetTableList(self,NbCol,request):
+        #QVariant(Id),QVariant(col1),...,QVariant(Nbcol),QString(Remarque),QVariant(isDeleted),QVariant(UserProperty1),QVariant(UserProperty2,...
+        self.res=[]
+        self.exec_(request)
+        while self.next():
+            tmp=[]
+            for i in range(self.record().count()):
+                tmp.append(self.value(i))
+            if self.record().count()<NbCol+3:
+                tmp.extend([QVariant(0)]*(NbCol+3-self.record().count()))
+            tmp[NbCol]=tmp[NbCol].toString()
+            self.res.append(tmp)
+        self.FieldsName=[self.record().fieldName(i+1) for i in range(NbCol)]
         return self.res
     
     def GetLines(self,request):
         self.res=[]
-        query=QSqlQuery()
-        query.exec_(request)
-        while query.next():
-            tmp=[]
-            for i in range(query.record().count()):
-                tmp.append(query.value(i))#.toString()
-            self.res.append(tmp)
-        del query
+        if self.Execute(request):
+            while self.next():
+                tmp=[]
+                for i in range(self.record().count()):
+                    tmp.append(self.value(i))
+                self.res.append(tmp)
         return self.res
 
     def GetLine(self,request):
         self.res=[]
-        query=QSqlQuery()
-        query.exec_(request)
-        query.next()
-        if query.isValid():
-            for i in range(query.record().count()):
-                self.res.append(query.value(i).toString())                          
-#            self.res=[query.value(i) for i in range(query.size())]
-        if len(self.res)==0:
-            self.res=None
-        del query
+        if self.Execute(request):
+            self.next()
+            if self.isValid():
+                for i in range(self.record().count()):
+                    self.res.append(self.value(i))                         
         return self.res
     
     def GetFields(self,table=None):
         if not table is None:
             self.Table=table
         self.Fields=[]
-        query=QSqlQuery()
-        query.exec_("SHOW COLUMNS FROM %s"%self.Table)
-        while query.next():
-            self.Fields.append(Field(query))
+        self.exec_("SHOW COLUMNS FROM %s"%self.Table)
+        while self.next():
+            self.Fields.append(Field(self))
+        return self.Fields
             
     def GetFieldIndex(self,name):
         for i in range(len(self.Fields)):
@@ -151,28 +195,28 @@ class Request():
                 else:
                     err.append(j.Name)
                 continue
-            if 'int' in j.Type:
+            elif 'int' in j.Type or j.Type=='id':
                 if i.toInt()[1]:
                     newvalues.append('%i'%i.toInt()[0])
                 else:
                     err.append(j.Name)
-            if 'decimal' in j.Type or 'float' in j.Type:
+            elif 'decimal' in j.Type or 'float' in j.Type:
                 if i.toFloat()[1]:
                     newvalues.append('%.2f'%i.toFloat()[0])
                 else:
                     err.append(j.Name)
-            if 'date' in j.Type:
-                if i.toDate()[1]:
-                    newvalues.append('\"%s"'%i.toString('yyyy-MM-dd'))
+            elif 'date'==j.Type:
+                if i.toDate().isValid():
+                    newvalues.append('\"%s"'%i.toDate().toString('yyyy-MM-dd'))
                 else:
                     err.append(j.Name)
-            if 'datetime' in j.Type:
-                if i.toDateTime()[1]:
-                    newvalues.append('\"%s"'%i.toString('yyyy-MM-dd : hh:mm'))
+            elif 'datetime'==j.Type:
+                if i.toDateTime().isValid():
+                    newvalues.append('\"%s"'%i.toDateTime().toString('yyyy-MM-dd : hh:mm'))
                 else:
                     err.append(j.Name)
-            if 'varchar' in j.Type or 'text' in j.Type:
-                if i.toString().isEmpty():
+            elif 'varchar' in j.Type or 'text' in j.Type:
+                if i.toString().isEmpty() and j.Name!='Identifiant':
                     if j.Null:
                         newvalues.append('NULL')
                     else:
@@ -182,12 +226,17 @@ class Request():
                         newvalues.append(u'\"%s"'%i.toString())
                     else:
                         err.append(j.Name)
+            else:
+                err.append(u'%s : Type non trouvé'%j.Name)
         return (err,newvalues)
                 
+    def Delete_Act(self,id):
+        self.exec_("CALL DeleteItemTable(%i,\"%s\")"%(id,self.Table))
+        return self.lastError()
+    
     def Delete(self,ids):
-        query=QSqlQuery()
-        query.exec_("DELETE FROM %s WHERE %s"%(self.Table,'='.join(ids)))
-        return query.lastError()
+        self.exec_("DELETE FROM %s WHERE %s"%(self.Table,'='.join(ids)))
+        return self.lastError()
     
     def Save(self,values,fields=None):
         if values[0]=='0':
@@ -198,22 +247,20 @@ class Request():
             return self.Update(fields,values)
     
     def Add(self,values):
-        query=QSqlQuery()
         values=','.join(values)
         if not self.Table is None:
-            query.exec_("INSERT INTO %s VALUES (%s)"%(self.Table,values))
-            self.lastID=query.lastInsertId()
-            return query.lastError()
+            self.exec_("INSERT INTO %s VALUES (%s)"%(self.Table,values))#TODO:if self.Execute
+            self.lastID=self.lastInsertId()
+            return self.lastError()
         else:
             return QSqlError('','Table non renseignée.')
 
     def Update(self,fields,values):
-        query=QSqlQuery()
         idtable='='.join(zip(fields,values)[0])
         sets=','.join(['='.join(i) for i in zip(fields,values)[1:]])
         if not self.Table is None:
-            query.exec_("UPDATE %s SET %s WHERE %s"%(self.Table,sets,idtable))
-            return query.lastError()
+            self.exec_("UPDATE %s SET %s WHERE %s"%(self.Table,sets,idtable))
+            return self.lastError()
 
 class Field:
     def __init__(self,query):
@@ -222,6 +269,10 @@ class Field:
         self.Maxlength=None
         if tmp.count('(') and 'varchar' not in tmp:
             self.Type=tmp[:tmp.index('(')]
+            if self.Type=='decimal':
+                self.NbDecimals=tmp[tmp.index(',')+1:tmp.index(')')]
+            if self.Type=='int' and query.value(3).toString()=='MUL':
+                self.Type='id'
         elif 'varchar' in tmp:
             self.Type=tmp
             self.Maxlength=int(tmp[tmp.index('(')+1:tmp.index(')')])

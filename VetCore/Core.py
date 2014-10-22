@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf8 -*-
 import re
+import shutil
+import os
 from PyQt4.QtCore import *
 from PyQt4.QtSql import *
 import config
@@ -19,7 +21,32 @@ class Ctable:
 		for i in self.TableFields:
 			print '%s : %s\t\t\t(%s)'%(i,str(self.__dict__[i]),type(self.__dict__[i]))
 
-		
+def Fdata(value,vtype=None,debug=False):
+	if isinstance(value,QString):
+		return value
+	if vtype is None:
+		vtype=value.typeName()
+	if value.isNull():
+		if debug:
+			return 'NULL'
+		else:
+			return QString('')
+	elif vtype=='QDate':
+		return value.toDate().toString('dd/MM/yyyy')
+	elif vtype=='QDateTime':
+		return value.toDateTime().toString('dd/MM/yyyy hh:mm')
+	elif vtype in ['int','qlonglong']:
+		return value.toInt()[0]
+	elif vtype=='QString':
+		return value.toString()
+	elif vtype=='bool':
+		return value.toBool()
+	elif vtype=='double' or vtype=='float':
+		return value.toFloat()[0]
+	else:
+		if debug:
+			print value.typeName()
+		return u'indeterminé'	  
 	
 def ValideDate(date,formatin='dmyy'):
 	if not isinstance(date, basestring):
@@ -47,16 +74,40 @@ def ValideTelephone(tel):
 		return None
 	return res
 
-	
+def ImportFile(path,folder):
+	file=path.right(path.length()-path.lastIndexOf('/')-1)
+#	folder='../Archives/%s/'%folder
+	if not os.path.samefile(path,folder+file):
+		shutil.copy(path,folder+file)
+	return file
 
+def Multiline(text,max=80):
+	try:
+		if text.count()<=max:
+			return text
+	except:	#DEBUG ONLY
+		print 'erreur'
+
+	res=''
+	tmp=''
+	for i in text.split(' '):
+		if len(tmp)+len(i)>max:
+			res=res+tmp[:-1]+'\n'
+			tmp=i+' '
+		else:
+			tmp=tmp+i+' '
+	res=res+tmp
+	return res
+	
 if __name__ == '__main__':
-	db = QSqlDatabase.addDatabase("QMYSQL")
-	db.setHostName ( config.host )
-	db.setUserName ( config.user )
-	db.setPassword ( config.password )
-	db.setDatabaseName(config.database)
-	if not db.open():
-		print 'connection impossible'
-	Mytable=Ctable(db,'Analyse')
-	Mytable.Print()
+	print Multiline(QString(u'Le petit chat de la bonne du curé s\'est perché au fait du clocher et surveille les pigeons du seigneur'))
+# 	db = QSqlDatabase.addDatabase("QMYSQL")
+# 	db.setHostName ( config.host )
+# 	db.setUserName ( config.user )
+# 	db.setPassword ( config.password )
+# 	db.setDatabaseName(config.database)
+# 	if not db.open():
+# 		print 'connection impossible'
+# 	Mytable=Ctable(db,'Analyse')
+# 	Mytable.Print()
 	

@@ -10,6 +10,8 @@ DEBUG_AFFICHE_MESSAGE_CONSOLE=True  #TODO: a enlever lorsuqe les msg d erreurs s
 
 
 #user='root'#pour ouvrir la base
+Path_Analyses='../Archives/Analyses/'
+Path_Icons='../images/'
 
 repertoire='/home/francois/Programmes/Kiwi/OpenVet/OpenVet/'
 WorkingPath='/media/Datas/Kiwi/OpenVet'
